@@ -43,9 +43,9 @@ Daily Scrum toplantılarının Google Meet uygulaması veya WhatsApp uygulaması
 ## Sprin Board Updates:
 ![Sprint Board Updates](https://github.com/MelisaYasak/yzta_team_forty/blob/main/trello_sprin1.png)
 ## Sprint Review:
+Sprint Review katılımcıları: Miraç	Aral, Sümeyra Usta ,  Meryem Durdu, Muhammet Ömer Kurnaz, Melisa YASAK.
 Bütün ekip projede hangi kısımların bittiğini ve bunun hakkındaki görüşlerini iletti. İlk sprint olduğu için daha sade ve fikir odaklı geçtiği konuşuldu.
 
-Sprint Review katılımcıları: Miraç	Aral, Sümeyra Usta ,  Meryem Durdu, Muhammet Ömer Kurnaz, Melisa YASAK.
-Sprint Retrospective:
+## Sprint Retrospective:
 | Neyi İyi Yaptık | Neleri Geliştirmeliyiz| Geliştirme Aksiyonlarımız Ne Olmalı  |
-|----------|------------------|----------------|----------|
+|-----------------|-----------------------|--------------------------------------|
