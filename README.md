@@ -8,7 +8,7 @@
 | Muhammet Ömer Kurnaz | Product Owner | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/momerkurnaz/) |
 | Meryem Durdu         | Developer     | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/meryem-durdu-4b39a7200/) |
 | Sümeyra Usta         | Developer     | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/s%C3%BCmeyrausta/) |
-| Miraç	Aral           | Developer     | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/ismaildonmez) |
+| Miraç	Aral           | Developer     | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/mira%C3%A7-aral-848520332/) |
 
 # Medvice
 
@@ -49,3 +49,4 @@ Bütün ekip projede hangi kısımların bittiğini ve bunun hakkındaki görü�
 ## Sprint Retrospective:
 | Neyi İyi Yaptık | Neleri Geliştirmeliyiz| Geliştirme Aksiyonlarımız Ne Olmalı  |
 |-----------------|-----------------------|--------------------------------------|
+|Tüm ekip üyelerinin aktif olup, özverili bir şekilde toplantılara katılıp fikirlerini beyan etmeleri. | ilerleyen süreçlerde yapacağımız kapsamlı toplantılarla teknik açıdan gelişebiliriz.|projenin tüm detaylarınin adım adım açıklanarak planlı bir şekilde ilerlenmesi|
