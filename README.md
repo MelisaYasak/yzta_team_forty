@@ -2,13 +2,13 @@
 -------------------
 ##  Takım Üyeleri
 
-| İsim            | Ünvan          | Bağlantı  |
-|----------|------------------|----------------|----------|
-| Melisa YASAK | Scrum Master | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/melisayasak/) |
-| Muhammet Ömer Kurnaz | Product Owner | [![LinkedIn](https://cdn-icons-png.flaticon.com/512/174/174857.png)](https://www.linkedin.com/in/momerkurnaz/) |
-| Meryem Durdu | Developer | [![LinkedIn](https://cdn-icons-png.flaticon.com/512/174/174857.png)](https://www.linkedin.com/in/meryem-durdu-4b39a7200/) |
-| Sümeyra Usta | Developer | [![LinkedIn](https://cdn-icons-png.flaticon.com/512/174/174857.png)](https://www.linkedin.com/in/s%C3%BCmeyrausta/) |
-| Miraç	Aral | Developer | [![LinkedIn](https://cdn-icons-png.flaticon.com/512/174/174857.png)](https://www.linkedin.com/in/ismaildonmez) |
+| İsim                 | Ünvan         | Bağlantı       |
+|----------------------|---------------|----------------|
+| Melisa YASAK         | Scrum Master  | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/melisayasak/) |
+| Muhammet Ömer Kurnaz | Product Owner | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn] (https://www.linkedin.com/in/momerkurnaz/) |
+| Meryem Durdu         | Developer     | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/meryem-durdu-4b39a7200/) |
+| Sümeyra Usta         | Developer     | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/s%C3%BCmeyrausta/) |
+| Miraç	Aral           | Developer     | [<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20"/> LinkedIn](https://www.linkedin.com/in/ismaildonmez) |
 
 # Medvice
 
