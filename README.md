@@ -50,3 +50,13 @@ Bütün ekip projede hangi kısımların bittiğini ve bunun hakkındaki görü�
 | Neyi İyi Yaptık | Neleri Geliştirmeliyiz| Geliştirme Aksiyonlarımız Ne Olmalı  |
 |-----------------|-----------------------|--------------------------------------|
 |Tüm ekip üyelerinin aktif olup, özverili bir şekilde toplantılara katılıp fikirlerini beyan etmeleri. | ilerleyen süreçlerde yapacağımız kapsamlı toplantılarla teknik açıdan gelişebiliriz.|projenin tüm detaylarınin adım adım açıklanarak planlı bir şekilde ilerlenmesi|
+
+
+# Sprint 
+## Sprint Review:
+Sprint Review katılımcıları: Miraç	Aral, Sümeyra Usta ,  Meryem Durdu, Muhammet Ömer Kurnaz, Melisa YASAK.
+Uygulama tasarımı yaptık. Veri araştırması yaptık. İnternetten açık kaynak veriler araştırdık. Uygulama tasarımı Miro linkinde (https://miro.com/app/board/uXjVJfJWOdg=/) veri dokümantasyonu ise buradaki linkte bulunmakta 
+## Sprint Retrospective
+| Neyi İyi Yaptık | Neleri Geliştirmeliyiz| Geliştirme Aksiyonlarımız Ne Olmalı  |
+|-----------------|-----------------------|--------------------------------------|
+|Fikri geliştirmeyi ve organize olmayı iyi yaptık | Daha planlı bir şekilde ilerleyebilirdik. Dailylere vaktinde katılamadık |Doğru yol haritası çizmeliyiz. İlk kim hatırlarsa dailyi başlatsın.|
