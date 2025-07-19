@@ -55,7 +55,7 @@ Bütün ekip projede hangi kısımların bittiğini ve bunun hakkındaki görü�
 # Sprint 
 ## Sprint Review:
 Sprint Review katılımcıları: Miraç	Aral, Sümeyra Usta ,  Meryem Durdu, Muhammet Ömer Kurnaz, Melisa YASAK.
-Uygulama tasarımı yaptık. Veri araştırması yaptık. İnternetten açık kaynak veriler araştırdık. Uygulama tasarımı Miro linkinde (https://miro.com/app/board/uXjVJfJWOdg=/) veri dokümantasyonu ise buradaki linkte bulunmakta 
+Uygulama tasarımı yaptık. Veri araştırması yaptık. İnternetten açık kaynak veriler araştırdık. Uygulama tasarımı Miro linkinde (https://miro.com/app/board/uXjVJfJWOdg=/) Veri için araştırdığımız siteler Trello üzerinde kartlarda bulunmakta
 ## Sprint Retrospective
 | Neyi İyi Yaptık | Neleri Geliştirmeliyiz| Geliştirme Aksiyonlarımız Ne Olmalı  |
 |-----------------|-----------------------|--------------------------------------|
