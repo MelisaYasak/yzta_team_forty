@@ -52,7 +52,15 @@ Bütün ekip projede hangi kısımların bittiğini ve bunun hakkındaki görü�
 |Tüm ekip üyelerinin aktif olup, özverili bir şekilde toplantılara katılıp fikirlerini beyan etmeleri. | ilerleyen süreçlerde yapacağımız kapsamlı toplantılarla teknik açıdan gelişebiliriz.|projenin tüm detaylarınin adım adım açıklanarak planlı bir şekilde ilerlenmesi|
 
 
-# Sprint 
+# Sprint 2
+## Sprint Notları: 
+Bu sprintte genel anlamda uygulamanın tasarımı ve kaynak olacak verinin araştırılması vardı. Miraç ve Ömer uygulama tasarımı ile ilgilinedi. Melisa, Sümeyra ve Meryem veri araştırması yaptı. Tasarım için Miro ortamı kullanıldı ve çizimler bu platformda blunuyor. Veri için yapılan araştırmalar ve elde edilen linkler Trello platformundaki kartlar içerisinde linkler halinde bulunmakte. Uygulama web tabanlı olacak şekilde karar verildi. AI mimarisi için RAG metodu ve model olarak GEMINI modeli karar verildi.
+## Tahmin Edilen Tamamlanacak Puan: 
+100 Puan
+## Tahmin Mantığı: 
+Takım üyelerinin zamanlarına göre sprinte iş alındı. Toplam 13 kalem iş bitirildi.
+## Daily Scrum: 
+Daily Scrum toplantılarının Google Meet uygulaması veya WhatsApp uygulaması üzerinden yapılması kararlaştırılmıştır.
 ## Sprint Review:
 Sprint Review katılımcıları: Miraç	Aral, Sümeyra Usta ,  Meryem Durdu, Muhammet Ömer Kurnaz, Melisa YASAK.
 Uygulama tasarımı yaptık. Veri araştırması yaptık. İnternetten açık kaynak veriler araştırdık. Uygulama tasarımı Miro linkinde (https://miro.com/app/board/uXjVJfJWOdg=/) Veri için araştırdığımız siteler Trello üzerinde kartlarda bulunmakta
