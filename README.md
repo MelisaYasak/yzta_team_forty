@@ -53,7 +53,11 @@ Bütün ekip projede hangi kısımların bittiğini ve bunun hakkındaki görü�
 
 # Sprint 2
 ## Sprint Notları: 
-Bu sprintte genel anlamda uygulamanın tasarımı ve kaynak olacak verinin araştırılması vardı. Miraç ve Ömer uygulama tasarımı ile ilgilinedi. Melisa, Sümeyra ve Meryem veri araştırması yaptı. Tasarım için Miro ortamı kullanıldı ve çizimler bu platformda blunuyor. Veri için yapılan araştırmalar ve elde edilen linkler Trello platformundaki kartlar içerisinde linkler halinde bulunmakte. Uygulama web tabanlı olacak şekilde karar verildi. AI mimarisi için RAG metodu ve model olarak GEMINI modeli karar verildi.
+Bu sprintte genel anlamda uygulamanın tasarımı ve kaynak olacak verinin araştırılması vardı. Miraç ve Ömer uygulama tasarımı ile ilgilinedi. Melisa, Sümeyra ve Meryem veri araştırması yaptı. Tasarım için Miro ortamı kullanıldı ve çizimler bu platformda blunuyor.
+![Tasarımın görseli](https://github.com/MelisaYasak/yzta_team_forty/blob/main/uygulama%20tasar%C4%B1m%C4%B1/pic1.png)
+Veri için yapılan araştırmalar ve elde edilen linkler Trello platformundaki kartlar içerisinde linkler halinde bulunmakte. 
+ * Uygulama web tabanlı olacak şekilde karar verildi.
+ * AI mimarisi için RAG metodu ve model olarak GEMINI modeli karar verildi.
 ## Tahmin Edilen Tamamlanacak Puan: 
 100 Puan
 ## Tahmin Mantığı: 
