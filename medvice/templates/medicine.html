@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlaç Bilgisi - Medvice</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            padding: 20px 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .header-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #27ae60;
+            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+        }
+        
+        .medicine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .medicine-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .medicine-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+            border-color: #27ae60;
+        }
+        
+        .medicine-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .medicine-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .medicine-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .medicine-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .medicine-details {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .detail-value {
+            color: #666;
+            text-align: right;
+        }
+        
+        .usage-info {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .usage-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .usage-text {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #fef7d9 100%);
+            border: 1px solid #f39c12;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .warning-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #b7860a;
+            margin-bottom: 5px;
+        }
+        
+        .warning-text {
+            font-size: 13px;
+            color: #856404;
+            line-height: 1.4;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e9ecef;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .prescription-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        
+        .stock-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .stock-available {
+            color: #27ae60;
+        }
+        
+        .stock-limited {
+            color: #f39c12;
+        }
+        
+        .stock-out {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <div class="header-title">İlaç Bilgisi</div>
+            <div>💊</div>
+        </div>
+        
+        <div class="content">
+            <div class="search-section">
+                <input type="text" class="search-input" placeholder="🔍 İlaç adı, etken madde veya hastalık yazın..." oninput="searchMedicines()">
+            </div>
+            
+            <div class="medicine-grid" id="medicineGrid">
+                <!-- İlaç kartları JavaScript ile yüklenecek -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const medicines = [
+            {
+                id: 1,
+                name: "Parol 500 mg",
+                activeIngredient: "Parasetamol",
+                manufacturer: "Atabay İlaç",
+                price: "12.50 TL",
+                prescription: false,
+                stock: "available",
+                usage: "Ağrı kesici ve ateş düşürücü. Günde 3-4 kez, yemeklerden sonra alınır.",
+                warning: "Günlük maksimum doz 4000 mg'ı geçmemelidir. Karaciğer hastalığı olanlarda dikkatli kullanılmalıdır.",
+                indication: "Baş ağrısı, diş ağrısı, kas ağrısı, ateş"
+            },
+            {
+                id: 2,
+                name: "Augmentin 1000 mg",
+                activeIngredient: "Amoksisilin + Klavulanik Asit",
+                manufacturer: "GSK",
+                price: "65.80 TL",
+                prescription: true,
+                stock: "limited",
+                usage: "Antibiyotik. Günde 2 kez, 12 saat arayla, yemek başlangıcında alınır.",
+                warning: "Doktor önerisi olmadan kullanılmamalıdır. Tam kür bitirilmelidir.",
+                indication: "Üst solunum yolu enfeksiyonları, idrar yolu enfeksiyonları"
+            },
+            {
+                id: 3,
+                name: "Voltaren 50 mg",
+                activeIngredient: "Diklofenak Sodyum",
+                manufacturer: "Novartis",
+                price: "28.90 TL",
+                prescription: false,
+                stock: "available",
+                usage: "Antiinflamatuar ağrı kesici. Günde 2-3 kez, yemeklerden sonra alınır.",
+                warning: "Mide koruyucu ile birlikte alınması önerilir. Kalp hastalığı olanlarda dikkatli kullanılmalıdır.",
+                indication: "Eklem ağrıları, kas ağrıları, romatizmal ağrılar"
+            },
+            {
+                id: 4,
+                name: "Concor 5 mg",
+                activeIngredient: "Bisoprolol Fumarat",
+                manufacturer: "Merck",
+                price: "45.60 TL",
+                prescription: true,
+                stock: "available",
+                usage: "Kalp ilacı. Günde 1 kez, sabah aç karnına alınır.",
+                warning: "Aniden kesilmemelidir. Doktor kontrolünde kullanılmalıdır.",
+                indication: "Yüksek tansiyon, kalp yetmezliği"
+            },
+            {
+                id: 5,
+                name: "Nexium 20 mg",
+                activeIngredient: "Esomeprazol",
+                manufacturer: "AstraZeneca",
+                price: "89.40 TL",
+                prescription: true,
+                stock: "out",
+                usage: "Mide koruyucu. Günde 1 kez, yemekten 1 saat önce alınır.",
+                warning: "Uzun süreli kullanımda doktor kontrolü gereklidir.",
+                indication: "Mide ülseri, reflü hastalığı, gastrit"
+            },
+            {
+                id: 6,
+                name: "Aspirin 100 mg",
+                activeIngredient: "Asetilsalisilik Asit",
+                manufacturer: "Bayer",
+                price: "8.75 TL",
+                prescription: false,
+                stock: "available",
+                usage: "Kan sulandırıcı. Günde 1 kez, yemekten sonra alınır.",
+                warning: "Kanama riski olanlarda kullanılmamalıdır. Mide koruyucu ile alınmalıdır.",
+                indication: "Kalp koruma, damar tıkanıklığı önleme"
+            }
+        ];
+        
+        function renderMedicines(medicineList = medicines) {
+            const container = document.getElementById('medicineGrid');
+            
+            container.innerHTML = medicineList.map(medicine => `
+                <div class="medicine-card" onclick="showMedicineDetails(${medicine.id})">
+                    <div class="medicine-header">
+                        <div class="medicine-icon">💊</div>
+                        <div class="medicine-info">
+                            <h3>${medicine.name} ${medicine.prescription ? '<span class="prescription-badge">REÇETELİ</span>' : ''}</h3>
+                            <p>${medicine.manufacturer} • ${medicine.price}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="medicine-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Etken Madde:</span>
+                            <span class="detail-value">${medicine.activeIngredient}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Endikasyon:</span>
+                            <span class="detail-value">${medicine.indication}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Stok Durumu:</span>
+                            <span class="detail-value stock-status ${getStockClass(medicine.stock)}">
+                                ${getStockIcon(medicine.stock)} ${getStockText(medicine.stock)}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="usage-info">
+                        <div class="usage-title">Kullanım Şekli:</div>
+                        <div class="usage-text">${medicine.usage}</div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <div class="warning-title">⚠️ Uyarı:</div>
+                        <div class="warning-text">${medicine.warning}</div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); orderMedicine(${medicine.id})">
+                            ${medicine.stock === 'out' ? 'Stokta Yok' : 'Sipariş Ver'}
+                        </button>
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); addToFavorites(${medicine.id})">
+                            ⭐ Favorile
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function getStockClass(stock) {
+            switch(stock) {
+                case 'available': return 'stock-available';
+                case 'limited': return 'stock-limited';
+                case 'out': return 'stock-out';
+                default: return 'stock-available';
+            }
+        }
+        
+        function getStockIcon(stock) {
+            switch(stock) {
+                case 'available': return '✅';
+                case 'limited': return '⚠️';
+                case 'out': return '❌';
+                default: return '✅';
+            }
+        }
+        
+        function getStockText(stock) {
+            switch(stock) {
+                case 'available': return 'Mevcut';
+                case 'limited': return 'Sınırlı';
+                case 'out': return 'Tükendi';
+                default: return 'Mevcut';
+            }
+        }
+        
+        function searchMedicines() {
+            const searchTerm = event.target.value.toLowerCase();
+            const filteredMedicines = medicines.filter(medicine =>
+                medicine.name.toLowerCase().includes(searchTerm) ||
+                medicine.activeIngredient.toLowerCase().includes(searchTerm) ||
+                medicine.indication.toLowerCase().includes(searchTerm) ||
+                medicine.manufacturer.toLowerCase().includes(searchTerm)
+            );
+            renderMedicines(filteredMedicines);
+        }
+        
+        function showMedicineDetails(id) {
+            const medicine = medicines.find(m => m.id === id);
+            alert(`📋 ${medicine.name} Detayları:\n\n• Etken Madde: ${medicine.activeIngredient}\n• Kullanım: ${medicine.usage}\n• Fiyat: ${medicine.price}\n• Üretici: ${medicine.manufacturer}`);
+        }
+        
+        function orderMedicine(id) {
+            const medicine = medicines.find(m => m.id === id);
+            
+            if (medicine.stock === 'out') {
+                alert('😔 Bu ilaç şu anda stokta bulunmuyor. Stok girdiğinde bilgilendirilmek ister misiniz?');
+                return;
+            }
+            
+            if (medicine.prescription) {
+                alert('📝 Bu ilaç reçeteli bir ilaçtır. Eczaneden reçeteniz ile temin edebilirsiniz.');
+            } else {
+                if (confirm(`🛒 ${medicine.name} siparişi vermek istediğinizden emin misiniz?\n\nFiyat: ${medicine.price}`)) {
+                    alert('✅ Siparişiniz alındı! En yakın eczaneden teslim alabilirsiniz.');
+                }
+            }
+        }
+        
+        function addToFavorites(id) {
+            const medicine = medicines.find(m => m.id === id);
+            alert(`⭐ ${medicine.name} favorilerinize eklendi!`);
+        }
+        
+        // Sayfa yüklendiğinde ilaçları göster
+        renderMedicines();
+    </script>
+</body>
+</html>

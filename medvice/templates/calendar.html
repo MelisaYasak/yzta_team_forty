@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Takvimi - Medvice</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            padding: 20px 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .header-title {
+            flex: 1;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #f8f9fa;
+        }
+        
+        .current-month {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .view-toggle {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 3px;
+        }
+        
+        .toggle-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 18px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        
+        .day-header {
+            background: #f8f9fa;
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .day-cell {
+            background: white;
+            min-height: 80px;
+            padding: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .day-cell:hover {
+            background: #f8f9fa;
+        }
+        
+        .day-cell.other-month {
+            background: #f8f9fa;
+            color: #ccc;
+        }
+        
+        .day-cell.today {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+        }
+        
+        .day-cell.has-appointment {
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .day-number {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .appointment-indicator {
+            background: #e74c3c;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-bottom: 2px;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .appointment-indicator.routine {
+            background: #27ae60;
+        }
+        
+        .appointment-indicator.urgent {
+            background: #f39c12;
+        }
+        
+        .upcoming-section {
+            margin-top: 25px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .appointment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .appointment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .appointment-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+        
+        .appointment-card.routine {
+            border-left-color: #27ae60;
+        }
+        
+        .appointment-card.urgent {
+            border-left-color: #f39c12;
+        }
+        
+        .appointment-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .appointment-time {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .appointment-type {
+            font-size: 12px;
+            color: #666;
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 10px;
+        }
+        
+        .appointment-details {
+            margin-bottom: 12px;
+        }
+        
+        .appointment-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .appointment-info {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .appointment-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-edit {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #e9ecef;
+        }
+        
+        .btn-cancel {
+            background: #ffe6e6;
+            color: #e74c3c;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .btn-confirm {
+            background: #e8f5e8;
+            color: #27ae60;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .add-appointment {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(155, 89, 182, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .add-appointment:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(155, 89, 182, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="history.back()">←</button>
+            <div class="header-title">Randevu Takvimi</div>
+            <div>📅</div>
+        </div>
+        
+        <div class="content">
+            <div class="calendar-header">
+                <div class="month-nav">
+                    <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
+                    <div class="current-month" id="currentMonth">Temmuz 2025</div>
+                    <button class="nav-btn" onclick="changeMonth(1)">›</button>
+                </div>
+                <div class="view-toggle">
+                    <button class="toggle-btn active" onclick="setView('calendar')">Takvim</button>
+                    <button class="toggle-btn" onclick="setView('list')">Liste</button>
+                </div>
+            </div>
+            
+            <div id="calendarView">
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Takvim JavaScript ile oluşturulacak -->
+                </div>
+            </div>
+            
+            <div class="upcoming-section">
+                <div class="section-title">
+                    🗓️ Yaklaşan Randevular
+                </div>
+                
+                <div class="appointment-list" id="appointmentList">
+                    <!-- Randevular JavaScript ile yüklenecek -->
+                </div>
+            </div>
+        </div>
+        
+        <button class="add-appointment" onclick="addNewAppointment()">+</button>
+    </div>
+    
+    <script>
+        const appointments = [
+            {
+                id: 1,
+                date: '2025-07-29',
+                time: '10:30',
+                title: 'Ortopedi Kontrolü',
+                doctor: 'Prof. Dr. Mehmet Özkan',
+                hospital: 'Ankara Şehir Hastanesi',
+                type: 'Kontrol',
+                priority: 'routine'
+            },
+            {
+                id: 2,
+                date: '2025-07-30',
+                time: '14:00',
+                title: 'Kan Tahlili',
+                doctor: 'Hemşire Ayşe Demir',
+                hospital: 'Medicana Ankara',
+                type: 'Tahlil',
+                priority: 'routine'
+            },
+            {
+                id: 3,
+                date: '2025-08-02',
+                time: '09:00',
+                title: 'Acil Kardiyoloji',
+                doctor: 'Doç. Dr. Ali Kaya',
+                hospital: 'Hacettepe Hastanesi',
+                type: 'Acil',
+                priority: 'urgent'
+            },
+            {
+                id: 4,
+                date: '2025-08-05',
+                time: '16:30',
+                title: 'Göz Muayenesi',
+                doctor: 'Uz. Dr. Fatma Özdemir',
+                hospital: 'Memorial Ankara',
+                type: 'Muayene',
+                priority: 'routine'
+            },
+            {
+                id: 5,
+                date: '2025-08-08',
+                time: '11:00',
+                title: 'Diyet Danışmanlığı',
+                doctor: 'Dyt. Zeynep Acar',
+                hospital: 'Gazi Üniversitesi',
+                type: 'Danışmanlık',
+                priority: 'routine'
+            }
+        ];
+        
+        let currentDate = new Date();
+        
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Takvim başlıkları
+            const dayHeaders = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            grid.innerHTML = dayHeaders.map(day => 
+                `<div class="day-header">${day}</div>`
+            ).join('');
+            
+            // Ayın ilk günü ve son günü
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            
+            // Pazartesi'den başlamak için ayarlama
+            let startingDay = firstDay.getDay();
+            startingDay = startingDay === 0 ? 6 : startingDay - 1;
+            
+            // Önceki ayın son günleri
+            for (let i = startingDay - 1; i >= 0; i--) {
+                const prevDate = new Date(year, month, -i);
+                grid.innerHTML += `<div class="day-cell other-month">
+                    <div class="day-number">${prevDate.getDate()}</div>
+                </div>`;
+            }
+            
+            // Bu ayın günleri
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayAppointments = appointments.filter(apt => apt.date === dateStr);
+                const isToday = dateStr === new Date().toISOString().split('T')[0];
+                
+                let cellClass = 'day-cell';
+                if (isToday) cellClass += ' today';
+                if (dayAppointments.length > 0) cellClass += ' has-appointment';
+                
+                const appointmentIndicators = dayAppointments.map(apt => 
+                    `<span class="appointment-indicator ${apt.priority}">${apt.time}</span>`
+                ).join('');
+                
+                grid.innerHTML += `<div class="${cellClass}" onclick="selectDate('${dateStr}')">
+                    <div class="day-number">${day}</div>
+                    ${appointmentIndicators}
+                </div>`;
+            }
+            
+            // Sonraki ayın ilk günleri (42 hücre tamamlamak için)
+            const totalCells = 42;
+            const currentCells = 7 + startingDay + daysInMonth;
+            for (let day = 1; currentCells + day - 1 < totalCells; day++) {
+                grid.innerHTML += `<div class="day-cell other-month">
+                    <div class="day-number">${day}</div>
+                </div>`;
+            }
+        }
+        
+        function renderAppointments() {
+            const container = document.getElementById('appointmentList');
+            const sortedAppointments = appointments
+                .filter(apt => new Date(apt.date) >= new Date())
+                .sort((a, b) => new Date(a.date + ' ' + a.time) - new Date(b.date + ' ' + b.time));
+            
+            container.innerHTML = sortedAppointments.map(apt => `
+                <div class="appointment-card ${apt.priority}">
+                    <div class="appointment-header">
+                        <div class="appointment-time">${formatDate(apt.date)} - ${apt.time}</div>
+                        <div class="appointment-type">${apt.type}</div>
+                    </div>
+                    <div class="appointment-details">
+                        <div class="appointment-title">${apt.title}</div>
+                        <div class="appointment-info">
+                            👨‍⚕️ ${apt.doctor}<br>
+                            🏥 ${apt.hospital}
+                        </div>
+                    </div>
+                    <div class="appointment-actions">
+                        <button class="action-btn btn-edit" onclick="editAppointment(${apt.id})">✏️ Düzenle</button>
+                        <button class="action-btn btn-confirm" onclick="confirmAppointment(${apt.id})">✅ Onayla</button>
+                        <button class="action-btn btn-cancel" onclick="cancelAppointment(${apt.id})">❌ İptal</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const months = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
+            return `${date.getDate()} ${months[date.getMonth()]}`;
+        }
+        
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            updateMonthDisplay();
+            generateCalendar();
+        }
+        
+        function updateMonthDisplay() {
+            const months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 
+                          'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+            document.getElementById('currentMonth').textContent = 
+                `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+        }
+        
+        function setView(viewType) {
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (viewType === 'list') {
+                document.getElementById('calendarView').style.display = 'none';
+            } else {
+                document.getElementById('calendarView').style.display = 'block';
+            }
+        }
+        
+        function selectDate(dateStr) {
+            const dayAppointments = appointments.filter(apt => apt.date === dateStr);
+            if (dayAppointments.length > 0) {
+                const appointmentDetails = dayAppointments.map(apt => 
+                    `${apt.time} - ${apt.title} (${apt.doctor})`
+                ).join('\n');
+                alert(`📅 ${formatDate(dateStr)} Randevuları:\n\n${appointmentDetails}`);
+            } else {
+                if (confirm(`📅 ${formatDate(dateStr)} tarihine yeni randevu eklemek ister misiniz?`)) {
+                    addNewAppointment(dateStr);
+                }
+            }
+        }
+        
+        function editAppointment(id) {
+            const appointment = appointments.find(apt => apt.id === id);
+            alert(`✏️ ${appointment.title} randevusu düzenleniyor...\n\nBu özellik yakında aktif olacak.`);
+        }
+        
+        function confirmAppointment(id) {
+            const appointment = appointments.find(apt => apt.id === id);
+            if (confirm(`✅ ${appointment.title} randevusunu onaylamak istediğinizden emin misiniz?`)) {
+                alert(`✅ Randevu onaylandı! SMS ile hatırlatma gönderilecek.`);
+            }
+        }
+        
+        function cancelAppointment(id) {
+            const appointment = appointments.find(apt => apt.id === id);
+            if (confirm(`❌ ${appointment.title} randevusunu iptal etmek istediğinizden emin misiniz?`)) {
+                // Randevuyu listeden kaldır
+                const index = appointments.findIndex(apt => apt.id === id);
+                appointments.splice(index, 1);
+                
+                alert('❌ Randevu başarıyla iptal edildi.');
+                
+                // Sayfayı yenile
+                generateCalendar();
+                renderAppointments();
+            }
+        }
+        
+        function addNewAppointment(selectedDate = null) {
+            const dateText = selectedDate ? formatDate(selectedDate) : 'seçilen tarih';
+            alert(`➕ Yeni randevu ekleme formu açılıyor...\n\n${dateText} için randevu oluşturma özelliği yakında aktif olacak.`);
+        }
+        
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMonthDisplay();
+            generateCalendar();
+            renderAppointments();
+            
+            // Randevu kartlarına animasyon
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.appointment-card');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 150);
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
