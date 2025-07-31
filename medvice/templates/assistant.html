@@ -328,11 +328,10 @@
             <h1 class="assistant-title">Nasıl yardımcı olabilirim?</h1>
             <p class="assistant-subtitle">
                 Size yardımcı olmak için buradayım.<br>
-                Hangi konuda kendimi kulun istediğinizi<br>
-                bana seçip benzer konu hakkında.<br>
-                Size ayrıntılı bir cevap ya da<br>
-                da açıklağını vermek istiyorum baslatla<br>
-                seçip cevap araın!
+                Hangi konuda destek istediğinizi<br>
+                bana söyleyebilirsiniz. Size ayrıntılı<br>
+                bir cevap vermek için buradayım.<br>
+                Lütfen ihtiyacınızı belirtin!
             </p>
             
             <div class="assistant-character" 
@@ -346,7 +345,7 @@
             </div>
             
             <div class="search-container">
-                <input type="text" class="search-input" placeholder="🔍 Acar verileri gizinizli miyim?">
+                <input type="text" class="search-input" placeholder="🔍 Size nasıl yardımcı olabilirim?">
             </div>
             
             <div class="quick-actions">
@@ -371,7 +370,7 @@
         
         <!-- Bottom Section -->
         <div class="bottom-section">
-            <button class="start-btn" onclick="window.location.href='/chat/{{ username }}'">Asistana başlayın</button>
+            <button class="start-btn" onclick="window.location.href='/chat/{{ username }}'">Asistanla Başla</button>
         </div>
     </div>
     
@@ -473,7 +472,7 @@
             setTimeout(() => {
                 const searchInput = document.querySelector('.search-input');
                 if (searchInput.value === '') {
-                    searchInput.placeholder = '🔍 Acar verileri gizinizli miyim?';
+                    searchInput.placeholder = '🔍 Size nasıl yardımcı olabilirim?';
                 }
             }, 1000);
         }
