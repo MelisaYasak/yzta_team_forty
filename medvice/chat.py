@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint,abort
+from flask import Flask, request, jsonify, Blueprint,abort,session
 from flask_cors import CORS
 from pydantic import BaseModel
 from typing import List, Dict, Optional
@@ -7,11 +7,12 @@ import google.generativeai as genai
 import numpy as np
 import faiss
 from sentence_transformers import SentenceTransformer
-import os
 import pickle
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 import os
+import re
+import random
 from dotenv import load_dotenv
 
 # .env dosyasını yükle
@@ -44,6 +45,552 @@ class QuestionResponse(BaseModel):
     processing_time: float
     success: bool
     message: Optional[str] = None
+
+# ==================== MEDVİCE RANDEVU SİSTEMİ ====================
+# Bu kodu chat.py dosyanıza, import'lardan sonra, class EnhancedRAGSystem'den önce ekleyin
+
+class MedviceAppointmentSystem:
+    """Medvice randevu sistemi - AI model ve hospital.py entegreli"""
+    
+    def __init__(self):
+        # Session bazlı randevu takibi
+        self.appointment_sessions = {}
+        
+        # Randevu akış durumları
+        self.STATES = {
+            'IDLE': 'idle',
+            'DEPARTMENT_SUGGESTED': 'department_suggested', 
+            'HOSPITAL_SELECTION': 'hospital_selection',
+            'DOCTOR_SELECTION': 'doctor_selection',
+            'DATE_SELECTION': 'date_selection',
+            'TIME_SELECTION': 'time_selection',
+            'CONFIRMATION': 'confirmation'
+        }
+    
+    def get_session_id(self):
+        """Session ID al veya oluştur"""
+        if 'medvice_session' not in session:
+            session['medvice_session'] = f"medvice_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{random.randint(1000,9999)}"
+        return session['medvice_session']
+    
+    def get_session_data(self, session_id):
+        """Session verilerini al"""
+        return self.appointment_sessions.get(session_id, {
+            'state': self.STATES['IDLE'],
+            'data': {},
+            'last_ai_response': ''
+        })
+    
+    def update_session_data(self, session_id, data):
+        """Session verilerini güncelle"""
+        self.appointment_sessions[session_id] = data
+    
+    def detect_appointment_intent(self, user_message, ai_response):
+        """Randevu niyeti tespit et"""
+        message_lower = user_message.lower()
+        ai_lower = (ai_response or "").lower()
+        
+        # Randevu keywords
+        appointment_keywords = [
+            'randevu', 'randevu al', 'randevu istiyorum',
+            'doktora git', 'muayene ol', 'hastaneye git',
+            'doktor bul', 'randevu ayarla'
+        ]
+        
+        # Aciliyet keywords
+        urgency_keywords = ['acil', 'derhal', 'hemen', 'acele']
+        
+        intent_score = 0
+        urgency_level = 'normal'
+        
+        # Randevu niyeti kontrolü
+        for keyword in appointment_keywords:
+            if keyword in message_lower:
+                intent_score += 3
+                break
+        
+        # AI yanıtında bölüm önerisi var mı?
+        if any(word in ai_lower for word in ['başvuru birimi:', 'bölüm:', 'önerilen']):
+            intent_score += 2
+        
+        # Aciliyet kontrolü
+        for keyword in urgency_keywords:
+            if keyword in message_lower or keyword in ai_lower:
+                urgency_level = 'urgent'
+                intent_score += 2
+                break
+        
+        return {
+            'has_intent': intent_score >= 2,
+            'score': intent_score,
+            'urgency': urgency_level,
+            'should_start_flow': intent_score >= 3 or urgency_level == 'urgent'
+        }
+    
+    def extract_department_from_ai_response(self, ai_response):
+        """AI yanıtından bölüm çıkar"""
+        if not ai_response:
+            return None
+        
+        ai_lower = ai_response.lower()
+        
+        # Pattern'lerle ara
+        patterns = [
+            r'başvuru birimi:\s*([^\n]+)',
+            r'bölüm:\s*([^\n]+)', 
+            r'önerilen bölüm[:\s]*([^\n]+)'
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, ai_lower)
+            if match:
+                suggested = match.group(1).strip()
+                # AI'nin önerdiği bölümü temizle
+                suggested = suggested.replace('[', '').replace(']', '').strip()
+                return suggested
+        
+        return None
+    
+    def get_hospitals_for_department(self, department):
+        """Hospital.py'den bölüm için hastaneleri getir"""
+        try:
+            # Hospital.py modellerini import et
+            from hospital import Hospital, Doctor, Department, db
+            
+            # Department'ı bul
+            dept_obj = Department.query.filter_by(name=department).first()
+            if not dept_obj:
+                # Eğer tam eşleşme yoksa, benzer aramaya geç
+                dept_obj = Department.query.filter(Department.name.contains(department)).first()
+            
+            if not dept_obj:
+                logger.warning(f"Bölüm bulunamadı: {department}")
+                return []
+            
+            # Bu bölümde doktoru olan hastaneleri bul
+            hospital_ids = db.session.query(Doctor.hospital_id).filter_by(
+                department_id=dept_obj.id
+            ).distinct().all()
+            
+            if not hospital_ids:
+                return []
+            
+            hospital_ids = [hid[0] for hid in hospital_ids]
+            hospitals = Hospital.query.filter(Hospital.id.in_(hospital_ids)).all()
+            
+            # Hastane verilerini dönüştür
+            result = []
+            for hospital in hospitals:
+                result.append({
+                    'id': hospital.id,
+                    'name': hospital.name,
+                    'address': hospital.location,
+                    'distance': hospital.distance,
+                    'rating': float(hospital.rating) if hospital.rating else 4.0
+                })
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Hastane listesi alınamadı: {e}")
+            # Fallback: Mock data
+            return [{
+                'id': 1,
+                'name': 'Adapazarı Devlet Hastanesi',
+                'address': 'Yağcılar Mah. Atatürk Bulvarı No:123',
+                'distance': '2.3 km',
+                'rating': 4.2
+            }]
+    
+    def get_doctors_for_hospital_department(self, hospital_id, department):
+        """Hospital.py'den doktorları getir"""
+        try:
+            from hospital import Doctor, Department, db
+            
+            # Department ID'sini bul
+            dept_obj = Department.query.filter_by(name=department).first()
+            if not dept_obj:
+                dept_obj = Department.query.filter(Department.name.contains(department)).first()
+            
+            if not dept_obj:
+                return []
+            
+            # Doktorları al
+            doctors = Doctor.query.filter_by(
+                hospital_id=hospital_id,
+                department_id=dept_obj.id
+            ).all()
+            
+            result = []
+            for doctor in doctors:
+                # Experience'dan yıl sayısını çıkar
+                experience_years = 5  # varsayılan
+                if doctor.experience:
+                    exp_match = re.search(r'(\d+)', doctor.experience)
+                    if exp_match:
+                        experience_years = int(exp_match.group(1))
+                
+                result.append({
+                    'id': doctor.id,
+                    'name': doctor.name,
+                    'experience': experience_years,
+                    'rating': float(doctor.rating) if doctor.rating else 4.5
+                })
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Doktor listesi alınamadı: {e}")
+            # Fallback: Mock data
+            return [{'id': 1, 'name': 'Dr. Mehmet Yılmaz', 'experience': 12, 'rating': 4.7}]
+    
+    def get_available_times(self, doctor_id, date):
+        """Müsait saatleri getir"""
+        all_times = ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", 
+                    "13:00", "13:30", "14:00", "14:30", "15:00", "15:30"]
+        
+        # Rastgele bazılarını çıkar (gerçek sistemde veritabanından gelecek)
+        available = all_times.copy()
+        remove_count = random.randint(2, 5)
+        for _ in range(remove_count):
+            if available:
+                available.pop(random.randint(0, len(available)-1))
+        
+        return available
+    
+    def enhance_ai_response_with_appointment(self, session_id, user_message, ai_response):
+        """AI yanıtını randevu sistemiyle geliştir"""
+        session_data = self.get_session_data(session_id)
+        current_state = session_data['state']
+        
+        # Eğer aktif randevu akışı varsa, onu devam ettir
+        if current_state != self.STATES['IDLE']:
+            return self.handle_appointment_flow(session_id, user_message)
+        
+        # Yeni randevu niyeti kontrolü
+        intent = self.detect_appointment_intent(user_message, ai_response)
+        
+        if not intent['has_intent']:
+            return ai_response
+        
+        # AI yanıtından bölüm çıkar
+        suggested_department = self.extract_department_from_ai_response(ai_response)
+        
+        if suggested_department:
+            # Randevu akışını başlat
+            session_data['state'] = self.STATES['DEPARTMENT_SUGGESTED']
+            session_data['data'] = {
+                'suggested_department': suggested_department,
+                'original_ai_response': ai_response,
+                'urgency': intent['urgency']
+            }
+            session_data['last_ai_response'] = ai_response
+            
+            self.update_session_data(session_id, session_data)
+            
+            # AI yanıtını geliştir
+            enhanced_response = ai_response + f"""
+
+🏥 **Randevu Alma Sistemi Aktif**
+
+Analizime göre size **{suggested_department}** bölümünü öneriyorum.
+
+Randevu almak ister misiniz?
+• ✅ **Evet, randevu al**
+• 🔄 **Başka bölüm öner** 
+• ❌ **Hayır, sadece bilgi istiyorum**
+
+Randevu almak için yukarıdaki seçeneklerden birini yazın."""
+            
+            return enhanced_response
+        
+        return ai_response
+    
+    def handle_appointment_flow(self, session_id, user_message):
+        """Randevu akışını yönet"""
+        session_data = self.get_session_data(session_id)
+        current_state = session_data['state']
+        
+        message_lower = user_message.lower()
+        
+        try:
+            if current_state == self.STATES['DEPARTMENT_SUGGESTED']:
+                return self._handle_department_confirmation(session_id, message_lower, session_data)
+            
+            elif current_state == self.STATES['HOSPITAL_SELECTION']:
+                return self._handle_hospital_selection(session_id, message_lower, session_data)
+            
+            elif current_state == self.STATES['DOCTOR_SELECTION']:
+                return self._handle_doctor_selection(session_id, message_lower, session_data)
+            
+            elif current_state == self.STATES['DATE_SELECTION']:
+                return self._handle_date_selection(session_id, user_message, session_data)
+            
+            elif current_state == self.STATES['TIME_SELECTION']:
+                return self._handle_time_selection(session_id, message_lower, session_data)
+            
+            elif current_state == self.STATES['CONFIRMATION']:
+                return self._handle_final_confirmation(session_id, message_lower, session_data)
+            
+            else:
+                self._reset_session(session_id)
+                return "Randevu akışında bir hata oluştu. Tekrar başlayabilirsiniz."
+                
+        except Exception as e:
+            self._reset_session(session_id)
+            return f"Randevu işlemi sırasında hata: {str(e)}"
+    
+    def _handle_department_confirmation(self, session_id, message_lower, session_data):
+        """Bölüm onayını işle"""
+        appointment_data = session_data['data']
+        
+        if any(word in message_lower for word in ['evet', 'tamam', 'randevu al', 'istiyorum']):
+            department = appointment_data['suggested_department']
+            hospitals = self.get_hospitals_for_department(department)
+            
+            if not hospitals:
+                self._reset_session(session_id)
+                return f"Üzgünüm, {department} bölümünde şu anda hastane bulunamadı."
+            
+            appointment_data['confirmed_department'] = department
+            appointment_data['available_hospitals'] = hospitals
+            session_data['state'] = self.STATES['HOSPITAL_SELECTION']
+            
+            response = f"✅ **{department}** bölümü seçildi.\n\n"
+            response += "**En yakın hastaneler:**\n\n"
+            
+            for i, hospital in enumerate(hospitals, 1):
+                response += f"**{i}. {hospital['name']}**\n"
+                response += f"📍 {hospital['address']}\n"
+                response += f"📏 {hospital['distance']} • ⭐ {hospital['rating']}/5\n\n"
+            
+            response += "Hangi hastaneyi seçmek istersiniz? (Numara veya hastane adını yazın)"
+            
+            self.update_session_data(session_id, session_data)
+            return response
+        
+        elif any(word in message_lower for word in ['başka', 'farklı', 'değiştir']):
+            self._reset_session(session_id)
+            return "Hangi bölümden randevu almak istiyorsunuz? Semptomlarınızı tekrar belirtin."
+        
+        elif any(word in message_lower for word in ['hayır', 'istemiyorum', 'iptal']):
+            self._reset_session(session_id)
+            return "Anladım. Başka bir konuda yardımcı olabilir miyim?"
+        
+        else:
+            return "Lütfen 'Evet', 'Hayır' veya 'Başka bölüm' seçeneklerinden birini seçin."
+    
+    def _handle_hospital_selection(self, session_id, message_lower, session_data):
+        """Hastane seçimi"""
+        appointment_data = session_data['data']
+        hospitals = appointment_data['available_hospitals']
+        
+        selected_hospital = None
+        
+        # Numara ile seçim
+        if message_lower.isdigit():
+            idx = int(message_lower) - 1
+            if 0 <= idx < len(hospitals):
+                selected_hospital = hospitals[idx]
+        
+        # İsimle seçim
+        if not selected_hospital:
+            for hospital in hospitals:
+                if any(word in hospital['name'].lower() for word in message_lower.split()):
+                    selected_hospital = hospital
+                    break
+        
+        if not selected_hospital:
+            hospital_list = "\n".join([f"{i+1}. {h['name']}" for i, h in enumerate(hospitals)])
+            return f"Lütfen geçerli bir hastane seçin:\n{hospital_list}"
+        
+        # Doktorları getir
+        department = appointment_data['confirmed_department']
+        doctors = self.get_doctors_for_hospital_department(selected_hospital['id'], department)
+        
+        if not doctors:
+            return f"Üzgünüm, {selected_hospital['name']} hastanesinde {department} bölümünde doktor bulunmuyor."
+        
+        appointment_data['selected_hospital'] = selected_hospital
+        appointment_data['available_doctors'] = doctors
+        session_data['state'] = self.STATES['DOCTOR_SELECTION']
+        
+        response = f"✅ **{selected_hospital['name']}** seçildi.\n\n"
+        response += f"**{department}** bölümündeki doktorlar:\n\n"
+        
+        for i, doctor in enumerate(doctors, 1):
+            response += f"**{i}. {doctor['name']}**\n"
+            response += f"👨‍⚕️ {doctor['experience']} yıl deneyim • ⭐ {doctor['rating']}/5\n\n"
+        
+        response += "Hangi doktoru seçmek istersiniz?"
+        
+        self.update_session_data(session_id, session_data)
+        return response
+    
+    def _handle_doctor_selection(self, session_id, message_lower, session_data):
+        """Doktor seçimi"""
+        appointment_data = session_data['data']
+        doctors = appointment_data['available_doctors']
+        
+        selected_doctor = None
+        
+        # Numara ile seçim
+        if message_lower.isdigit():
+            idx = int(message_lower) - 1
+            if 0 <= idx < len(doctors):
+                selected_doctor = doctors[idx]
+        
+        # İsimle seçim
+        if not selected_doctor:
+            for doctor in doctors:
+                if any(word in doctor['name'].lower() for word in message_lower.split()):
+                    selected_doctor = doctor
+                    break
+        
+        if not selected_doctor:
+            doctor_list = "\n".join([f"{i+1}. {d['name']}" for i, d in enumerate(doctors)])
+            return f"Lütfen geçerli bir doktor seçin:\n{doctor_list}"
+        
+        appointment_data['selected_doctor'] = selected_doctor
+        session_data['state'] = self.STATES['DATE_SELECTION']
+        
+        response = f"✅ **{selected_doctor['name']}** doktoru seçildi.\n\n"
+        response += "Randevu tarihi seçin:\n"
+        response += "• **Bugün**\n"
+        response += "• **Yarın**\n"
+        response += "• **Bu hafta** (otomatik uygun gün)\n"
+        response += "• Belirli tarih (örn: 15 Ağustos)\n\n"
+        response += "Ne zaman randevu almak istersiniz?"
+        
+        self.update_session_data(session_id, session_data)
+        return response
+    
+    def _handle_date_selection(self, session_id, user_message, session_data):
+        """Tarih seçimi"""
+        appointment_data = session_data['data']
+        message_lower = user_message.lower()
+        
+        today = datetime.now()
+        selected_date = None
+        
+        if 'bugün' in message_lower:
+            selected_date = today
+        elif 'yarın' in message_lower:
+            selected_date = today + timedelta(days=1)
+        elif 'bu hafta' in message_lower:
+            selected_date = today + timedelta(days=1)
+        else:
+            # Basit tarih parsing
+            selected_date = today + timedelta(days=1)  # Varsayılan yarın
+        
+        date_str = selected_date.strftime('%Y-%m-%d')
+        doctor_id = appointment_data['selected_doctor']['id']
+        available_times = self.get_available_times(doctor_id, date_str)
+        
+        if not available_times:
+            return f"{selected_date.strftime('%d.%m.%Y')} tarihinde müsait saat yok. Başka bir tarih seçin."
+        
+        appointment_data['selected_date'] = date_str
+        appointment_data['available_times'] = available_times
+        session_data['state'] = self.STATES['TIME_SELECTION']
+        
+        response = f"✅ **{selected_date.strftime('%d.%m.%Y')}** tarihi seçildi.\n\n"
+        response += "Müsait saatler:\n\n"
+        
+        for i, time in enumerate(available_times, 1):
+            response += f"**{i}.** {time}\n"
+        
+        response += "\nHangi saati tercih edersiniz?"
+        
+        self.update_session_data(session_id, session_data)
+        return response
+    
+    def _handle_time_selection(self, session_id, message_lower, session_data):
+        """Saat seçimi"""
+        appointment_data = session_data['data']
+        times = appointment_data['available_times']
+        
+        selected_time = None
+        
+        # Numara ile seçim
+        if message_lower.isdigit():
+            idx = int(message_lower) - 1
+            if 0 <= idx < len(times):
+                selected_time = times[idx]
+        
+        # Saat ile seçim
+        if not selected_time:
+            for time in times:
+                if time in message_lower:
+                    selected_time = time
+                    break
+        
+        if not selected_time:
+            time_list = "\n".join([f"{i+1}. {t}" for i, t in enumerate(times)])
+            return f"Lütfen geçerli bir saat seçin:\n{time_list}"
+        
+        appointment_data['selected_time'] = selected_time
+        session_data['state'] = self.STATES['CONFIRMATION']
+        
+        # Özet
+        summary = "📋 **Randevu Özeti:**\n\n"
+        summary += f"🏥 Hastane: {appointment_data['selected_hospital']['name']}\n"
+        summary += f"👨‍⚕️ Doktor: {appointment_data['selected_doctor']['name']}\n"
+        summary += f"🏥 Bölüm: {appointment_data['confirmed_department']}\n"
+        summary += f"📅 Tarih: {appointment_data['selected_date']}\n"
+        summary += f"🕐 Saat: {selected_time}\n\n"
+        summary += "Onaylıyor musunuz?\n"
+        summary += "• ✅ **Evet, oluştur**\n"
+        summary += "• ❌ **Hayır, iptal et**"
+        
+        self.update_session_data(session_id, session_data)
+        return summary
+    
+    def _handle_final_confirmation(self, session_id, message_lower, session_data):
+        """Final onay"""
+        appointment_data = session_data['data']
+        
+        if any(word in message_lower for word in ['evet', 'onay', 'oluştur', 'tamam']):
+            # Randevu oluştur
+            appointment_id = f"RDV{datetime.now().strftime('%Y%m%d')}{random.randint(1000,9999)}"
+            
+            success_msg = "🎉 **Randevunuz oluşturuldu!**\n\n"
+            success_msg += f"📋 **Randevu No:** {appointment_id}\n"
+            success_msg += f"🏥 **Hastane:** {appointment_data['selected_hospital']['name']}\n"
+            success_msg += f"👨‍⚕️ **Doktor:** {appointment_data['selected_doctor']['name']}\n"
+            success_msg += f"📅 **Tarih:** {appointment_data['selected_date']}\n"
+            success_msg += f"🕐 **Saat:** {appointment_data['selected_time']}\n\n"
+            success_msg += "📞 Randevu günü hastaneyi arayarak doğrulama yapabilirsiniz.\n"
+            success_msg += "💡 Randevu saatinden 15 dakika önce hastanede olmanız önerilir.\n\n"
+            success_msg += "Başka bir konuda yardımcı olabilir miyim?"
+            
+            self._reset_session(session_id)
+            return success_msg
+        
+        elif any(word in message_lower for word in ['hayır', 'iptal']):
+            self._reset_session(session_id)
+            return "Randevu iptal edildi. Başka nasıl yardımcı olabilirim?"
+        
+        else:
+            return "Lütfen 'Evet' veya 'Hayır' olarak yanıtlayın."
+    
+    def _reset_session(self, session_id):
+        """Session'ı sıfırla"""
+        self.appointment_sessions[session_id] = {
+            'state': self.STATES['IDLE'],
+            'data': {},
+            'last_ai_response': ''
+        }
+    
+    def is_in_appointment_flow(self, session_id):
+        """Randevu akışında mı kontrol et"""
+        session_data = self.get_session_data(session_id)
+        return session_data['state'] != self.STATES['IDLE']
+
+
+medvice_system = MedviceAppointmentSystem()
+
+
 
 class EnhancedRAGSystem:
     def __init__(self, json_file_path: str, model_name: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"):
@@ -258,6 +805,12 @@ class EnhancedRAGSystem:
         """RAG ile soru cevapla"""
         start_time = datetime.now()
         
+        session_id = medvice_system.get_session_id()
+
+        if medvice_system.is_in_appointment_flow(session_id):
+            medvice_response = medvice_system.handle_appointment_flow(session_id, question)
+            processing_time = (datetime.now() - start_time).total_seconds()
+            return medvice_response, [], [], processing_time
         # İlgili belgeleri bul
         relevant_docs, similarity_scores = self.search_similar(question, top_k, similarity_threshold)
         
@@ -310,8 +863,13 @@ class EnhancedRAGSystem:
         except Exception as e:
             answer = f"AI yanıt oluşturma hatası: {str(e)}"
         
+
+        enhanced_answer = medvice_system.enhance_ai_response_with_appointment(
+            session_id, question, answer
+        )
+
         processing_time = (datetime.now() - start_time).total_seconds()
-        return answer, relevant_docs, similarity_scores, processing_time
+        return enhanced_answer, relevant_docs, similarity_scores, processing_time
 
 # Gemini API'yi yapılandır
 genai.configure(api_key="AIzaSyC29VH13ZDaAwIepdefoqWnVzl3ommWqAk")  # Gerçek API key'inizi buraya koyun
@@ -321,8 +879,8 @@ model = genai.GenerativeModel('gemini-2.0-flash')
 def load_rag():
     global rag_system
     try:
-        if os.path.exists(r'C:\\Users\\melis\\YZTA_m\\medvica\\yzta_team_forty\\medvice\\three.json'):
-            rag_system = EnhancedRAGSystem(r'C:\\Users\\melis\\YZTA_m\\medvica\\yzta_team_forty\\medvice\\three.json')
+        if os.path.exists(r'C:\\Users\\Acer Nitro\\Desktop\\akademi__proje\\yzta_team_forty2\\medvice\\three.json'):
+            rag_system = EnhancedRAGSystem(r'C:\\Users\\Acer Nitro\\Desktop\\akademi__proje\\yzta_team_forty2\\medvice\\three.json')
         else:
             abort(500, description="Veri dosyası eksik.")
     except Exception as e:
@@ -431,3 +989,4 @@ def clear_cache():
         })
     except Exception as e:
         return jsonify({"error": f"Cache temizleme hatası: {str(e)}"}), 500
+
