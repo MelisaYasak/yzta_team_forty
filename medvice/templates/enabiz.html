@@ -1,198 +1,209 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E-Nabız Giriş - Medvice</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        
-        .login-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 350px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .back-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #666;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-        
-        .back-btn:hover {
-            background: #f0f0f0;
-            color: #333;
-        }
-        
-        .logo-section {
-            margin-bottom: 30px;
-        }
-        
-        .enabiz-logo {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 30px;
-        }
-        
-        h2 {
-            color: #27ae60;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-        }
-        
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-            box-sizing: border-box;
-        }
-        
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #27ae60;
-            box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
-        }
-        
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
-        }
-        
-        .error {
-            color: #e74c3c;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(231, 76, 60, 0.1);
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        
-        .info {
-            font-size: 12px;
-            color: #666;
-            margin-top: 20px;
-            line-height: 1.4;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #27ae60;
-        }
-        
-        .health-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 15px;
-            color: #666;
-            font-size: 12px;
-        }
-        
-        .health-badge::before {
-            content: '⚕️';
-            margin-right: 5px;
-        }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .login-container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        text-align: center;
+        position: relative;
+      }
+
+      .back-btn {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        color: #666;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .back-btn:hover {
+        background: #f0f0f0;
+        color: #333;
+      }
+
+      .logo-section {
+        margin-bottom: 30px;
+      }
+
+      .enabiz-logo {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-size: 30px;
+      }
+
+      h2 {
+        color: #27ae60;
+        margin-bottom: 10px;
+        font-size: 24px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 25px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        outline: none;
+        border-color: #27ae60;
+        box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+      }
+
+      .error {
+        color: #e74c3c;
+        margin-bottom: 15px;
+        padding: 10px;
+        background: rgba(231, 76, 60, 0.1);
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      .info {
+        font-size: 12px;
+        color: #666;
+        margin-top: 20px;
+        line-height: 1.4;
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #27ae60;
+      }
+
+      .health-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 15px;
+        color: #666;
+        font-size: 12px;
+      }
+
+      .health-badge::before {
+        content: "⚕️";
+        margin-right: 5px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="login-container">
-        <button class="back-btn" onclick="window.location.href='/'">←</button>
-        
-        <div class="logo-section">
-            <div class="enabiz-logo">🏥</div>
-            <h2>E-Nabız Giriş</h2>
-            <p class="subtitle">Sağlık Bilgilerinize Güvenli Erişim</p>
+      <button class="back-btn" onclick="window.location.href='/'">←</button>
+
+      <div class="logo-section">
+        <div class="enabiz-logo">🏥</div>
+        <h2>E-Nabız Giriş</h2>
+        <p class="subtitle">Sağlık Bilgilerinize Güvenli Erişim</p>
+      </div>
+
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" action="/enabiz-login">
+        <div class="form-group">
+          <label for="tc_no">T.C. Kimlik Numarası</label>
+          <input
+            type="text"
+            id="tc_no"
+            name="tc_no"
+            placeholder="11 haneli T.C. kimlik numaranız"
+            maxlength="11"
+            required
+          />
         </div>
-        
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
-        
-        <form method="post" action="/enabiz-login">
-            <div class="form-group">
-                <label for="tc_no">T.C. Kimlik Numarası</label>
-                <input type="text" id="tc_no" name="tc_no" placeholder="11 haneli T.C. kimlik numaranız" maxlength="11" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">E-Nabız Şifreniz</label>
-                <input type="password" id="password" name="password" placeholder="E-nabız şifrenizi girin" required>
-            </div>
-            
-            <button type="submit">Sağlık Sistemi'ne Giriş Yap</button>
-        </form>
-        
-        <div class="info">
-            <strong>Demo Amaçlı:</strong><br>
-            Herhangi bir T.C. Kimlik No ve şifre ile giriş yapabilirsiniz.<br>
-            Gerçek uygulamada e-nabız doğrulaması yapılır.
+
+        <div class="form-group">
+          <label for="password">E-Nabız Şifreniz</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="E-nabız şifrenizi girin"
+            required
+          />
         </div>
-        
-        <div class="health-badge">
-            Kişisel Sağlık Verileriniz Güvende
-        </div>
+
+        <button type="submit">Sağlık Sistemi'ne Giriş Yap</button>
+      </form>
+
+      <div class="info">
+        <strong>Demo Amaçlı:</strong><br />
+        Herhangi bir T.C. Kimlik No ve şifre ile giriş yapabilirsiniz.<br />
+        Gerçek uygulamada e-nabız doğrulaması yapılır.
+      </div>
+
+      <div class="health-badge">Kişisel Sağlık Verileriniz Güvende</div>
     </div>
-</body>
+  </body>
 </html>

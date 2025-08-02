@@ -1,496 +1,470 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tahlil Sonuçları - Medvice</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 100%;
-            margin: 0;
-            background: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            padding: 20px 25px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .back-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .header-title {
-            flex: 1;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .content {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-        }
-        
-        .summary-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border-left: 4px solid #3498db;
-        }
-        
-        .summary-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .summary-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .last-update {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .summary-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        
-        .stat-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .stat-label {
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-        }
-        
-        .normal { color: #27ae60; }
-        .warning { color: #f39c12; }
-        .critical { color: #e74c3c; }
-        
-        .tests-section {
-            margin-bottom: 25px;
-        }
-        
-        .section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .test-card {
-            background: white;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 15px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-            border: 1px solid #f0f0f0;
-            transition: all 0.3s ease;
-        }
-        
-        .test-card:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
-        }
-        
-        .test-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        
-        .test-name {
-            font-weight: 600;
-            font-size: 14px;
-            color: #333;
-            flex: 1;
-        }
-        
-        .test-date {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .test-results {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 12px;
-        }
-        
-        .result-item {
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            border-left: 3px solid #dee2e6;
-        }
-        
-        .result-item.normal { border-left-color: #27ae60; }
-        .result-item.warning { border-left-color: #f39c12; }
-        .result-item.critical { border-left-color: #e74c3c; }
-        
-        .result-label {
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 4px;
-        }
-        
-        .result-value {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .result-unit {
-            font-size: 11px;
-            color: #666;
-            margin-left: 2px;
-        }
-        
-        .result-range {
-            font-size: 10px;
-            color: #999;
-            margin-top: 2px;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 500;
-            margin-top: 4px;
-        }
-        
-        .badge-normal {
-            background: #d5f4e6;
-            color: #0f5132;
-        }
-        
-        .badge-warning {
-            background: #fff3cd;
-            color: #664d03;
-        }
-        
-        .badge-critical {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: #f8f9fa;
-            color: #666;
-            border: 1px solid #e9ecef;
-        }
-        
-        .btn:hover {
-            transform: translateY(-1px);
-        }
-        
-        .trend-indicator {
-            font-size: 12px;
-            margin-left: 5px;
-        }
-        
-        .trend-up { color: #e74c3c; }
-        .trend-down { color: #27ae60; }
-        .trend-stable { color: #95a5a6; }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 100%;
+        margin: 0;
+        background: white;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        padding: 20px 25px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .back-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 5px;
+      }
+
+      .header-title {
+        flex: 1;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .content {
+        flex: 1;
+        padding: 25px;
+        overflow-y: auto;
+      }
+
+      .summary-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        border-left: 4px solid #3498db;
+      }
+
+      .summary-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .summary-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .last-update {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .summary-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .stat-value {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+      }
+
+      .normal {
+        color: #27ae60;
+      }
+      .warning {
+        color: #f39c12;
+      }
+      .critical {
+        color: #e74c3c;
+      }
+
+      .tests-section {
+        margin-bottom: 25px;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .test-card {
+        background: white;
+        border-radius: 12px;
+        padding: 18px;
+        margin-bottom: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f0f0f0;
+        transition: all 0.3s ease;
+      }
+
+      .test-card:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+      }
+
+      .test-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .test-name {
+        font-weight: 600;
+        font-size: 14px;
+        color: #333;
+        flex: 1;
+      }
+
+      .test-date {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .test-results {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+      }
+
+      .result-item {
+        background: #f8f9fa;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: center;
+        border-left: 3px solid #dee2e6;
+      }
+
+      .result-item.normal {
+        border-left-color: #27ae60;
+      }
+      .result-item.warning {
+        border-left-color: #f39c12;
+      }
+      .result-item.critical {
+        border-left-color: #e74c3c;
+      }
+
+      .result-label {
+        font-size: 11px;
+        color: #666;
+        margin-bottom: 4px;
+      }
+
+      .result-value {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .result-unit {
+        font-size: 11px;
+        color: #666;
+        margin-left: 2px;
+      }
+
+      .result-range {
+        font-size: 10px;
+        color: #999;
+        margin-top: 2px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 500;
+        margin-top: 4px;
+      }
+
+      .badge-normal {
+        background: #d5f4e6;
+        color: #0f5132;
+      }
+
+      .badge-warning {
+        background: #fff3cd;
+        color: #664d03;
+      }
+
+      .badge-critical {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        color: white;
+      }
+
+      .btn-secondary {
+        background: #f8f9fa;
+        color: #666;
+        border: 1px solid #e9ecef;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .trend-indicator {
+        font-size: 12px;
+        margin-left: 5px;
+      }
+
+      .trend-up {
+        color: #e74c3c;
+      }
+      .trend-down {
+        color: #27ae60;
+      }
+      .trend-stable {
+        color: #95a5a6;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <button class="back-btn" onclick="history.back()">←</button>
-            <div class="header-title">Tahlil Sonuçları</div>
-            <div>📋</div>
+      <div class="header">
+        <button class="back-btn" onclick="history.back()">←</button>
+        <div class="header-title">
+          Tahlil Sonuçları - {{ session['user']['name'] }}
         </div>
-        
-        <div class="content">
-            <div class="summary-card">
-                <div class="summary-header">
-                    <div class="summary-title">📊 Genel Durum</div>
-                    <div class="last-update">Son güncelleme: 24.07.2025</div>
-                </div>
-                <div class="summary-stats">
-                    <div class="stat-item">
-                        <div class="stat-value normal">8</div>
-                        <div class="stat-label">Normal</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value warning">2</div>
-                        <div class="stat-label">Dikkat</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value critical">1</div>
-                        <div class="stat-label">Kritik</div>
-                    </div>
-                </div>
+        <div>📋</div>
+      </div>
+
+      <div class="content">
+        <div class="summary-card">
+          <div class="summary-header">
+            <div class="summary-title">📊 Genel Durum</div>
+            <div class="last-update">Son güncelleme: 24.07.2025</div>
+          </div>
+          <div class="summary-stats">
+            <div class="stat-item">
+              <div class="stat-value normal">8</div>
+              <div class="stat-label">Normal</div>
             </div>
-            
-            <div class="tests-section">
-                <div class="section-title">
-                    🩸 Kan Tahlilleri
-                </div>
-                
-                <div class="test-card">
-                    <div class="test-header">
-                        <div class="test-name">Hemogram (Tam Kan Sayımı)</div>
-                        <div class="test-date">23.07.2025</div>
-                    </div>
-                    <div class="test-results">
-                        <div class="result-item normal">
-                            <div class="result-label">Hemoglobin</div>
-                            <div class="result-value">14.2 <span class="result-unit">g/dL</span></div>
-                            <div class="result-range">Normal: 12-16</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                        <div class="result-item warning">
-                            <div class="result-label">Beyaz Küre</div>
-                            <div class="result-value">11.8 <span class="result-unit">K/uL</span></div>
-                            <div class="result-range">Normal: 4-10</div>
-                            <span class="status-badge badge-warning">Yüksek ⬆️</span>
-                        </div>
-                        <div class="result-item normal">
-                            <div class="result-label">Trombosit</div>
-                            <div class="result-value">285 <span class="result-unit">K/uL</span></div>
-                            <div class="result-range">Normal: 150-450</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="downloadReport('hemogram')">📄 Raporu İndir</button>
-                        <button class="btn btn-secondary" onclick="shareResult('hemogram')">📤 Paylaş</button>
-                    </div>
-                </div>
-                
-                <div class="test-card">
-                    <div class="test-header">
-                        <div class="test-name">Biyokimya Paneli</div>
-                        <div class="test-date">23.07.2025</div>
-                    </div>
-                    <div class="test-results">
-                        <div class="result-item normal">
-                            <div class="result-label">Glukoz</div>
-                            <div class="result-value">95 <span class="result-unit">mg/dL</span></div>
-                            <div class="result-range">Normal: 70-110</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                        <div class="result-item critical">
-                            <div class="result-label">Kolesterol</div>
-                            <div class="result-value">245 <span class="result-unit">mg/dL</span></div>
-                            <div class="result-range">Normal: <200</div>
-                            <span class="status-badge badge-critical">Yüksek ⬆️</span>
-                        </div>
-                        <div class="result-item normal">
-                            <div class="result-label">Kreatinin</div>
-                            <div class="result-value">0.9 <span class="result-unit">mg/dL</span></div>
-                            <div class="result-range">Normal: 0.7-1.3</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                        <div class="result-item normal">
-                            <div class="result-label">ALT</div>
-                            <div class="result-value">28 <span class="result-unit">U/L</span></div>
-                            <div class="result-range">Normal: 7-56</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="downloadReport('biochemistry')">📄 Raporu İndir</button>
-                        <button class="btn btn-secondary" onclick="shareResult('biochemistry')">📤 Paylaş</button>
-                    </div>
-                </div>
+            <div class="stat-item">
+              <div class="stat-value warning">2</div>
+              <div class="stat-label">Dikkat</div>
             </div>
-            
-            <div class="tests-section">
-                <div class="section-title">
-                    🫀 Hormon Testleri
-                </div>
-                
-                <div class="test-card">
-                    <div class="test-header">
-                        <div class="test-name">Tiroid Fonksiyon Testleri</div>
-                        <div class="test-date">20.07.2025</div>
-                    </div>
-                    <div class="test-results">
-                        <div class="result-item normal">
-                            <div class="result-label">TSH</div>
-                            <div class="result-value">2.8 <span class="result-unit">mIU/L</span></div>
-                            <div class="result-range">Normal: 0.4-4.0</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                        <div class="result-item normal">
-                            <div class="result-label">T4 Serbest</div>
-                            <div class="result-value">1.2 <span class="result-unit">ng/dL</span></div>
-                            <div class="result-range">Normal: 0.8-1.8</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                        <div class="result-item warning">
-                            <div class="result-label">T3 Serbest</div>
-                            <div class="result-value">2.1 <span class="result-unit">pg/mL</span></div>
-                            <div class="result-range">Normal: 2.3-4.2</div>
-                            <span class="status-badge badge-warning">Düşük ⬇️</span>
-                        </div>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="downloadReport('thyroid')">📄 Raporu İndir</button>
-                        <button class="btn btn-secondary" onclick="shareResult('thyroid')">📤 Paylaş</button>
-                    </div>
-                </div>
+            <div class="stat-item">
+              <div class="stat-value critical">1</div>
+              <div class="stat-label">Kritik</div>
             </div>
-            
-            <div class="tests-section">
-                <div class="section-title">
-                    🧪 Diğer Testler
-                </div>
-                
-                <div class="test-card">
-                    <div class="test-header">
-                        <div class="test-name">Vitamin & Mineral Paneli</div>
-                        <div class="test-date">18.07.2025</div>
-                    </div>
-                    <div class="test-results">
-                        <div class="result-item normal">
-                            <div class="result-label">Vitamin D</div>
-                            <div class="result-value">35 <span class="result-unit">ng/mL</span></div>
-                            <div class="result-range">Normal: 30-100</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                        <div class="result-item normal">
-                            <div class="result-label">B12</div>
-                            <div class="result-value">485 <span class="result-unit">pg/mL</span></div>
-                            <div class="result-range">Normal: 200-900</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                        <div class="result-item normal">
-                            <div class="result-label">Demir</div>
-                            <div class="result-value">95 <span class="result-unit">μg/dL</span></div>
-                            <div class="result-range">Normal: 60-170</div>
-                            <span class="status-badge badge-normal">Normal</span>
-                        </div>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="btn btn-primary" onclick="downloadReport('vitamins')">📄 Raporu İndir</button>
-                        <button class="btn btn-secondary" onclick="shareResult('vitamins')">📤 Paylaş</button>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <div class="tests-section">
+          <div class="section-title">🩸 Kan Tahlilleri</div>
+
+          {% set grouped = {} %} {% for result in lab_results %} {% if
+          result.test_type not in grouped %} {% set _ =
+          grouped.update({result.test_type: []}) %} {% endif %} {% set _ =
+          grouped[result.test_type].append(result) %} {% endfor %} {% for
+          test_type, tests in grouped.items() %}
+          <div class="test-card">
+            <div class="test-header">
+              <div class="test-name">{{ test_type }}</div>
+              <div class="test-date">{{ tests[0].test_date }}</div>
+            </div>
+            <div class="test-results">
+              {% for test in tests %}
+              <div
+                class="result-item {% if test.status == 'normal' %}normal{% elif test.status == 'warning' %}warning{% elif test.status == 'critical' %}critical{% else %}normal{% endif %}"
+              >
+                <div class="result-label">{{ test.test_name }}</div>
+                <div class="result-value">
+                  {{ test.value }}
+                  <span class="result-unit">{{ test.unit }}</span>
+                </div>
+                <div class="result-range">Normal: {{ test.range_info }}</div>
+                <span
+                  class="status-badge {% if test.status == 'normal' %}badge-normal {% elif test.status == 'warning' %}badge-warning {% elif test.status == 'critical' %}badge-critical {% else %}badge-normal{% endif %}"
+                >
+                  {% if test.status == 'normal' %}Normal {% elif test.status ==
+                  'warning' %}Yüksek ⬆️ {% elif test.status == 'critical' %}Çok
+                  Yüksek ⬆️ {% else %}Bilinmiyor{% endif %}
+                </span>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="action-buttons">
+              <button
+                class="btn btn-primary"
+                onclick="downloadReport(test_type )"
+              >
+                📄 Raporu İndir
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="shareResult(test_type )"
+              >
+                📤 Paylaş
+              </button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="tests-section">
+          <div class="section-title">🧪 Tüm Testler</div>
+
+          {% for test in lab_results %}
+          <div class="test-card">
+            <div class="test-header">
+              <div class="test-name">
+                {{ test.test_type }} - {{ test.test_name }}
+              </div>
+              <div class="test-date">{{ test.test_date }}</div>
+            </div>
+            <div class="test-results">
+              <div
+                class="result-item {% if test.status == 'Normal' %}normal{% elif test.status == 'Dikkat' %}warning{% elif test.status == 'Kritik' %}critical{% endif %}"
+              >
+                <div class="result-label">{{ test.test_name }}</div>
+                <div class="result-value">
+                  {{ test.value }}
+                  <span class="result-unit">{{ test.unit }}</span>
+                </div>
+                <div class="result-range">{{ test.range_info }}</div>
+                <span
+                  class="status-badge {% if test.status == 'Normal' %}badge-normal {% elif test.status == 'Dikkat' %}badge-warning {% elif test.status == 'Kritik' %}badge-critical {% endif %}"
+                >
+                  {{ test.status }}
+                </span>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button
+                class="btn btn-primary"
+                onclick="downloadReport('{{ test.test_name }}')"
+              >
+                📄 Raporu İndir
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="shareResult('{{ test.test_name }}')"
+              >
+                📤 Paylaş
+              </button>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
-    
+
     <script>
-        function downloadReport(testType) {
-            const testNames = {
-                'hemogram': 'Hemogram Raporu',
-                'biochemistry': 'Biyokimya Raporu',
-                'thyroid': 'Tiroid Raporu',
-                'vitamins': 'Vitamin-Mineral Raporu'
-            };
-            
-            alert(`📄 ${testNames[testType]} PDF olarak indiriliyor...`);
-            
-            // Simülasyon - gerçek uygulamada PDF oluşturulur
+      function downloadReport(testType) {
+        const testNames = {
+          hemogram: "Hemogram Raporu",
+          biochemistry: "Biyokimya Raporu",
+          thyroid: "Tiroid Raporu",
+          vitamins: "Vitamin-Mineral Raporu",
+        };
+
+        alert(`📄 ${testNames[testType]} PDF olarak indiriliyor...`);
+
+        // Simülasyon - gerçek uygulamada PDF oluşturulur
+        setTimeout(() => {
+          alert(`✅ ${testNames[testType]} başarıyla indirildi!`);
+        }, 1500);
+      }
+
+      function shareResult(testType) {
+        const testNames = {
+          hemogram: "Hemogram Sonuçları",
+          biochemistry: "Biyokimya Sonuçları",
+          thyroid: "Tiroid Sonuçları",
+          vitamins: "Vitamin-Mineral Sonuçları",
+        };
+
+        if (
+          confirm(
+            `📤 ${testNames[testType]}'nı doktorunuzla paylaşmak istediğinizden emin misiniz?`
+          )
+        ) {
+          alert(`✅ ${testNames[testType]} güvenli bağlantı ile paylaşıldı!`);
+        }
+      }
+
+      // Sayfa yüklendiğinde animasyon efekti
+      document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".test-card");
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(20px)";
+            card.style.transition = "all 0.5s ease";
+
             setTimeout(() => {
-                alert(`✅ ${testNames[testType]} başarıyla indirildi!`);
-            }, 1500);
-        }
-        
-        function shareResult(testType) {
-            const testNames = {
-                'hemogram': 'Hemogram Sonuçları',
-                'biochemistry': 'Biyokimya Sonuçları', 
-                'thyroid': 'Tiroid Sonuçları',
-                'vitamins': 'Vitamin-Mineral Sonuçları'
-            };
-            
-            if (confirm(`📤 ${testNames[testType]}'nı doktorunuzla paylaşmak istediğinizden emin misiniz?`)) {
-                alert(`✅ ${testNames[testType]} güvenli bağlantı ile paylaşıldı!`);
-            }
-        }
-        
-        // Sayfa yüklendiğinde animasyon efekti
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.test-card');
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'all 0.5s ease';
-                    
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 200);
-            });
+              card.style.opacity = "1";
+              card.style.transform = "translateY(0)";
+            }, 100);
+          }, index * 200);
         });
+      });
     </script>
-</body>
+  </body>
 </html>

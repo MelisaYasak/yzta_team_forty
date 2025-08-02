@@ -1,18 +1,57 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Blueprint, session
+import sqlite3
+app = Blueprint('app',__name__)
 
-app = Flask(__name__)
+def get_user_id_from_tc(tc_no):
+    conn = sqlite3.connect(r'C:\\Users\\melis\\YZTA_m\\medvica\\yzta_team_forty\\medvice\\db\\db.db')
+    cursor = conn.cursor()
+    
+    query = "SELECT id FROM user WHERE tc_no = ?"
+    cursor.execute(query, (tc_no,))
+    row = cursor.fetchone()
+    conn.close()
+    
+    if row:
+        return {
+            "id": row[0]
+        }
+    return None
 
-# Gömülü kullanıcı verisi (gizli)
-users = {
-    "doktor1": "1234",
-    "hemsire2": "abcd", 
-    "admin3": "admin",
-    "danisman4": "9876"
-}
+def get_user_from_id(user_id):
+    conn = sqlite3.connect(r'C:\\Users\\melis\\YZTA_m\\medvica\\yzta_team_forty\\medvice\\db\\db.db')
+    cursor = conn.cursor()
+    
+    query = "SELECT name, tc_no, password FROM user WHERE tc_no = ?"
+    cursor.execute(query, (user_id,))
+    row = cursor.fetchone()
+    conn.close()
+    
+    if row:
+        return {
+            "name":  row[0],
+            "tc_no":  row[1],
+            "password":  row[2]
+        }
+    return None
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+def get_user_from_name(name):
+    conn = sqlite3.connect(r'C:\\Users\\melis\\YZTA_m\\medvica\\yzta_team_forty\\medvice\\db\\db.db')
+    cursor = conn.cursor()
+    
+    query = "SELECT id, name, tc_no, password FROM user WHERE name = ?"
+    cursor.execute(query, (name,))
+    row = cursor.fetchone()
+    conn.close()
+    
+    if row:
+        return {
+            "id": row[0],
+            "name":  row[1],
+            "tc_no":  row[2],
+            "password":  row[3]
+        }
+    return None
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -20,68 +59,45 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-
-        if username in users and users[username] == password:
+        user = get_user_from_name(username)
+        if username == user.get('name') and user.get('password')  == password:
             return redirect(url_for("welcome", username=username))
         else:
             error = "❌ Kullanıcı adı veya şifre hatalı."
     return render_template("login.html", error=error)
 
-@app.route("/edevlet")
-def edevlet():
-    return render_template("edevlet.html")
-
-@app.route("/enabiz")
-def enabiz():
-    return render_template("enabiz.html")
-
-@app.route("/edevlet-login", methods=["POST"])
-def edevlet_login():
-    tc_no = request.form["tc_no"]
-    password = request.form["password"]
+'''
+DÜZENLENECEK
+def get_test_with_id(user_id):
+    conn = sqlite3.connect(r'C:\\Users\\melis\\YZTA_m\\medvica\\yzta_team_forty\\medvice\\db\\db.db')
+    cursor = conn.cursor()
     
-    # E-devlet doğrulama simülasyonu
-    if tc_no and password:
-        # Gerçek uygulamada burada TC kimlik doğrulaması yapılır
-        return redirect(url_for("welcome", username="E-Devlet Kullanıcısı"))
-    else:
-        return render_template("edevlet.html", error="❌ TC Kimlik No veya şifre hatalı.")
-
-@app.route("/enabiz-login", methods=["POST"])
-def enabiz_login():
-    tc_no = request.form["tc_no"]
-    password = request.form["password"]
+    query = "SELECT id, name, tc_no, password FROM user WHERE name = ?"
+    cursor.execute(query, (name,))
+    row = cursor.fetchone()
+    conn.close()
     
-    # E-nabız doğrulama simülasyonu
-    if tc_no and password:
-        # Gerçek uygulamada burada e-nabız doğrulaması yapılır
-        return redirect(url_for("welcome", username="E-Nabız Kullanıcısı"))
-    else:
-        return render_template("enabiz.html", error="❌ TC Kimlik No veya şifre hatalı.")
+    if row:
+        return {
+            "id": row[0],
+            "name":  row[1],
+            "tc_no":  row[2],
+            "password":  row[3]
+        }
+    return None'''
 
-@app.route("/welcome/<username>")
-def welcome(username):
-    return render_template("assistant.html", username=username)
+@app.route("/welcome/<username>/<int:user_id>")
+def welcome(username, user_id):
+    return render_template("assistant.html", username=username, user_id = user_id)
 
-@app.route("/chat/<username>")
-def chat(username):
-    return render_template("chat.html", username=username)
+@app.route("/chat/<int:user_id>")
+def chat(user_id):
+    return render_template("chat.html", user_id=user_id)
 
-@app.route("/appointments/<username>")
-def appointments(username):
-    return render_template("appointments.html", username=username)
+@app.route("/appointments/<int:user_id>")
+def appointments(user_id):
+    return render_template("appointments.html", user_id=user_id)
 
-@app.route("/medicine/<username>")
-def medicine(username):
-    return render_template("medicine.html", username=username)
-
-@app.route("/lab-results/<username>")
-def lab_results(username):
-    return render_template("lab_results.html", username=username)
-
-@app.route("/calendar/<username>")
-def calendar(username):
-    return render_template("calendar.html", username=username)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route("/calendar/<int:user_id>")
+def calendar(user_id):
+    return render_template("calendar.html", user_id=user_id)

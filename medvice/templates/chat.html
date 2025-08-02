@@ -1,350 +1,393 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medvice Chat</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      .phone-container {
+        width: 100%;
+        height: 100vh;
+        background: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chat-header {
+        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        padding: 20px 25px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .back-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .chat-title {
+        flex: 1;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .chat-messages {
+        flex: 1;
+        padding: 25px;
+        overflow-y: auto;
+        background: #f8f9fa;
+      }
+
+      .message {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .message.bot {
+        align-items: flex-start;
+      }
+
+      .message.user {
+        align-items: flex-end;
+      }
+
+      .message-bubble {
+        max-width: 80%;
+        padding: 15px 18px;
+        border-radius: 20px;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .message.bot .message-bubble {
+        background: white;
+        border: 1px solid #e9ecef;
+        border-bottom-left-radius: 5px;
+      }
+
+      .message.user .message-bubble {
+        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        color: white;
+        border-bottom-right-radius: 5px;
+      }
+
+      .chat-input-container {
+        padding: 20px 25px;
+        background: white;
+        border-top: 1px solid #e9ecef;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .chat-input {
+        flex: 1;
+        padding: 12px 18px;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      .voice-btn {
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        border: none;
+        color: white;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        user-select: none;
+      }
+
+      .voice-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+      }
+
+      .voice-btn.recording {
+        background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+        animation: pulse-voice 1s infinite;
+        transform: scale(1.1);
+      }
+
+      @keyframes pulse-voice {
+        0%,
+        100% {
+          box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
         }
-        
-        .phone-container {
-            width: 100%;
-            height: 100vh;
-            background: white;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        50% {
+          box-shadow: 0 0 25px rgba(231, 76, 60, 0.8);
         }
-        
-        .chat-header {
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            padding: 20px 25px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .back-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-        }
-        
-        .chat-title {
-            flex: 1;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            background: #f8f9fa;
-        }
-        
-        .message {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .message.bot {
-            align-items: flex-start;
-        }
-        
-        .message.user {
-            align-items: flex-end;
-        }
-        
-        .message-bubble {
-            max-width: 80%;
-            padding: 15px 18px;
-            border-radius: 20px;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-        
-        .message.bot .message-bubble {
-            background: white;
-            border: 1px solid #e9ecef;
-            border-bottom-left-radius: 5px;
-        }
-        
-        .message.user .message-bubble {
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .chat-input-container {
-            padding: 20px 25px;
-            background: white;
-            border-top: 1px solid #e9ecef;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        
-        .chat-input {
-            flex: 1;
-            padding: 12px 18px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            font-size: 16px;
-            outline: none;
-        }
-        
-        .voice-btn {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            border: none;
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-        
-        .voice-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
-        }
-        
-        .voice-btn.recording {
-            background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
-            animation: pulse-voice 1s infinite;
-            transform: scale(1.1);
-        }
-        
-        @keyframes pulse-voice {
-            0%, 100% { box-shadow: 0 0 15px rgba(231, 76, 60, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(231, 76, 60, 0.8); }
-        }
-        
-        .send-btn {
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            border: none;
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
+      }
+
+      .send-btn {
+        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        border: none;
+        color: white;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="phone-container">
-        <div class="chat-header">
-            <button class="back-btn" onclick="history.back()">←</button>
-            <div class="chat-title">Medvice Asistanı</div>
-            <div>🤖</div>
+      <div class="chat-header">
+        <button class="back-btn" onclick="history.back()">←</button>
+        <div class="chat-title">Medvice Asistanı</div>
+        <div>🤖</div>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+          <div class="message-bubble">
+            Merhaba {{ username }}! Size nasıl yardımcı olabilirim? Sağlık
+            konularında sorularınızı yanıtlamak için buradayım.
+          </div>
         </div>
-        
-        <div class="chat-messages" id="chatMessages">
-            <div class="message bot">
-                <div class="message-bubble">
-                    Merhaba {{ username }}! Size nasıl yardımcı olabilirim? Sağlık konularında sorularınızı yanıtlamak için buradayım.
-                </div>
-            </div>
-        </div>
-        
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="messageInput" placeholder="Mesajınızı yazın...">
-            <button class="voice-btn" id="voiceBtn"
-                    onmousedown="startVoiceRecording()" 
-                    onmouseup="stopVoiceRecording()" 
-                    onmouseleave="stopVoiceRecording()"
-                    ontouchstart="startVoiceRecording()" 
-                    ontouchend="stopVoiceRecording()">🎤</button>
-            <button class="send-btn" onclick="sendMessage()">➤</button>
-        </div>
+      </div>
+
+      <div class="chat-input-container">
+        <input
+          type="text"
+          class="chat-input"
+          id="messageInput"
+          placeholder="Mesajınızı yazın..."
+        />
+        <button
+          class="voice-btn"
+          id="voiceBtn"
+          onmousedown="startVoiceRecording()"
+          onmouseup="stopVoiceRecording()"
+          onmouseleave="stopVoiceRecording()"
+          ontouchstart="startVoiceRecording()"
+          ontouchend="stopVoiceRecording()"
+        >
+          🎤
+        </button>
+        <button class="send-btn" onclick="sendMessage()">➤</button>
+      </div>
     </div>
-    
+
     <script>
-        let recognition;
-        let isRecording = false;
-        let recordingTimeout;
-        
-        // Ses tanıma desteği kontrolü
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            
-            recognition.continuous = true;
-            recognition.interimResults = true;
-            recognition.lang = 'tr-TR'; // Türkçe dil desteği
-            
-            recognition.onresult = function(event) {
-                let finalTranscript = '';
-                let interimTranscript = '';
-                
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interimTranscript += transcript;
-                    }
-                }
-                
-                // Input'u güncelle
-                const messageInput = document.getElementById('messageInput');
-                if (finalTranscript) {
-                    messageInput.value = finalTranscript;
-                    // Otomatik mesaj gönder
-                    setTimeout(() => {
-                        sendMessage();
-                    }, 500);
-                } else if (interimTranscript) {
-                    messageInput.placeholder = '🎤 ' + interimTranscript;
-                }
-            };
-            
-            recognition.onerror = function(event) {
-                console.log('Ses tanıma hatası:', event.error);
-                stopVoiceRecording();
-                showVoiceError();
-            };
-            
-            recognition.onend = function() {
-                stopVoiceRecording();
-            };
-        }
-        
-        function startVoiceRecording() {
-            if (!recognition) {
-                alert('Tarayıcınız ses tanımayı desteklemiyor. Chrome veya Edge kullanmayı deneyin.');
-                return;
-            }
-            
-            if (isRecording) return;
-            
-            isRecording = true;
-            const voiceBtn = document.getElementById('voiceBtn');
-            voiceBtn.classList.add('recording');
-            
-            // Mikrofon izni iste ve kayıt başlat
-            try {
-                recognition.start();
-                
-                // 10 saniye sonra otomatik durdur
-                recordingTimeout = setTimeout(() => {
-                    stopVoiceRecording();
-                }, 10000);
-                
-            } catch (error) {
-                console.log('Ses kayıt hatası:', error);
-                stopVoiceRecording();
-                showVoiceError();
-            }
-        }
-        
-        function stopVoiceRecording() {
-            if (!isRecording) return;
-            
-            isRecording = false;
-            const voiceBtn = document.getElementById('voiceBtn');
-            voiceBtn.classList.remove('recording');
-            
-            if (recognition) {
-                recognition.stop();
-            }
-            
-            if (recordingTimeout) {
-                clearTimeout(recordingTimeout);
-            }
-            
-            // Placeholder'ı sıfırla
-            setTimeout(() => {
-                const messageInput = document.getElementById('messageInput');
-                if (messageInput.value === '') {
-                    messageInput.placeholder = 'Mesajınızı yazın...';
-                }
-            }, 1000);
-        }
-        
-        function showVoiceError() {
-            const voiceBtn = document.getElementById('voiceBtn');
-            voiceBtn.style.background = 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)';
-            
-            setTimeout(() => {
-                voiceBtn.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
-            }, 1000);
-        }
-        
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const messages = document.getElementById('chatMessages');
-            
-            if (input.value.trim() === '') return;
-            
-            // Kullanıcı mesajını ekle
-            const userMessage = document.createElement('div');
-            userMessage.className = 'message user';
-            userMessage.innerHTML = `<div class="message-bubble">${input.value}</div>`;
-            messages.appendChild(userMessage);
-            
-            // Ses komutu için özel yanıtlar
-            const userText = input.value.toLowerCase();
-            let botResponse = '';
-            
-            if (userText.includes('randevu')) {
-                botResponse = 'Randevu almak için size yardımcı olabilirim. Hangi bölümden randevu istiyorsunuz? Ortopedi, Kardiyoloji, Nöroloji gibi seçenekleriniz var.';
-            } else if (userText.includes('ilaç')) {
-                botResponse = 'İlaç bilgisi konusunda size yardımcı olabilirim. Hangi ilacın bilgilerini öğrenmek istiyorsunuz? İlaç adını veya hastalığınızı söyleyebilirsiniz.';
-            } else if (userText.includes('tahlil')) {
-                botResponse = 'Tahlil sonuçlarınızı kontrol edebilir ve açıklayabilirim. Son tahlil sonuçlarınızda dikkat etmeniz gereken bir durum var mı?';
-            } else if (userText.includes('hastane')) {
-                botResponse = 'Size en yakın hastaneleri ve uygun randevu saatlerini gösterebilirim. Hangi bölgede hastane arıyorsunuz?';
-            } else if (userText.includes('merhaba') || userText.includes('selam')) {
-                botResponse = 'Merhaba! Size nasıl yardımcı olabilirim? Randevu, ilaç bilgisi, tahlil sonuçları veya hastane bilgileri konularında size destek verebilirim.';
-            } else if (userText.includes('teşekkür')) {
-                botResponse = 'Rica ederim! Size yardımcı olabildiysem ne mutlu bana. Başka bir konuda yardıma ihtiyacınız olursa buradayım.';
+      let recognition;
+      let isRecording = false;
+      let recordingTimeout;
+
+      // Ses tanıma desteği kontrolü
+      if (
+        "webkitSpeechRecognition" in window ||
+        "SpeechRecognition" in window
+      ) {
+        const SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = "tr-TR"; // Türkçe dil desteği
+
+        recognition.onresult = function (event) {
+          let finalTranscript = "";
+          let interimTranscript = "";
+
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript;
             } else {
-                botResponse = 'Anlıyorum. Bu konuda size yardımcı olmak için elimden geleni yapacağım. Daha detaylı bilgi verebilir misiniz? Randevu, ilaç, tahlil veya hastane konularında size daha iyi yardım edebilirim.';
+              interimTranscript += transcript;
             }
-            
-            // Bot yanıtını simüle et
+          }
+
+          // Input'u güncelle
+          const messageInput = document.getElementById("messageInput");
+          if (finalTranscript) {
+            messageInput.value = finalTranscript;
+            // Otomatik mesaj gönder
             setTimeout(() => {
-                const botMessage = document.createElement('div');
-                botMessage.className = 'message bot';
-                botMessage.innerHTML = `<div class="message-bubble">${botResponse}</div>`;
-                messages.appendChild(botMessage);
-                messages.scrollTop = messages.scrollHeight;
-            }, 1000);
-            
-            input.value = '';
-            messages.scrollTop = messages.scrollHeight;
+              sendMessage();
+            }, 500);
+          } else if (interimTranscript) {
+            messageInput.placeholder = "🎤 " + interimTranscript;
+          }
+        };
+
+        recognition.onerror = function (event) {
+          console.log("Ses tanıma hatası:", event.error);
+          stopVoiceRecording();
+          showVoiceError();
+        };
+
+        recognition.onend = function () {
+          stopVoiceRecording();
+        };
+      }
+
+      function startVoiceRecording() {
+        if (!recognition) {
+          alert(
+            "Tarayıcınız ses tanımayı desteklemiyor. Chrome veya Edge kullanmayı deneyin."
+          );
+          return;
         }
-        
-        document.getElementById('messageInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
+
+        if (isRecording) return;
+
+        isRecording = true;
+        const voiceBtn = document.getElementById("voiceBtn");
+        voiceBtn.classList.add("recording");
+
+        // Mikrofon izni iste ve kayıt başlat
+        try {
+          recognition.start();
+
+          // 10 saniye sonra otomatik durdur
+          recordingTimeout = setTimeout(() => {
+            stopVoiceRecording();
+          }, 10000);
+        } catch (error) {
+          console.log("Ses kayıt hatası:", error);
+          stopVoiceRecording();
+          showVoiceError();
+        }
+      }
+
+      function stopVoiceRecording() {
+        if (!isRecording) return;
+
+        isRecording = false;
+        const voiceBtn = document.getElementById("voiceBtn");
+        voiceBtn.classList.remove("recording");
+
+        if (recognition) {
+          recognition.stop();
+        }
+
+        if (recordingTimeout) {
+          clearTimeout(recordingTimeout);
+        }
+
+        // Placeholder'ı sıfırla
+        setTimeout(() => {
+          const messageInput = document.getElementById("messageInput");
+          if (messageInput.value === "") {
+            messageInput.placeholder = "Mesajınızı yazın...";
+          }
+        }, 1000);
+      }
+
+      function showVoiceError() {
+        const voiceBtn = document.getElementById("voiceBtn");
+        voiceBtn.style.background =
+          "linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)";
+
+        setTimeout(() => {
+          voiceBtn.style.background =
+            "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)";
+        }, 1000);
+      }
+
+      async function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const messages = document.getElementById("chatMessages");
+
+        if (input.value.trim() === "") return;
+
+        const userText = input.value;
+
+        // Kullanıcı mesajını ekle
+        const userMessage = document.createElement("div");
+        userMessage.className = "message user";
+        userMessage.innerHTML = `<div class="message-bubble">${userText}</div>`;
+        messages.appendChild(userMessage);
+        messages.scrollTop = messages.scrollHeight;
+
+        input.value = "";
+
+        // Bot cevabı için geçici "Yükleniyor" mesajı ekle
+        const botLoading = document.createElement("div");
+        botLoading.className = "message bot";
+        botLoading.innerHTML = `<div class="message-bubble">Yanıt yazılıyor...</div>`;
+        messages.appendChild(botLoading);
+        messages.scrollTop = messages.scrollHeight;
+
+        try {
+          const response = await fetch("/ask", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ question: userText }),
+          });
+
+          const data = await response.json();
+
+          botLoading.remove(); // Geçici mesajı kaldır
+
+          const botMessage = document.createElement("div");
+          botMessage.className = "message bot";
+
+          if (data.success) {
+            botMessage.innerHTML = `<div class="message-bubble">${data.answer}</div>`;
+          } else {
+            botMessage.innerHTML = `<div class="message-bubble">❌ ${
+              data.message || "Bir hata oluştu."
+            }</div>`;
+          }
+
+          messages.appendChild(botMessage);
+          messages.scrollTop = messages.scrollHeight;
+        } catch (error) {
+          botLoading.remove();
+
+          const errorMessage = document.createElement("div");
+          errorMessage.className = "message bot";
+          errorMessage.innerHTML = `<div class="message-bubble">❌ Sunucuya bağlanırken bir hata oluştu: ${error.message}</div>`;
+          messages.appendChild(errorMessage);
+          messages.scrollTop = messages.scrollHeight;
+        }
+      }
+
+      document
+        .getElementById("messageInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
         });
-        
-        // Touch eventlerini optimize et
-        document.addEventListener('touchstart', function() {}, {passive: true});
-        document.addEventListener('touchend', function() {}, {passive: true});
+
+      // Touch eventlerini optimize et
+      document.addEventListener("touchstart", function () {}, {
+        passive: true,
+      });
+      document.addEventListener("touchend", function () {}, { passive: true });
     </script>
-</body>
+  </body>
 </html>

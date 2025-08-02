@@ -1,0 +1,1919 @@
+{
+  "hipotansiyon": {
+    "hastalik_adi": "Hipotansiyon",
+    "ingilizce": "hypotension",
+    "semptomlar": [
+      "idrarda kan",
+      "yorgunluk",
+      "konfüzyon",
+      "soğuk terleme",
+      "konsantrasyon güçlüğü",
+      "nefes darlığı",
+      "hızlı kalp atışı",
+      "bulanık görme",
+      "mide ağrısı"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı",
+      "idrarda kan",
+      "fiziksel aktivite eksikliği",
+      "vücut pozisyonu.",
+      "kronik stres"
+    ]
+  },
+  "anjina": {
+    "hastalik_adi": "Anjina",
+    "ingilizce": "angina",
+    "semptomlar": [
+      "idrarda kan",
+      "nefes darlığı",
+      "terleme",
+      "göğüs ağrısı",
+      "bulantı",
+      "dolgunluk.",
+      "yüksek tansiyon",
+      "baş dönmesi"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı",
+      "idrarda kan"
+    ]
+  },
+  "aritmia": {
+    "hastalik_adi": "Aritmia",
+    "ingilizce": "arrhythmia",
+    "semptomlar": [
+      "terleme",
+      "baş dönmesi",
+      "göğüs ağrısı",
+      "nefes darlığı",
+      "hızlı kalp atışı",
+      "idrarda kan",
+      "anksiyete"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı",
+      "i̇ki alt odaya ventriküller denir.",
+      "i̇ki üst odaya atriya denir."
+    ]
+  },
+  "kalp_yetmezliği": {
+    "hastalik_adi": "Kalp Yetmezliği",
+    "ingilizce": "heart failure",
+    "semptomlar": [
+      "yorgunluk",
+      "göğüs ağrısı",
+      "nefes alma güçlüğü",
+      "nefes darlığı",
+      "kırmızı gözler",
+      "hızlı kalp atışı",
+      "idrarda kan",
+      "şişlik"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "yüksek ateş",
+      "kas ağrısı",
+      "nefes darlığı",
+      "idrarda kan"
+    ]
+  },
+  "kalp_kapak_hastaliklari": {
+    "hastalik_adi": "Kalp Kapak Hastalıkları",
+    "ingilizce": "heart valve disease",
+    "semptomlar": [
+      "nefes darlığı",
+      "göğüs ağrısı",
+      "yorgunluk",
+      "çarpıntı",
+      "ayak şişliği",
+      "baş dönmesi"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "yaş",
+      "romatizmal ateş öyküsü",
+      "doğuştan kalp hastalığı",
+      "enfektif endokardit",
+      "aile öyküsü"
+    ]
+  },
+  "ateroskleroz": {
+    "hastalik_adi": "Ateroskleroz",
+    "ingilizce": "atherosclerosis",
+    "semptomlar": [
+      "göğüs ağrısı",
+      "yüksek ateş"
+    ],
+    "brans": "Dahiliye",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "idrarda kan",
+      "nefes darlığı",
+      "yüksek ateş",
+      "uyku sorunları",
+      "obezite",
+      "diyabet",
+      "kötü beslenme"
+    ]
+  },
+  "varisler": {
+    "hastalik_adi": "Varisler",
+    "ingilizce": "varicose veins",
+    "semptomlar": [
+      "ruh hali değişiklikleri",
+      "şişlik",
+      "nefes darlığı",
+      "göğüs ağrısı",
+      "bacak şişliği"
+    ],
+    "brans": "Dahiliye",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı",
+      "idrarda kan",
+      "kilo kaybı"
+    ]
+  },
+  "periferik_arter_hastaliği": {
+    "hastalik_adi": "Periferik Arter Hastalığı",
+    "ingilizce": "peripheral artery disease",
+    "semptomlar": [
+      "soğuk terleme",
+      "bacak şişliği",
+      "idrarda kan",
+      "şiddetli baş ağrısı",
+      "erektil disfonksiyon.",
+      "göğüs ağrısı",
+      "güçsüzlük",
+      "egzersiz eksikliği"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "toksinlere maruz kalma",
+      "nefes darlığı",
+      "yüksek ateş",
+      "idrarda kan",
+      "obezite",
+      "diyabet",
+      "bacak şişliği",
+      "kas ağrısı"
+    ]
+  },
+  "kardiyomiyopati": {
+    "hastalik_adi": "Kardiyomiyopati",
+    "ingilizce": "cardiomyopathy",
+    "semptomlar": [
+      "idrarda kan",
+      "yorgunluk",
+      "göğüs ağrısı",
+      "nefes darlığı",
+      "hızlı kalp atışı",
+      "baş dönmesi",
+      "uyku sorunları"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı",
+      "böbrek hastalığı",
+      "yaş",
+      "idrarda kan",
+      "kas ağrısı",
+      "görme sorunları",
+      "obezite"
+    ]
+  },
+  "perikarditis": {
+    "hastalik_adi": "Perikarditis",
+    "ingilizce": "pericarditis",
+    "semptomlar": [
+      "çarpıntı",
+      "toksinlere maruz kalma",
+      "ateş",
+      "öksürük",
+      "nefes darlığı",
+      "idrarda kan"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "toksinlere maruz kalma",
+      "idrarda kan",
+      "göğüs ağrısı",
+      "lupus."
+    ]
+  },
+  "diyabet_tip_1": {
+    "hastalik_adi": "Diyabet Tip 1",
+    "ingilizce": "type 1 diabetes",
+    "semptomlar": [
+      "aşırı susama",
+      "bulanık görme",
+      "ruh hali değişiklikleri",
+      "idrarda kan",
+      "kilo kaybı"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "çocuk/genç",
+    "risk_faktorleri": [
+      "tütün kullanımı",
+      "idrarda kan",
+      "nefes darlığı",
+      "genetik faktörler"
+    ]
+  },
+  "diyabet_tip_2": {
+    "hastalik_adi": "Diyabet Tip 2",
+    "ingilizce": "type 2 diabetes",
+    "semptomlar": [
+      "nefes darlığı",
+      "sık idrara çıkma",
+      "kilo kaybı",
+      "idrarda kan",
+      "bulanık görme",
+      "daha fazla açlık.",
+      "aşırı susama",
+      "uyuşma",
+      "kırmızı gözler"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "idrarda kan",
+      "nefes darlığı",
+      "kilo kaybı"
+    ]
+  },
+  "hipoglisemi": {
+    "hastalik_adi": "Hipoglisemi",
+    "ingilizce": "hypoglycemia",
+    "semptomlar": [
+      "nefes darlığı",
+      "baş dönmesi",
+      "konsantrasyon güçlüğü",
+      "yorgunluk",
+      "kırmızı gözler",
+      "uyku sorunları",
+      "nöbetler",
+      "idrarda kan",
+      "terleme",
+      "hızlı kalp atışı",
+      "konfüzyon"
+    ],
+    "brans": "Dahiliye",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "idrarda kan"
+    ]
+  },
+  "hipertiroidi": {
+    "hastalik_adi": "Hipertiroidi",
+    "ingilizce": "hyperthyroidism",
+    "semptomlar": [
+      "terleme",
+      "kilo kaybı",
+      "iştah artışı",
+      "hızlı kalp atışı",
+      "idrarda kan",
+      "sık idrara çıkma",
+      "görme sorunları",
+      "anksiyete",
+      "nefes darlığı",
+      "ruh hali değişiklikleri"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı"
+    ]
+  },
+  "hipotiroidi": {
+    "hastalik_adi": "Hipotiroidi",
+    "ingilizce": "hypothyroidism",
+    "semptomlar": [
+      "kas ağrısı",
+      "düzensiz kalp atışı",
+      "kabızlık.",
+      "kalp hastalığı",
+      "idrarda kan",
+      "boğuk ses.",
+      "kabarık yüz.",
+      "depresyon",
+      "kilo kaybı",
+      "soğuk terleme"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "göğüs ağrısı",
+      "tiroid ameliyatı geçirdim.",
+      "hipertiroidizm için tedavi gördü.",
+      "nefes darlığı",
+      "diyabet",
+      "bir kadın."
+    ]
+  },
+  "addison_hastaliği": {
+    "hastalik_adi": "Addison Hastalığı",
+    "ingilizce": "addison disease",
+    "semptomlar": [
+      "göğüs ağrısı",
+      "kilo kaybı",
+      "yorgunluk",
+      "şiddetli baş ağrısı",
+      "idrarda kan",
+      "ateş",
+      "nefes darlığı"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı",
+      "idrarda kan",
+      "kronik stres"
+    ]
+  },
+  "cushing_sendromu": {
+    "hastalik_adi": "Cushing Sendromu",
+    "ingilizce": "cushing syndrome",
+    "semptomlar": [
+      "hızlı kilo alma",
+      "yüz şişliği",
+      "mor çizgiler",
+      "kas güçsüzlüğü",
+      "yüksek tansiyon",
+      "ruh hali değişiklikleri"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "uzun süreli steroid kullanımı",
+      "hipofiz tümörü",
+      "böbrek üstü bezi tümörü",
+      "kadın cinsiyet"
+    ]
+  },
+  "osteoporoz": {
+    "hastalik_adi": "Osteoporoz",
+    "ingilizce": "osteoporosis",
+    "semptomlar": [
+      "toksinlere maruz kalma",
+      "beklenenden çok daha kolay kırılan bir kemik.",
+      "göğüs ağrısı",
+      "nefes darlığı"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "toksinlere maruz kalma",
+      "nefes darlığı",
+      "enfekte kişi ile temas"
+    ]
+  },
+  "böbrek_taşi": {
+    "hastalik_adi": "Böbrek Taşı",
+    "ingilizce": "kidney stones",
+    "semptomlar": [
+      "göğüs ağrısı",
+      "kusma",
+      "nefes darlığı",
+      "idrarda kan",
+      "ateş"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": []
+  },
+  "böbrek_yetmezliği_akut": {
+    "hastalik_adi": "Böbrek Yetmezliği Akut",
+    "ingilizce": "acute kidney failure",
+    "semptomlar": [
+      "konfüzyon",
+      "bulantı",
+      "güçsüzlük",
+      "nefes darlığı",
+      "göğüs ağrısı",
+      "idrarda kan",
+      "şiddetli baş ağrısı",
+      "kırmızı gözler",
+      "hızlı kalp atışı"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "kalp hastalığı",
+      "nefes darlığı",
+      "böbrek hastalığı",
+      "idrarda kan",
+      "bacak şişliği",
+      "anafilaksi adı verilen kötü alerjik reaksiyon.",
+      "kilo kaybı",
+      "şiddetli baş ağrısı"
+    ]
+  },
+  "böbrek_yetmezliği_kronik": {
+    "hastalik_adi": "Böbrek Yetmezliği Kronik",
+    "ingilizce": "chronic kidney disease",
+    "semptomlar": [
+      "uyuşma",
+      "göğüs ağrısı",
+      "nefes darlığı"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": []
+  },
+  "prostat_kanseri": {
+    "hastalik_adi": "Prostat Kanseri",
+    "ingilizce": "prostate cancer",
+    "semptomlar": [
+      "göğüs ağrısı",
+      "idrarda kan",
+      "kilo kaybı",
+      "nefes darlığı",
+      "güçsüzlük",
+      "nefes alma güçlüğü"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erkek/erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı"
+    ]
+  },
+  "mesane_enfeksiyonu": {
+    "hastalik_adi": "Mesane Enfeksiyonu",
+    "ingilizce": "bladder infection",
+    "semptomlar": [
+      "idrarda kan",
+      "nefes darlığı"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "idrarda kan"
+    ]
+  },
+  "mesane_kanseri": {
+    "hastalik_adi": "Mesane Kanseri",
+    "ingilizce": "bladder cancer",
+    "semptomlar": [
+      "idrarda kan",
+      "ağrılı idrarlama",
+      "sık idrara çıkma",
+      "karın ağrısı",
+      "kilo kaybı"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "sigara içme",
+      "yaş",
+      "erkek cinsiyet",
+      "kimyasal maruziyeti",
+      "aile öyküsü"
+    ]
+  },
+  "böbrek_kanseri": {
+    "hastalik_adi": "Böbrek Kanseri",
+    "ingilizce": "kidney cancer",
+    "semptomlar": [
+      "kilo kaybı",
+      "nefes darlığı",
+      "idrarda kan",
+      "göğüs ağrısı",
+      "kırmızı gözler"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "nefes darlığı"
+    ]
+  },
+  "i̇nkontinans": {
+    "hastalik_adi": "İnkontinans",
+    "ingilizce": "urinary incontinence",
+    "semptomlar": [
+      "idrarda kan",
+      "nefes darlığı"
+    ],
+    "brans": "Dahiliye",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "çikolata",
+      "nefes darlığı",
+      "kas ağrısı",
+      "idrarda kan",
+      "yüksek ateş",
+      "yapay tatlandırıcılar",
+      "biber"
+    ]
+  },
+  "erektil_disfonksiyon": {
+    "hastalik_adi": "Erektil Disfonksiyon",
+    "ingilizce": "erectile dysfunction",
+    "semptomlar": [
+      "toksinlere maruz kalma",
+      "idrarda kan"
+    ],
+    "brans": "Dahiliye",
+    "aciliyet": "düşük",
+    "yas_grubu": "erkek/erişkin",
+    "risk_faktorleri": [
+      "idrarda kan",
+      "multipl skleroz.",
+      "kronik stres",
+      "yüksek ateş",
+      "depresyon",
+      "kilo kaybı",
+      "böbrek hastalığı"
+    ]
+  },
+  "epididimit": {
+    "hastalik_adi": "Epididimit",
+    "ingilizce": "epididymitis",
+    "semptomlar": [
+      "testis ağrısı",
+      "şişlik",
+      "ateş",
+      "idrarda yanma",
+      "kızarıklık"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erkek/erişkin",
+    "risk_faktorleri": [
+      "cinsel yolla bulaşan enfeksiyonlar",
+      "idrar yolu enfeksiyonu",
+      "prostat enfeksiyonu",
+      "cinsel aktivite"
+    ]
+  },
+  "orşit": {
+    "hastalik_adi": "Orşit",
+    "ingilizce": "orchitis",
+    "semptomlar": [
+      "göğüs ağrısı",
+      "idrarda kan",
+      "bulantı",
+      "şişlik",
+      "ateş"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "birden fazla cinsel partner.",
+      "nefes darlığı",
+      "enfekte kişi ile temas"
+    ]
+  },
+  "üretral_darlik": {
+    "hastalik_adi": "Üretral Darlık",
+    "ingilizce": "urethral stricture",
+    "semptomlar": [
+      "idrarda kan",
+      "nefes darlığı",
+      "göğüs ağrısı"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "idrarda kan",
+      "radyasyon tedavisi.",
+      "nefes darlığı"
+    ]
+  },
+  "polikistik_böbrek_hastaliği": {
+    "hastalik_adi": "Polikistik Böbrek Hastalığı",
+    "ingilizce": "polycystic kidney disease",
+    "semptomlar": [
+      "idrarda kan",
+      "göğüs ağrısı",
+      "nefes darlığı",
+      "böbrek hastalığı",
+      "baş ağrısı",
+      "yüksek ateş"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": []
+  },
+  "glomerulonefrit": {
+    "hastalik_adi": "Glomerulonefrit",
+    "ingilizce": "glomerulonephritis",
+    "semptomlar": [
+      "yüksek ateş",
+      "bulantı",
+      "kas ağrısı",
+      "idrarda kan",
+      "yorgunluk",
+      "şişlik"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": []
+  },
+  "gestasyonel_diyabet": {
+    "hastalik_adi": "Gestasyonel Diyabet",
+    "ingilizce": "gestational diabetes",
+    "semptomlar": [
+      "aşırı susama",
+      "sık idrara çıkma",
+      "yorgunluk",
+      "bulanık görme",
+      "bulantı",
+      "aşırı kilo alma"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "orta",
+    "yas_grubu": "kadın/gebelik",
+    "risk_faktorleri": [
+      "hamilelik",
+      "obezite",
+      "aile öyküsü",
+      "önceki gestasyonel diyabet",
+      "35 yaş üzeri"
+    ]
+  },
+  "metabolik_sendrom": {
+    "hastalik_adi": "Metabolik Sendrom",
+    "ingilizce": "metabolic syndrome",
+    "semptomlar": [
+      "karın bölgesi şişliği",
+      "yüksek tansiyon",
+      "yorgunluk",
+      "aşırı susama",
+      "sık idrara çıkma"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "obezite",
+      "hareketsiz yaşam",
+      "insulin direnci",
+      "aile öyküsü",
+      "yaş"
+    ]
+  },
+  "varikosel": {
+    "hastalik_adi": "Varikosel",
+    "ingilizce": "varicocele",
+    "semptomlar": [
+      "testis ağrısı",
+      "skrotum şişliği",
+      "ağırlık hissi",
+      "testis küçülmesi",
+      "infertilite"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erkek/erişkin",
+    "risk_faktorleri": [
+      "yaş",
+      "uzun süre ayakta durma",
+      "aile öyküsü",
+      "venöz yetersizlik"
+    ]
+  },
+  "hidrosol": {
+    "hastalik_adi": "Hidrosol",
+    "ingilizce": "hydrocele",
+    "semptomlar": [
+      "skrotum şişliği",
+      "ağırlık hissi",
+      "rahatsızlık",
+      "büyüklük değişimi"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erkek/erişkin",
+    "risk_faktorleri": [
+      "yaş",
+      "enfeksiyon",
+      "travma",
+      "doğuştan"
+    ]
+  },
+  "hipertansiyon": {
+    "hastalik_adi": "Hipertansiyon",
+    "ingilizce": "hypertension",
+    "semptomlar": [
+      "baş ağrısı",
+      "boyun ağrısı",
+      "baş dönmesi",
+      "kulak çınlaması",
+      "göğüs ağrısı",
+      "nefes darlığı",
+      "yorgunluk",
+      "burun kanaması",
+      "görme bozukluğu"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "yaş",
+      "obezite",
+      "sigara içme",
+      "aile öyküsü",
+      "aşırı tuz tüketimi",
+      "hareketsiz yaşam",
+      "stres",
+      "alkol kullanımı"
+    ]
+  },
+  "kalp_krizi": {
+    "hastalik_adi": "Kalp Krizi",
+    "ingilizce": "heart attack",
+    "semptomlar": [
+      "göğüs ağrısı",
+      "nefes darlığı",
+      "sol kol ağrısı",
+      "çene ağrısı",
+      "sırt ağrısı",
+      "bulantı",
+      "kusma",
+      "soğuk terleme",
+      "baş dönmesi",
+      "yorgunluk"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "sigara içme",
+      "yüksek kolesterol",
+      "yüksek tansiyon",
+      "diyabet",
+      "obezite",
+      "aile öyküsü",
+      "yaş",
+      "erkek cinsiyet",
+      "stres"
+    ]
+  },
+  "dvt": {
+    "hastalik_adi": "DVT",
+    "ingilizce": "deep vein thrombosis",
+    "semptomlar": [
+      "bacak şişliği",
+      "bacak ağrısı",
+      "bacakta ısı artışı",
+      "kızarıklık",
+      "damar çizgileri",
+      "kramp benzeri ağrı",
+      "yürüme güçlüğü",
+      "hassasiyet"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "uzun süre hareketsizlik",
+      "ameliyat",
+      "kanser",
+      "hamilelik",
+      "obezite",
+      "sigara içme",
+      "yaş",
+      "kalp hastalığı"
+    ]
+  },
+  "endokardit": {
+    "hastalik_adi": "Endokardit",
+    "ingilizce": "endocarditis",
+    "semptomlar": [
+      "ateş",
+      "titreme",
+      "yorgunluk",
+      "gece terlemesi",
+      "kas ağrısı",
+      "eklem ağrısı",
+      "nefes darlığı",
+      "göğüs ağrısı",
+      "cilt döküntüleri"
+    ],
+    "brans": "Kardiyoloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "kalp kapak hastalığı",
+      "doğuştan kalp hastalığı",
+      "kalp ameliyatı öyküsü",
+      "uyuşturucu kullanımı",
+      "zayıf bağışıklık sistemi",
+      "dental işlemler"
+    ]
+  },
+  "guatr": {
+    "hastalik_adi": "Guatr",
+    "ingilizce": "goiter",
+    "semptomlar": [
+      "boyun şişliği",
+      "yutma güçlüğü",
+      "nefes alma güçlüğü",
+      "öksürük",
+      "ses kısıklığı",
+      "boyun gerginliği",
+      "görünür kitle"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "iyot eksikliği",
+      "kadın cinsiyet",
+      "yaş",
+      "aile öyküsü",
+      "gebelik",
+      "radyasyon maruziyeti"
+    ]
+  },
+  "polikistik_over_sendromu": {
+    "hastalik_adi": "Polikistik Over Sendromu",
+    "ingilizce": "polycystic ovary syndrome",
+    "semptomlar": [
+      "düzensiz adet",
+      "adet kesilmesi",
+      "aşırı kıllanma",
+      "kilo alma",
+      "saç dökülmesi",
+      "akne",
+      "infertilite",
+      "insulin direnci"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "kadın/erişkin",
+    "risk_faktorleri": [
+      "genetik faktörler",
+      "insulin direnci",
+      "obezite",
+      "aile öyküsü",
+      "hormonal dengesizlik"
+    ]
+  },
+  "prostat_buyumesi": {
+    "hastalik_adi": "Prostat Büyümesi",
+    "ingilizce": "enlarged prostate",
+    "semptomlar": [
+      "zor idrarlama",
+      "sık idrara çıkma",
+      "gece idrarlama",
+      "idrar akışında zayıflama",
+      "idrar tutamama",
+      "mesane boşalmama hissi",
+      "damla damla idrarlama"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erkek/erişkin",
+    "risk_faktorleri": [
+      "yaş",
+      "aile öyküsü",
+      "obezite",
+      "diyabet",
+      "kalp hastalığı"
+    ]
+  },
+  "bobrek_kisti": {
+    "hastalik_adi": "Böbrek Kisti",
+    "ingilizce": "kidney cysts",
+    "semptomlar": [
+      "yan ağrısı",
+      "karın ağrısı",
+      "ateş",
+      "idrarda kan",
+      "sık idrara çıkma",
+      "yüksek tansiyon",
+      "kitle hissi"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "yaş",
+      "erkek cinsiyet",
+      "böbrek hastalığı",
+      "genetik faktörler",
+      "polikistik böbrek hastalığı"
+    ]
+  },
+  "nefrit_sendromu": {
+    "hastalik_adi": "Nefrit Sendromu",
+    "ingilizce": "nephritic syndrome",
+    "semptomlar": [
+      "idrarda kan",
+      "protein kaybı",
+      "yüksek tansiyon",
+      "şişlik",
+      "idrar miktarında azalma",
+      "yorgunluk",
+      "bulantı",
+      "baş ağrısı"
+    ],
+    "brans": "Üroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "böbrek enfeksiyonu",
+      "otoimmün hastalıklar",
+      "genetik faktörler",
+      "sistemik hastalıklar",
+      "ilaç toksisitesi"
+    ]
+  },
+  "obezite": {
+    "hastalik_adi": "Obezite",
+    "ingilizce": "obesity",
+    "semptomlar": [
+      "aşırı kilo",
+      "nefes darlığı",
+      "yorgunluk",
+      "aşırı terleme",
+      "horlama",
+      "eklem ağrısı",
+      "sırt ağrısı",
+      "özgüven kaybı",
+      "depresyon"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "hareketsiz yaşam",
+      "kötü beslenme",
+      "genetik faktörler",
+      "hormonal bozukluklar",
+      "bazı ilaçlar",
+      "stres",
+      "uykusuzluk"
+    ]
+  },
+  "bobrek_ustu_bezler_hastaligi": {
+    "hastalik_adi": "Böbrek Üstü Bezler Hastalığı",
+    "ingilizce": "adrenal gland disorders",
+    "semptomlar": [
+      "kronik yorgunluk",
+      "kas güçsüzlüğü",
+      "kilo değişiklikleri",
+      "kan basıncı değişiklikleri",
+      "cilt değişiklikleri",
+      "ruh hali değişiklikleri",
+      "elektrolit dengesizliği",
+      "kan şekeri sorunları"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "otoimmün hastalıklar",
+      "tümör",
+      "enfeksiyon",
+      "genetik faktörler",
+      "steroid kullanımı",
+      "travma"
+    ]
+  },
+  "paratiroid_hastaliklari": {
+    "hastalik_adi": "Paratiroid Hastalıkları",
+    "ingilizce": "parathyroid disorders",
+    "semptomlar": [
+      "kemik ağrısı",
+      "kas güçsüzlüğü",
+      "yorgunluk",
+      "depresyon",
+      "böbrek taşı",
+      "karın ağrısı",
+      "bulantı",
+      "konfüzyon",
+      "kalp ritim bozuklukları"
+    ],
+    "brans": "Endokrinoloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "kadın cinsiyet",
+      "yaş",
+      "radyasyon maruziyeti",
+      "aile öyküsü",
+      "vitamin d eksikliği",
+      "böbrek hastalığı"
+    ]
+  },
+
+  "migren": {
+    "hastalik_adi": "Migren",
+    "ingilizce": "Migraine",
+    "semptomlar": [
+      "Şiddetli baş ağrısı",
+      "Işık ve sese duyarlılık",
+      "Bulantı ve kusma",
+      "Görme bozuklukları (aura)"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Stres",
+      "Hormonal değişiklikler",
+      "Uyku düzeni bozuklukları",
+      "Bazı yiyecekler"
+    ]
+  },
+  "gerilim_bas_agrisi": {
+    "hastalik_adi": "Gerilim Baş Ağrısı",
+    "ingilizce": "Tension Headache",
+    "semptomlar": [
+      "Başın iki tarafında baskı hissi",
+      "Boyun ve omuzlarda gerginlik",
+      "Hafif-orta şiddette ağrı"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Stres",
+      "Uyku yetersizliği",
+      "Gergin kaslar"
+    ]
+  },
+  "epilepsi": {
+    "hastalik_adi": "Epilepsi",
+    "ingilizce": "Epilepsy",
+    "semptomlar": [
+      "Tekrarlayan nöbetler",
+      "Bilinç kaybı",
+      "Kaslarda kontrolsüz hareketler"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "yüksek",
+    "yas_grubu": "tüm yaşlar",
+    "risk_faktorleri": [
+      "Beyin travması",
+      "Genetik faktörler",
+      "Enfeksiyonlar"
+    ]
+  },
+  "alzheimer": {
+    "hastalik_adi": "Alzheimer",
+    "ingilizce": "Alzheimer's Disease",
+    "semptomlar": [
+      "Bellek kaybı",
+      "Zaman ve mekan orientasyonunda bozukluk",
+      "Kişilik değişiklikleri"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "yüksek",
+    "yas_grubu": "yaşlı",
+    "risk_faktorleri": [
+      "İleri yaş",
+      "Genetik yatkınlık",
+      "Kafa travması"
+    ]
+  },
+  "parkinson": {
+    "hastalik_adi": "Parkinson",
+    "ingilizce": "Parkinson's Disease",
+    "semptomlar": [
+      "Titreme",
+      "Hareketlerde yavaşlama",
+      "Kas sertliği",
+      "Denge problemleri"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "yüksek",
+    "yas_grubu": "yaşlı",
+    "risk_faktorleri": [
+      "İleri yaş",
+      "Genetik faktörler",
+      "Çevresel toksinler"
+    ]
+  },
+  "multiple_skleroz": {
+    "hastalik_adi": "Multiple Skleroz",
+    "ingilizce": "Multiple Sclerosis",
+    "semptomlar": [
+      "Görme bozuklukları",
+      "Kas güçsüzlüğü",
+      "Uyuşma ve karıncalanma",
+      "Yorgunluk"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "orta-yüksek",
+    "yas_grubu": "genç-erişkin",
+    "risk_faktorleri": [
+      "Genetik yatkınlık",
+      "Çevresel faktörler",
+      "Sigara kullanımı"
+    ]
+  },
+  "inme": {
+    "hastalik_adi": "İnme (Felç)",
+    "ingilizce": "Stroke",
+    "semptomlar": [
+      "Yüz, kol veya bacakta ani güçsüzlük veya uyuşma (özellikle tek taraflı)",
+      "Konuşma güçlüğü, anlamada bozukluk",
+      "Ani görme problemleri",
+      "Baş dönmesi, denge ve koordinasyon kaybı",
+      "Şiddetli baş ağrısı"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "yüksek (acil müdahale gerektirir)",
+    "yas_grubu": "erişkin-yaşlı",
+    "risk_faktorleri": [
+      "Hipertansiyon",
+      "Sigara kullanımı",
+      "Diyabet",
+      "Yüksek kolesterol",
+      "Atriyal fibrilasyon",
+      "Obezite",
+      "Fiziksel aktivite eksikliği"
+    ]
+  },
+  "tia": {
+    "hastalik_adi": "TIA (Geçici İskemik Atak)",
+    "ingilizce": "Transient Ischemic Attack",
+    "semptomlar": [
+      "Geçici yüz, kol veya bacakta güçsüzlük veya uyuşma",
+      "Konuşma veya anlama zorluğu",
+      "Geçici görme kaybı veya bulanık görme",
+      "Baş dönmesi, denge sorunları",
+      "Belirtiler genellikle birkaç dakika içinde geçer"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "yüksek (inme öncüsü olabilir)",
+    "yas_grubu": "erişkin-yaşlı",
+    "risk_faktorleri": [
+      "Hipertansiyon",
+      "Ateroskleroz",
+      "Kalp hastalıkları",
+      "Sigara kullanımı",
+      "Yüksek kolesterol",
+      "Diyabet"
+    ]
+  },
+  "trigeminal_nevralji": {
+    "hastalik_adi": "Trigeminal Nevralji",
+    "ingilizce": "Trigeminal Neuralgia",
+    "semptomlar": [
+      "Ani, şiddetli, elektrik çarpması tarzı yüz ağrısı",
+      "Genellikle tek taraflı",
+      "Yüzde ani ağrı atakları, birkaç saniye ila dakika sürer",
+      "Ağrı tetikleyicileri: yüz yıkama, diş fırçalama, konuşma"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin-yaşlı",
+    "risk_faktorleri": [
+      "Sinir kökü basısı (örneğin damar tarafından)",
+      "Multiple Skleroz",
+      "Yaşlanma",
+      "Sinir yaralanmaları"
+    ]
+  },
+  "fasiyal_paralizi": {
+    "hastalik_adi": "Fasiyal Paralizi (Bell's Palsy)",
+    "ingilizce": "Facial Paralysis (Bell's Palsy)",
+    "semptomlar": [
+      "Yüzün tek tarafında ani güçsüzlük veya felç",
+      "Göz kırpma güçlüğü",
+      "Yüzde sarkma",
+      "Tat alma bozukluğu",
+      "Ağızda kurumaya bağlı rahatsızlık"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "orta",
+    "yas_grubu": "genç-erişkin",
+    "risk_faktorleri": [
+      "Viral enfeksiyonlar (özellikle herpes simplex)",
+      "Hamilelik",
+      "Diyabet",
+      "Sinir inflamasyonu"
+    ]
+  },
+  "carpal_tunnel_sendromu": {
+    "hastalik_adi": "Carpal Tunnel Sendromu",
+    "ingilizce": "Carpal Tunnel Syndrome",
+    "semptomlar": [
+      "Elde uyuşma, karıncalanma (özellikle başparmak, işaret ve orta parmak)",
+      "Gece ağrısı",
+      "El ve parmaklarda güçsüzlük",
+      "El becerilerinde azalma"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Tekrarlayan el hareketleri",
+      "Gebelik",
+      "Obezite",
+      "Diyabet",
+      "Romatoid artrit"
+    ]
+  },
+  "siyatik": {
+    "hastalik_adi": "Siyatik",
+    "ingilizce": "Sciatica",
+    "semptomlar": [
+      "Belden bacağa yayılan ağrı",
+      "Bacakta uyuşma, karıncalanma",
+      "Kas güçsüzlüğü",
+      "Hareketle artan ağrı"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Bel fıtığı",
+      "Uzun süre oturma",
+      "Ağır kaldırma",
+      "Obezite"
+    ]
+  },
+  "vertigo": {
+    "hastalik_adi": "Vertigo",
+    "ingilizce": "Vertigo",
+    "semptomlar": [
+      "Baş dönmesi ve denge kaybı",
+      "Mide bulantısı",
+      "Kusma",
+      "Görme sorunları"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "tüm yaş grupları",
+    "risk_faktorleri": [
+      "İç kulak problemleri",
+      "Baş travması",
+      "Sinir sistemi hastalıkları"
+    ]
+  },
+  "meniere_hastaligi": {
+    "hastalik_adi": "Meniere Hastalığı",
+    "ingilizce": "Meniere's Disease",
+    "semptomlar": [
+      "Ani başlayan vertigo atakları",
+      "Kulakta dolgunluk hissi",
+      "İşitme kaybı",
+      "Kulak çınlaması (tinnitus)"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "orta",
+    "yas_grubu": "30-60 yaş arası",
+    "risk_faktorleri": [
+      "Genetik yatkınlık",
+      "Virüsler",
+      "Otoimmün hastalıklar"
+    ]
+  },
+  "nöropati": {
+    "hastalik_adi": "Nöropati",
+    "ingilizce": "Neuropathy",
+    "semptomlar": [
+      "Eldeki ve ayaktaki uyuşma ve karıncalanma",
+      "Ağrı ve yanma hissi",
+      "Kas güçsüzlüğü",
+      "Duyu kaybı"
+    ],
+    "brans": "Sinir Sistemi",
+    "aciliyet": "değişken",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Diyabet",
+      "Alkol kullanımı",
+      "Vitamin eksiklikleri",
+      "Enfeksiyonlar",
+      "Toksin maruziyeti"
+    ]
+  },
+  "gastrit": {
+    "hastalik_adi": "Gastrit",
+    "ingilizce": "Gastritis",
+    "semptomlar": [
+      "Karın üst kısmında ağrı veya yanma",
+      "Bulantı",
+      "Hazımsızlık",
+      "Kusma"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "tüm yaş grupları",
+    "risk_faktorleri": [
+      "Helicobacter pylori enfeksiyonu",
+      "Aşırı alkol tüketimi",
+      "Uzun süreli NSAID kullanımı",
+      "Stres"
+    ]
+  },
+  "peptik_ulser": {
+    "hastalik_adi": "Peptik Ülser",
+    "ingilizce": "Peptic Ulcer",
+    "semptomlar": [
+      "Karın üst bölgesinde yanma ve ağrı",
+      "Hazımsızlık",
+      "Bulantı ve kusma",
+      "Kanlı veya koyu renkli dışkı"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Helicobacter pylori enfeksiyonu",
+      "Uzun süreli NSAID kullanımı",
+      "Sigara kullanımı",
+      "Alkol tüketimi"
+    ]
+  },
+  "crohn_hastaligi": {
+    "hastalik_adi": "Crohn Hastalığı",
+    "ingilizce": "Crohn's Disease",
+    "semptomlar": [
+      "Karın ağrısı ve kramp",
+      "İshal (bazı durumlarda kanlı)",
+      "Kilo kaybı",
+      "Yorgunluk"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "orta-yüksek",
+    "yas_grubu": "genç-erişkin",
+    "risk_faktorleri": [
+      "Genetik yatkınlık",
+      "Sigara kullanımı",
+      "Bağışıklık sistemi bozuklukları"
+    ]
+  },
+  "ulseratif_kolit": {
+    "hastalik_adi": "Ülseratif Kolit",
+    "ingilizce": "Ulcerative Colitis",
+    "semptomlar": [
+      "Kanlı ishal",
+      "Karın ağrısı",
+      "Ateş",
+      "Yorgunluk"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "orta-yüksek",
+    "yas_grubu": "genç-erişkin",
+    "risk_faktorleri": [
+      "Genetik yatkınlık",
+      "Bağışıklık sistemi bozuklukları",
+      "Sigara kullanımı (koruyucu etkisi tartışmalı)"
+    ]
+  },
+  "hemoroid": {
+    "hastalik_adi": "Hemoroid",
+    "ingilizce": "Hemorrhoids",
+    "semptomlar": [
+      "Anüs çevresinde ağrı ve kaşıntı",
+      "Kanama (dışkılamada)",
+      "Şişlik ve rahatsızlık"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Kabızlık",
+      "Uzun süre oturma",
+      "Gebelik",
+      "Aşırı ıkınma"
+    ]
+  },
+  "anal_fissur": {
+    "hastalik_adi": "Anal Fissür",
+    "ingilizce": "Anal Fissure",
+    "semptomlar": [
+      "Dışkılama sırasında ağrı",
+      "Kanama",
+      "Anüs çevresinde çatlak görünümü"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "düşük",
+    "yas_grubu": "tüm yaşlar",
+    "risk_faktorleri": [
+      "Kabızlık",
+      "İshal",
+      "Doğum",
+      "Aşırı ıkınma"
+    ]
+  },
+  "safra_tasi": {
+    "hastalik_adi": "Safra Taşı",
+    "ingilizce": "Gallstones",
+    "semptomlar": [
+      "Sağ üst karın ağrısı",
+      "Mide bulantısı ve kusma",
+      "Sindirim problemleri",
+      "Ağrı atakları"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Obezite",
+      "Kadın cinsiyet",
+      "Gebelik",
+      "Yaş"
+    ]
+  },
+  "karaciger_yaglanmasi": {
+    "hastalik_adi": "Karaciğer Yağlanması",
+    "ingilizce": "Fatty Liver Disease",
+    "semptomlar": [
+      "Çoğunlukla belirti vermez",
+      "Yorgunluk",
+      "Karın sağ üst tarafında rahatsızlık",
+      "Karaciğer büyümesi"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Obezite",
+      "Diyabet",
+      "Alkol kullanımı",
+      "Yüksek kolesterol"
+    ]
+  },
+  "siroz": {
+    "hastalik_adi": "Siroz",
+    "ingilizce": "Cirrhosis",
+    "semptomlar": [
+      "Yorgunluk",
+      "Sarılık",
+      "Karında şişlik (asit)",
+      "Kilo kaybı"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Kronik alkol kullanımı",
+      "Hepatit B ve C enfeksiyonları",
+      "Karaciğer yağlanması",
+      "Otoimmün hastalıklar"
+    ]
+  },
+  "pankreatit": {
+    "hastalik_adi": "Pankreatit",
+    "ingilizce": "Pancreatitis",
+    "semptomlar": [
+      "Şiddetli üst karın ağrısı",
+      "Bulantı ve kusma",
+      "Ateş",
+      "Hızlı nabız"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Safra taşları",
+      "Aşırı alkol tüketimi",
+      "Yüksek trigliserid",
+      "İlaçlar"
+    ]
+  },
+  "apandisit": {
+    "hastalik_adi": "Apandisit",
+    "ingilizce": "Appendicitis",
+    "semptomlar": [
+      "Karın sağ alt kısmında ağrı",
+      "Bulantı ve kusma",
+      "Ateş",
+      "İştah kaybı"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "çok yüksek (acil cerrahi gerektirir)",
+    "yas_grubu": "tüm yaşlar",
+    "risk_faktorleri": [
+      "Bakteriyel enfeksiyon",
+      "Bağırsak tıkanıklığı"
+    ]
+  },
+  "divertikülit": {
+    "hastalik_adi": "Divertikülit",
+    "ingilizce": "Diverticulitis",
+    "semptomlar": [
+      "Karın sol alt kısmında ağrı",
+      "Ateş",
+      "Kabızlık veya ishal",
+      "Bulantı"
+    ],
+    "brans": "Gastroenteroloji",
+    "aciliyet": "orta-yüksek",
+    "yas_grubu": "erişkin",
+    "risk_faktorleri": [
+      "Düşük lifli diyet",
+      "Yaş",
+      "Obezite"
+    ]
+  },
+  "menstrual_duzensizlikler": {
+    "hastalik_adi": "Menstrual Düzensizlikler",
+    "ingilizce": "Menstrual Irregularities",
+    "semptomlar": [
+      "Düzensiz adet kanaması",
+      "Ağrılı adet",
+      "Adet gecikmesi veya erken gelme",
+      "Aşırı kanama"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "ergen-erişkin",
+    "risk_faktorleri": [
+      "Hormonal dengesizlikler",
+      "Stres",
+      "Tiroid hastalıkları",
+      "Obezite"
+    ]
+  },
+  "endometriozis": {
+    "hastalik_adi": "Endometriozis",
+    "ingilizce": "Endometriosis",
+    "semptomlar": [
+      "Ağrılı adet",
+      "Pelvik ağrı",
+      "Kısırlık",
+      "Ağrılı cinsel ilişki"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "orta",
+    "yas_grubu": "ergen-erişkin",
+    "risk_faktorleri": [
+      "Genetik yatkınlık",
+      "Aşırı adet kanaması",
+      "Geç ilk adet"
+    ]
+  },
+  "myom": {
+    "hastalik_adi": "Myom",
+    "ingilizce": "Myoma (Fibroids)",
+    "semptomlar": [
+      "Ağır ve uzun adet kanaması",
+      "Pelvik ağrı",
+      "Sık idrara çıkma",
+      "Karın şişliği"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "ergen-erişkin",
+    "risk_faktorleri": [
+      "Genetik yatkınlık",
+      "Obezite",
+      "Hormonal değişiklikler"
+    ]
+  },
+  "over_kisti": {
+    "hastalik_adi": "Over Kisti",
+    "ingilizce": "Ovarian Cyst",
+    "semptomlar": [
+      "Pelvik ağrı",
+      "Adet düzensizliği",
+      "Karın şişliği",
+      "İdrar yaparken rahatsızlık"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "ergen-erişkin",
+    "risk_faktorleri": [
+      "Hormonal dengesizlik",
+      "Gebelik",
+      "Endometriozis"
+    ]
+  },
+  "vajinitis": {
+    "hastalik_adi": "Vajinitis",
+    "ingilizce": "Vaginitis",
+    "semptomlar": [
+      "Kaşıntı",
+      "Akıntı",
+      "Kızarıklık",
+      "Ağrı veya yanma"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "düşük",
+    "yas_grubu": "ergen-erişkin",
+    "risk_faktorleri": [
+      "Enfeksiyonlar",
+      "Hijyen eksikliği",
+      "Alerjik reaksiyonlar"
+    ]
+  },
+  "pid": {
+    "hastalik_adi": "PID (Pelvik İnflamatuar Hastalık)",
+    "ingilizce": "Pelvic Inflammatory Disease",
+    "semptomlar": [
+      "Alt karın ağrısı",
+      "Ateş",
+      "Anormal vajinal akıntı",
+      "Ağrılı cinsel ilişki"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "yüksek",
+    "yas_grubu": "ergen-erişkin",
+    "risk_faktorleri": [
+      "Cinsel yolla bulaşan enfeksiyonlar",
+      "Çok eşlilik",
+      "Geçirilmiş pelvik enfeksiyon"
+    ]
+  },
+  "menopoz": {
+    "hastalik_adi": "Menopoz",
+    "ingilizce": "Menopause",
+    "semptomlar": [
+      "Adet kanamalarının durması",
+      "Sıcak basmaları",
+      "Gece terlemeleri",
+      "Ruh hali değişiklikleri"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "düşük",
+    "yas_grubu": "yaşlı kadınlar",
+    "risk_faktorleri": [
+      "İleri yaş",
+      "Genetik faktörler"
+    ]
+  },
+  "gebelik_komplikasyonlari": {
+    "hastalik_adi": "Gebelik Komplikasyonları",
+    "ingilizce": "Pregnancy Complications",
+    "semptomlar": [
+      "Vaginal kanama",
+      "Şiddetli karın ağrısı",
+      "Şişlik",
+      "Baş ağrısı"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "yüksek",
+    "yas_grubu": "gebelik dönemi",
+    "risk_faktorleri": [
+      "Yüksek tansiyon",
+      "Şeker hastalığı",
+      "Çoğul gebelik",
+      "İleri yaş"
+    ]
+  },
+  "ektopik_gebelik": {
+    "hastalik_adi": "Ektopik Gebelik",
+    "ingilizce": "Ectopic Pregnancy",
+    "semptomlar": [
+      "Ağrılı adet",
+      "Vaginal kanama",
+      "Şiddetli karın ağrısı",
+      "Baş dönmesi ve bayılma"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "çok yüksek",
+    "yas_grubu": "gebelik dönemi",
+    "risk_faktorleri": [
+      "Pelvik enfeksiyon",
+      "Daha önce ektopik gebelik",
+      "Tüplerin hasarı"
+    ]
+  },
+  "dusuk": {
+    "hastalik_adi": "Düşük",
+    "ingilizce": "Miscarriage",
+    "semptomlar": [
+      "Vaginal kanama",
+      "Karın ağrısı veya kramp",
+      "Gebelik belirtilerinde azalma",
+      "Bel ağrısı"
+    ],
+    "brans": "Kadın Hastalıkları & Doğum",
+    "aciliyet": "yüksek",
+    "yas_grubu": "gebelik dönemi",
+    "risk_faktorleri": [
+      "İleri yaş",
+      "Hormonal dengesizlikler",
+      "Enfeksiyonlar",
+      "Kromozomal anormallikler"
+    ]
+  },
+  "astim_cocuk": {
+    "hastalik_adi": "Astım (Çocuk)",
+    "ingilizce": "Asthma (Children)",
+    "semptomlar": [
+      "Nefes darlığı",
+      "Hırıltılı solunum",
+      "Öksürük",
+      "Göğüste sıkışma hissi"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "değişken",
+    "yas_grubu": "0-18 yaş",
+    "risk_faktorleri": [
+      "Ailede astım öyküsü",
+      "Alerjik hastalıklar",
+      "Sigara dumanına maruz kalma",
+      "Çevresel alerjenler"
+    ]
+  },
+  "bronsiolit": {
+    "hastalik_adi": "Bronşiolit",
+    "ingilizce": "Bronchiolitis",
+    "semptomlar": [
+      "Hırıltılı solunum",
+      "Öksürük",
+      "Nefes alma güçlüğü",
+      "Ateş"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "orta-yüksek",
+    "yas_grubu": "0-2 yaş",
+    "risk_faktorleri": [
+      "Prematüre doğum",
+      "Düşük bağışıklık sistemi",
+      "Sigara dumanına maruz kalma",
+      "Kış aylarında enfeksiyon riski"
+    ]
+  },
+  "otitis_media": {
+    "hastalik_adi": "Otitis Media",
+    "ingilizce": "Middle Ear Infection",
+    "semptomlar": [
+      "Kulak ağrısı",
+      "İştahsızlık",
+      "Ateş",
+      "İşitme kaybı"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "düşük-orta",
+    "yas_grubu": "0-5 yaş",
+    "risk_faktorleri": [
+      "Soğuk algınlığı ve üst solunum yolu enfeksiyonları",
+      "Sigara dumanına maruz kalma",
+      "Biberonla beslenme",
+      "Kalıtsal yatkınlık"
+    ]
+  },
+  "febril_konvulziyon": {
+    "hastalik_adi": "Febril Konvülziyon",
+    "ingilizce": "Febrile Seizures",
+    "semptomlar": [
+      "Yüksek ateş ile birlikte nöbet",
+      "Bilinç kaybı",
+      "Kaslarda sertlik",
+      "Titreme"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "orta",
+    "yas_grubu": "6 ay - 5 yaş",
+    "risk_faktorleri": [
+      "Aile öyküsü",
+      "Yüksek ateş",
+      "Alt solunum yolu enfeksiyonları"
+    ]
+  },
+  "gastroenterit_cocuk": {
+    "hastalik_adi": "Gastroenterit (Çocuk)",
+    "ingilizce": "Gastroenteritis (Children)",
+    "semptomlar": [
+      "İshal",
+      "Kusma",
+      "Karın ağrısı",
+      "Ateş"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "orta",
+    "yas_grubu": "0-5 yaş",
+    "risk_faktorleri": [
+      "Bulaşıcı enfeksiyonlar",
+      "Kirli su veya gıda tüketimi",
+      "Hijyen eksikliği"
+    ]
+  },
+  "dehidrasyon": {
+    "hastalik_adi": "Dehidrasyon",
+    "ingilizce": "Dehydration",
+    "semptomlar": [
+      "Aşırı susuzluk",
+      "Kuru ağız ve dudaklar",
+      "Azalmış idrar miktarı",
+      "Baş dönmesi"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "yüksek",
+    "yas_grubu": "tüm yaş grupları",
+    "risk_faktorleri": [
+      "İshal",
+      "Kusma",
+      "Yetersiz sıvı alımı",
+      "Aşırı terleme"
+    ]
+  },
+  "kolik": {
+    "hastalik_adi": "Kolik",
+    "ingilizce": "Colic",
+    "semptomlar": [
+      "Yoğun ağlama",
+      "Karın krampları",
+      "Huzursuzluk",
+      "Uyku problemleri"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "düşük",
+    "yas_grubu": "0-3 ay",
+    "risk_faktorleri": [
+      "Sindirim sistemi olgunlaşmaması",
+      "Beslenme şekli",
+      "Ailede kolik öyküsü"
+    ]
+  },
+  "ishal": {
+    "hastalik_adi": "İshal",
+    "ingilizce": "Diarrhea",
+    "semptomlar": [
+      "Sulu dışkı",
+      "Karın ağrısı",
+      "Ateş",
+      "Dehidrasyon"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "orta-yüksek",
+    "yas_grubu": "tüm yaş grupları",
+    "risk_faktorleri": [
+      "Bakteriyel veya viral enfeksiyonlar",
+      "Hijyen eksikliği",
+      "Kirli gıda veya su tüketimi"
+    ]
+  },
+  "kabizlik": {
+    "hastalik_adi": "Kabızlık",
+    "ingilizce": "Constipation",
+    "semptomlar": [
+      "Zor dışkılama",
+      "Karın ağrısı",
+      "Şişkinlik",
+      "Dışkıda kanama"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "düşük",
+    "yas_grubu": "tüm yaş grupları",
+    "risk_faktorleri": [
+      "Düşük lifli diyet",
+      "Yetersiz sıvı alımı",
+      "Hareketsizlik",
+      "Bazı ilaç kullanımları"
+    ]
+  },
+  "buyume_geriligi": {
+    "hastalik_adi": "Büyüme Geriliği",
+    "ingilizce": "Growth Retardation",
+    "semptomlar": [
+      "Yaşa göre düşük boy ve kilo",
+      "Gelişim geriliği",
+      "Beslenme sorunları",
+      "Zayıf bağışıklık"
+    ],
+    "brans": "Çocuk Hastalıkları",
+    "aciliyet": "orta",
+    "yas_grubu": "çocuk",
+    "risk_faktorleri": [
+      "Yetersiz beslenme",
+      "Kronik hastalıklar",
+      "Genetik faktörler",
+      "Hormon eksiklikleri"
+    ]
+  }
+}

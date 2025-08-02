@@ -1,995 +1,1039 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Randevu Al - Medvice</title>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 100%;
-            margin: 0;
-            background: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            padding: 20px 25px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .back-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .header-title {
-            flex: 1;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .content {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-        }
-        
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-        
-        .step {
-            display: flex;
-            align-items: center;
-            margin: 0 10px;
-        }
-        
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 600;
-            margin-right: 8px;
-        }
-        
-        .step.active .step-number {
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            color: white;
-        }
-        
-        .step.completed .step-number {
-            background: #27ae60;
-            color: white;
-        }
-        
-        .step.inactive .step-number {
-            background: #e9ecef;
-            color: #666;
-        }
-        
-        .step-text {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .step.active .step-text {
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .section {
-            display: none;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        /* Poliklinik Seçimi */
-        .department-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .department-card {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .department-card:hover {
-            border-color: #00d2ff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .department-card.selected {
-            border-color: #00d2ff;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-        }
-        
-        .department-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-        
-        .department-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        /* Hastane Seçimi */
-        .hospital-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .hospital-card {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 18px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .hospital-card:hover,
-        .hospital-card.selected {
-            border-color: #00d2ff;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-        }
-        
-        .hospital-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
-        
-        .hospital-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: white;
-        }
-        
-        .hospital-info h4 {
-            margin: 0 0 5px 0;
-            font-size: 16px;
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .hospital-info p {
-            margin: 0;
-            font-size: 13px;
-            color: #666;
-        }
-        
-        .hospital-details {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 12px;
-        }
-        
-        .detail-item {
-            text-align: center;
-            padding: 8px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .detail-value {
-            font-size: 12px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .detail-label {
-            font-size: 10px;
-            color: #666;
-            margin-top: 2px;
-        }
-        
-        /* Doktor Seçimi */
-        .doctor-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .doctor-card {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .doctor-card:hover,
-        .doctor-card.selected {
-            border-color: #00d2ff;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-        }
-        
-        .doctor-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .doctor-photo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: white;
-        }
-        
-        .doctor-info h5 {
-            margin: 0 0 5px 0;
-            font-size: 14px;
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .doctor-info p {
-            margin: 0;
-            font-size: 12px;
-            color: #666;
-        }
-        
-        /* Tarih ve Saat Seçimi */
-        .date-picker {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .date-item {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 10px 5px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .date-item:hover,
-        .date-item.selected {
-            border-color: #00d2ff;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-        }
-        
-        .date-item.disabled {
-            background: #f8f9fa;
-            color: #ccc;
-            cursor: not-allowed;
-        }
-        
-        .date-day {
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 3px;
-        }
-        
-        .date-number {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .time-slots {
-            display: none; /* Başlangıçta gizli */
-            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            gap: 10px;
-            margin-bottom: 25px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        .time-slots.show {
-            display: grid;
-        }
-        
-        .time-slot {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        
-        .time-slot:hover,
-        .time-slot.selected {
-            border-color: #00d2ff;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-        }
-        
-        .time-slot.unavailable {
-            background: #f8f9fa;
-            color: #ccc;
-            cursor: not-allowed;
-        }
-        
-        /* Navigation Buttons */
-        .navigation {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        .nav-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-prev {
-            background: #f8f9fa;
-            color: #666;
-            border: 1px solid #e9ecef;
-        }
-        
-        .btn-next {
-            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-            color: white;
-        }
-        
-        .btn-next:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
-        }
-        
-        .btn-prev:hover {
-            background: #e9ecef;
-        }
-        
-        /* Özet Sayfası */
-        .summary-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #00d2ff;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .summary-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        
-        .summary-label {
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .summary-value {
-            color: #666;
-            text-align: right;
-        }
-        
-        .confirm-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .confirm-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
-        }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 100%;
+        margin: 0;
+        background: white;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        padding: 20px 25px;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .back-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 5px;
+      }
+
+      .header-title {
+        flex: 1;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .content {
+        flex: 1;
+        padding: 25px;
+        overflow-y: auto;
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 25px;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        margin: 0 10px;
+      }
+
+      .step-number {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 600;
+        margin-right: 8px;
+      }
+
+      .step.active .step-number {
+        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        color: white;
+      }
+
+      .step.completed .step-number {
+        background: #27ae60;
+        color: white;
+      }
+
+      .step.inactive .step-number {
+        background: #e9ecef;
+        color: #666;
+      }
+
+      .step-text {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .step.active .step-text {
+        color: #333;
+        font-weight: 600;
+      }
+
+      .section {
+        display: none;
+      }
+
+      .section.active {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      /* Poliklinik Seçimi */
+      .department-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .department-card {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .department-card:hover {
+        border-color: #00d2ff;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .department-card.selected {
+        border-color: #00d2ff;
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      }
+
+      .department-icon {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      .department-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      /* Hastane Seçimi */
+      .hospital-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .hospital-card {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .hospital-card:hover,
+      .hospital-card.selected {
+        border-color: #00d2ff;
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      }
+
+      .hospital-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 12px;
+      }
+
+      .hospital-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: white;
+      }
+
+      .hospital-info h4 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+        color: #333;
+        font-weight: 600;
+      }
+
+      .hospital-info p {
+        margin: 0;
+        font-size: 13px;
+        color: #666;
+      }
+
+      .hospital-details {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .detail-item {
+        text-align: center;
+        padding: 8px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .detail-value {
+        font-size: 12px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .detail-label {
+        font-size: 10px;
+        color: #666;
+        margin-top: 2px;
+      }
+
+      /* Doktor Seçimi */
+      .doctor-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .doctor-card {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .doctor-card:hover,
+      .doctor-card.selected {
+        border-color: #00d2ff;
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      }
+
+      .doctor-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .doctor-photo {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: white;
+      }
+
+      .doctor-info h5 {
+        margin: 0 0 5px 0;
+        font-size: 14px;
+        color: #333;
+        font-weight: 600;
+      }
+
+      .doctor-info p {
+        margin: 0;
+        font-size: 12px;
+        color: #666;
+      }
+
+      /* Tarih ve Saat Seçimi */
+      .date-picker {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .date-item {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        padding: 10px 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .date-item:hover,
+      .date-item.selected {
+        border-color: #00d2ff;
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      }
+
+      .date-item.disabled {
+        background: #f8f9fa;
+        color: #ccc;
+        cursor: not-allowed;
+      }
+
+      .date-day {
+        font-size: 11px;
+        color: #666;
+        margin-bottom: 3px;
+      }
+
+      .date-number {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .time-slots {
+        display: none; /* Başlangıçta gizli */
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 10px;
+        margin-bottom: 25px;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+      }
+
+      .time-slots.show {
+        display: grid;
+      }
+
+      .time-slot {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .time-slot:hover,
+      .time-slot.selected {
+        border-color: #00d2ff;
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+      }
+
+      .time-slot.unavailable {
+        background: #f8f9fa;
+        color: #ccc;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .navigation {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+      }
+
+      .nav-btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-prev {
+        background: #f8f9fa;
+        color: #666;
+        border: 1px solid #e9ecef;
+      }
+
+      .btn-next {
+        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        color: white;
+      }
+
+      .btn-next:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
+      }
+
+      .btn-prev:hover {
+        background: #e9ecef;
+      }
+
+      /* Özet Sayfası */
+      .summary-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 4px solid #00d2ff;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .summary-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .summary-label {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .summary-value {
+        color: #666;
+        text-align: right;
+      }
+
+      .confirm-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .confirm-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <button class="back-btn" onclick="history.back()">←</button>
-            <div class="header-title">Randevu Al</div>
-            <div>📅</div>
+      <div class="header">
+        <button class="back-btn" onclick="history.back()">←</button>
+        <div class="header-title">Randevu Al</div>
+        <div>📅</div>
+      </div>
+
+      <div class="content">
+        <!-- Adım Göstergesi -->
+        <div class="step-indicator">
+          <div class="step active" id="step1">
+            <div class="step-number">1</div>
+            <div class="step-text">Poliklinik</div>
+          </div>
+          <div class="step inactive" id="step2">
+            <div class="step-number">2</div>
+            <div class="step-text">Hastane</div>
+          </div>
+          <div class="step inactive" id="step3">
+            <div class="step-number">3</div>
+            <div class="step-text">Doktor</div>
+          </div>
+          <div class="step inactive" id="step4">
+            <div class="step-number">4</div>
+            <div class="step-text">Tarih & Saat</div>
+          </div>
+          <div class="step inactive" id="step5">
+            <div class="step-number">5</div>
+            <div class="step-text">Onay</div>
+          </div>
         </div>
-        
-        <div class="content">
-            <!-- Adım Göstergesi -->
-            <div class="step-indicator">
-                <div class="step active" id="step1">
-                    <div class="step-number">1</div>
-                    <div class="step-text">Poliklinik</div>
-                </div>
-                <div class="step inactive" id="step2">
-                    <div class="step-number">2</div>
-                    <div class="step-text">Hastane</div>
-                </div>
-                <div class="step inactive" id="step3">
-                    <div class="step-number">3</div>
-                    <div class="step-text">Doktor</div>
-                </div>
-                <div class="step inactive" id="step4">
-                    <div class="step-number">4</div>
-                    <div class="step-text">Tarih & Saat</div>
-                </div>
-                <div class="step inactive" id="step5">
-                    <div class="step-number">5</div>
-                    <div class="step-text">Onay</div>
-                </div>
-            </div>
-            
-            <!-- Poliklinik Seçimi -->
-            <div class="section active" id="section1">
-                <div class="section-title">Hangi poliklinikten randevu almak istiyorsunuz?</div>
-                <div class="department-grid" id="departmentGrid"></div>
-            </div>
-            
-            <!-- Hastane Seçimi -->
-            <div class="section" id="section2">
-                <div class="section-title">Hastane seçiniz</div>
-                <div class="hospital-list" id="hospitalList"></div>
-            </div>
-            
-            <!-- Doktor Seçimi -->
-            <div class="section" id="section3">
-                <div class="section-title">Doktor seçiniz</div>
-                <div class="doctor-list" id="doctorList"></div>
-            </div>
-            
-            <!-- Tarih ve Saat Seçimi -->
-            <div class="section" id="section4">
-                <div class="section-title">Tarih ve saat seçiniz</div>
-                <div class="date-picker" id="datePicker"></div>
-                <div class="time-slots" id="timeSlots"></div>
-            </div>
-            
-            <!-- Özet ve Onay -->
-            <div class="section" id="section5">
-                <div class="section-title">Randevu Bilgilerinizi Onaylayın</div>
-                <div class="summary-card" id="summaryCard"></div>
-                <button class="confirm-btn" onclick="confirmAppointment()">✅ Randevuyu Onayla</button>
-            </div>
-            
-            <!-- Navigation -->
-            <div class="navigation">
-                <button class="nav-btn btn-prev" onclick="previousStep()" id="prevBtn" style="display: none;">← Önceki</button>
-                <button class="nav-btn btn-next" onclick="nextStep()" id="nextBtn">Devam Et →</button>
-            </div>
+
+        <!-- Poliklinik Seçimi -->
+        <div class="section active" id="section1">
+          <div class="section-title">
+            Hangi poliklinikten randevu almak istiyorsunuz?
+          </div>
+          <div class="department-grid" id="departmentGrid"></div>
         </div>
+
+        <!-- Hastane Seçimi -->
+        <div class="section" id="section2">
+          <div class="section-title">Hastane seçiniz</div>
+          <div class="hospital-list" id="hospitalList"></div>
+        </div>
+
+        <!-- Doktor Seçimi -->
+        <div class="section" id="section3">
+          <div class="section-title">Doktor seçiniz</div>
+          <div class="doctor-list" id="doctorList"></div>
+        </div>
+
+        <!-- Tarih ve Saat Seçimi -->
+        <div class="section" id="section4">
+          <div class="section-title">Tarih ve saat seçiniz</div>
+          <div class="date-picker" id="datePicker"></div>
+          <div class="time-slots" id="timeSlots"></div>
+        </div>
+
+        <!-- Özet ve Onay -->
+        <div class="section" id="section5">
+          <div class="section-title">Randevu Bilgilerinizi Onaylayın</div>
+          <div class="summary-card" id="summaryCard"></div>
+          <button class="confirm-btn" onclick="confirmAppointment()">
+            ✅ Randevuyu Onayla
+          </button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+          <button
+            class="nav-btn btn-prev"
+            onclick="previousStep()"
+            id="prevBtn"
+            style="display: none"
+          >
+            ← Önceki
+          </button>
+          <button class="nav-btn btn-next" onclick="nextStep()" id="nextBtn">
+            Devam Et →
+          </button>
+        </div>
+      </div>
     </div>
-    
+
     <script>
-        let currentStep = 1;
-        let selectedData = {
-            department: null,
-            hospital: null,
-            doctor: null,
-            date: null,
-            time: null
-        };
-        
-        const departments = [
-            { id: 'kardiyoloji', name: 'Kardiyoloji', icon: '❤️' },
-            { id: 'ortopedi', name: 'Ortopedi', icon: '🦴' },
-            { id: 'noroloji', name: 'Nöroloji', icon: '🧠' },
-            { id: 'dahiliye', name: 'Dahiliye', icon: '🩺' },
-            { id: 'cocuk', name: 'Çocuk Hastalıkları', icon: '👶' },
-            { id: 'goz', name: 'Göz Hastalıkları', icon: '👁️' },
-            { id: 'kulak', name: 'Kulak Burun Boğaz', icon: '👂' },
-            { id: 'cildiye', name: 'Cildiye', icon: '🧴' },
-            { id: 'uroloji', name: 'Üroloji', icon: '🔬' },
-            { id: 'jinekologi', name: 'Jinekologi', icon: '👩‍⚕️' },
-            { id: 'psikiyatri', name: 'Psikiyatri', icon: '🧘' },
-            { id: 'fizik', name: 'Fizik Tedavi', icon: '🏃' },
-            { id: 'genel', name: 'Genel Cerrahi', icon: '⚕️' },
-            { id: 'beslenme', name: 'Beslenme', icon: '🥗' },
-            { id: 'radyoloji', name: 'Radyoloji', icon: '📷' },
-            { id: 'anestezi', name: 'Anestezi', icon: '💉' }
-        ];
-        
-        const hospitals = [
-            {
-                id: 1,
-                name: 'Ankara Şehir Hastanesi',
-                location: 'Bilkent, Ankara',
-                distance: '2.5 km',
-                rating: '4.8',
-                departments: ['kardiyoloji', 'ortopedi', 'noroloji', 'dahiliye', 'cocuk', 'goz']
-            },
-            {
-                id: 2,
-                name: 'Hacettepe Üniversitesi Hastanesi',
-                location: 'Sıhhiye, Ankara',
-                distance: '3.2 km',
-                rating: '4.9',
-                departments: ['kardiyoloji', 'ortopedi', 'noroloji', 'dahiliye', 'psikiyatri', 'genel']
-            },
-            {
-                id: 3,
-                name: 'Gazi Üniversitesi Hastanesi',
-                location: 'Beşevler, Ankara',
-                distance: '4.1 km',
-                rating: '4.7',
-                departments: ['ortopedi', 'fizik', 'cildiye', 'uroloji', 'jinekologi']
-            },
-            {
-                id: 4,
-                name: 'Ankara Eğitim ve Araştırma Hastanesi',
-                location: 'Ulucanlar, Ankara',
-                distance: '3.8 km',
-                rating: '4.6',
-                departments: ['dahiliye', 'cocuk', 'goz', 'kulak', 'beslenme']
-            },
-            {
-                id: 5,
-                name: 'Medicana Ankara',
-                location: 'Söğütözü, Ankara',
-                distance: '1.8 km',
-                rating: '4.8',
-                departments: ['kardiyoloji', 'noroloji', 'psikiyatri', 'radyoloji', 'anestezi']
-            },
-            {
-                id: 6,
-                name: 'Memorial Ankara',
-                location: 'Bahçelievler, Ankara',
-                distance: '3.7 km',
-                rating: '4.9',
-                departments: ['ortopedi', 'genel', 'uroloji', 'jinekologi', 'fizik']
-            }
-        ];
-        
-        const doctors = {
-            kardiyoloji: [
-                { id: 1, name: 'Prof. Dr. Mehmet Kardiyak', experience: '25 yıl', rating: '4.9' },
-                { id: 2, name: 'Doç. Dr. Ayşe Kalp', experience: '15 yıl', rating: '4.8' },
-                { id: 3, name: 'Uz. Dr. Ali Damar', experience: '12 yıl', rating: '4.7' }
-            ],
-            ortopedi: [
-                { id: 4, name: 'Prof. Dr. Fatma Kemik', experience: '20 yıl', rating: '4.8' },
-                { id: 5, name: 'Doç. Dr. Emre Eklem', experience: '18 yıl', rating: '4.9' },
-                { id: 6, name: 'Uz. Dr. Zeynep Kas', experience: '10 yıl', rating: '4.6' }
-            ],
-            noroloji: [
-                { id: 7, name: 'Prof. Dr. Hasan Beyin', experience: '22 yıl', rating: '4.9' },
-                { id: 8, name: 'Doç. Dr. Selin Sinir', experience: '16 yıl', rating: '4.8' }
-            ],
-            dahiliye: [
-                { id: 9, name: 'Prof. Dr. Ahmet İç', experience: '28 yıl', rating: '4.9' },
-                { id: 10, name: 'Doç. Dr. Elif Organ', experience: '17 yıl', rating: '4.7' },
-                { id: 11, name: 'Uz. Dr. Murat Sistem', experience: '11 yıl', rating: '4.6' }
-            ],
-            cocuk: [
-                { id: 12, name: 'Prof. Dr. Sevim Çocuk', experience: '24 yıl', rating: '4.9' },
-                { id: 13, name: 'Doç. Dr. Kemal Bebek', experience: '16 yıl', rating: '4.8' },
-                { id: 14, name: 'Uz. Dr. Aylin Küçük', experience: '9 yıl', rating: '4.7' }
-            ],
-            goz: [
-                { id: 15, name: 'Prof. Dr. Görkem Göz', experience: '23 yıl', rating: '4.8' },
-                { id: 16, name: 'Doç. Dr. Işık Retina', experience: '14 yıl', rating: '4.9' },
-                { id: 17, name: 'Uz. Dr. Berrak Kornea', experience: '8 yıl', rating: '4.6' }
-            ],
-            kulak: [
-                { id: 18, name: 'Prof. Dr. Ses Kulak', experience: '26 yıl', rating: '4.8' },
-                { id: 19, name: 'Doç. Dr. Nefes Burun', experience: '15 yıl', rating: '4.7' },
-                { id: 20, name: 'Uz. Dr. Söz Boğaz', experience: '10 yıl', rating: '4.6' }
-            ],
-            cildiye: [
-                { id: 21, name: 'Prof. Dr. Pürüzsüz Cilt', experience: '21 yıl', rating: '4.9' },
-                { id: 22, name: 'Doç. Dr. Güzel Deri', experience: '13 yıl', rating: '4.8' },
-                { id: 23, name: 'Uz. Dr. Sağlam Ten', experience: '7 yıl', rating: '4.5' }
-            ],
-            uroloji: [
-                { id: 24, name: 'Prof. Dr. Güçlü Böbrek', experience: '27 yıl', rating: '4.9' },
-                { id: 25, name: 'Doç. Dr. Sağlam Mesane', experience: '16 yıl', rating: '4.7' },
-                { id: 26, name: 'Uz. Dr. Aktif Prostat', experience: '12 yıl', rating: '4.6' }
-            ],
-            jinekologi: [
-                { id: 27, name: 'Prof. Dr. Nurhan Ana', experience: '25 yıl', rating: '4.9' },
-                { id: 28, name: 'Doç. Dr. Güler Doğum', experience: '18 yıl', rating: '4.8' },
-                { id: 29, name: 'Uz. Dr. Sevgi Kadın', experience: '11 yıl', rating: '4.7' }
-            ],
-            psikiyatri: [
-                { id: 30, name: 'Prof. Dr. Huzur Ruh', experience: '22 yıl', rating: '4.8' },
-                { id: 31, name: 'Doç. Dr. Sakin Zihin', experience: '14 yıl', rating: '4.9' },
-                { id: 32, name: 'Uz. Dr. Mutlu Psikoloji', experience: '9 yıl', rating: '4.6' }
-            ],
-            fizik: [
-                { id: 33, name: 'Prof. Dr. Güçlü Kas', experience: '19 yıl', rating: '4.7' },
-                { id: 34, name: 'Doç. Dr. Esnek Eklem', experience: '13 yıl', rating: '4.8' },
-                { id: 35, name: 'Uz. Dr. Aktif Hareket', experience: '8 yıl', rating: '4.5' }
-            ],
-            genel: [
-                { id: 36, name: 'Prof. Dr. Usta Cerrahi', experience: '30 yıl', rating: '4.9' },
-                { id: 37, name: 'Doç. Dr. Başarılı Ameliyat', experience: '17 yıl', rating: '4.8' },
-                { id: 38, name: 'Uz. Dr. Dikkatli Operasyon', experience: '12 yıl', rating: '4.7' }
-            ],
-            beslenme: [
-                { id: 39, name: 'Prof. Dr. Sağlıklı Besin', experience: '15 yıl', rating: '4.8' },
-                { id: 40, name: 'Doç. Dr. Dengeli Diyet', experience: '12 yıl', rating: '4.7' },
-                { id: 41, name: 'Uz. Dr. Fit Beslenme', experience: '8 yıl', rating: '4.6' }
-            ],
-            radyoloji: [
-                { id: 42, name: 'Prof. Dr. Net Görüntü', experience: '24 yıl', rating: '4.9' },
-                { id: 43, name: 'Doç. Dr. Açık Röntgen', experience: '16 yıl', rating: '4.8' },
-                { id: 44, name: 'Uz. Dr. Detay Tomografi', experience: '10 yıl', rating: '4.6' }
-            ],
-            anestezi: [
-                { id: 45, name: 'Prof. Dr. Uyutan Anestezi', experience: '26 yıl', rating: '4.9' },
-                { id: 46, name: 'Doç. Dr. Güvenli Narkoz', experience: '15 yıl', rating: '4.8' },
-                { id: 47, name: 'Uz. Dr. Rahat Uyku', experience: '11 yıl', rating: '4.7' }
-            ]
-        };
-        
-        function initializePage() {
-            renderDepartments();
+      // Mevcut script etiketinin içeriğini şununla değiştirin:
+
+      let currentStep = 1;
+      let selectedData = {
+        department: null,
+        hospital: null,
+        doctor: null,
+        date: null,
+        time: null,
+      };
+
+      // API fonksiyonları
+      async function fetchAPI(url) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return await response.json();
+        } catch (error) {
+          console.error("API Error:", error);
+          showError("Veri yüklenirken hata oluştu");
+          return null;
         }
-        
-        function renderDepartments() {
-            const container = document.getElementById('departmentGrid');
-            container.innerHTML = departments.map(dept => `
-                <div class="department-card" onclick="selectDepartment('${dept.id}', '${dept.name}')">
-                    <div class="department-icon">${dept.icon}</div>
-                    <div class="department-name">${dept.name}</div>
+      }
+
+      async function postAPI(url, data) {
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          return await response.json();
+        } catch (error) {
+          console.error("API Error:", error);
+          showError("İşlem sırasında hata oluştu");
+          return null;
+        }
+      }
+
+      function showError(message) {
+        alert(message);
+      }
+
+      function showLoading(container, message = "Yükleniyor...") {
+        container.innerHTML = `
+        <div style="text-align: center; padding: 20px; color: #666;">
+            <div style="font-size: 24px; margin-bottom: 10px;">⏳</div>
+            <p>${message}</p>
+        </div>
+    `;
+      }
+
+      // Sayfa başlatma
+      async function initializePage() {
+        await loadDepartments();
+      }
+
+      // Poliklinik yükleme
+      async function loadDepartments() {
+        const container = document.getElementById("departmentGrid");
+        showLoading(container, "Poliklinikler yükleniyor...");
+
+        const departments = await fetchAPI("/api/departments");
+        if (departments) {
+          renderDepartments(departments);
+        }
+      }
+
+      function renderDepartments(departments) {
+        const container = document.getElementById("departmentGrid");
+        container.innerHTML = departments
+          .map(
+            (dept) => `
+        <div class="department-card" onclick="selectDepartment('${dept.id}', '${dept.name}')">
+            <div class="department-icon">${dept.icon}</div>
+            <div class="department-name">${dept.name}</div>
+        </div>
+    `
+          )
+          .join("");
+      }
+
+      function selectDepartment(id, name) {
+        selectedData.department = { id, name };
+        document
+          .querySelectorAll(".department-card")
+          .forEach((card) => card.classList.remove("selected"));
+        event.target.closest(".department-card").classList.add("selected");
+        document.getElementById("nextBtn").style.display = "block";
+      }
+
+      // Hastane yükleme
+      async function loadHospitals() {
+        const container = document.getElementById("hospitalList");
+        showLoading(container, "Hastaneler yükleniyor...");
+
+        const hospitals = await fetchAPI(
+          `/api/hospitals/${selectedData.department.id}`
+        );
+        if (hospitals) {
+          renderHospitals(hospitals);
+        }
+      }
+
+      function renderHospitals(hospitals) {
+        const container = document.getElementById("hospitalList");
+
+        if (hospitals.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #666;">
+                <div style="font-size: 48px; margin-bottom: 15px;">🏥</div>
+                <h3>Bu poliklinik için hastane bulunamadı</h3>
+                <p>Lütfen başka bir poliklinik seçiniz.</p>
+            </div>
+        `;
+          return;
+        }
+
+        container.innerHTML = hospitals
+          .map(
+            (hospital) => `
+        <div class="hospital-card" onclick="selectHospital(${hospital.id}, '${hospital.name}')">
+            <div class="hospital-header">
+                <div class="hospital-icon">🏥</div>
+                <div class="hospital-info">
+                    <h4>${hospital.name}</h4>
+                    <p>${hospital.location} • ${hospital.distance}</p>
                 </div>
-            `).join('');
-        }
-        
-        function selectDepartment(id, name) {
-            selectedData.department = { id, name };
-            document.querySelectorAll('.department-card').forEach(card => card.classList.remove('selected'));
-            event.target.closest('.department-card').classList.add('selected');
-            document.getElementById('nextBtn').style.display = 'block';
-        }
-        
-        function renderHospitals() {
-            const container = document.getElementById('hospitalList');
-            const filteredHospitals = hospitals.filter(hospital => 
-                hospital.departments.includes(selectedData.department.id)
-            );
-            
-            container.innerHTML = filteredHospitals.map(hospital => `
-                <div class="hospital-card" onclick="selectHospital(${hospital.id}, '${hospital.name}')">
-                    <div class="hospital-header">
-                        <div class="hospital-icon">🏥</div>
-                        <div class="hospital-info">
-                            <h4>${hospital.name}</h4>
-                            <p>${hospital.location} • ${hospital.distance}</p>
-                        </div>
-                    </div>
-                    <div class="hospital-details">
-                        <div class="detail-item">
-                            <div class="detail-value">${hospital.rating}</div>
-                            <div class="detail-label">Değerlendirme</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-value">${hospital.distance}</div>
-                            <div class="detail-label">Mesafe</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-value">Mevcut</div>
-                            <div class="detail-label">Randevu</div>
-                        </div>
-                    </div>
+            </div>
+            <div class="hospital-details">
+                <div class="detail-item">
+                    <div class="detail-value">${hospital.rating}</div>
+                    <div class="detail-label">Değerlendirme</div>
                 </div>
-            `).join('');
-        }
-        
-        function selectHospital(id, name) {
-            selectedData.hospital = { id, name };
-            document.querySelectorAll('.hospital-card').forEach(card => card.classList.remove('selected'));
-            event.target.closest('.hospital-card').classList.add('selected');
-        }
-        
-        function renderDoctors() {
-            const container = document.getElementById('doctorList');
-            const departmentDoctors = doctors[selectedData.department.id] || [];
-            
-            if (departmentDoctors.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #666;">
-                        <div style="font-size: 48px; margin-bottom: 15px;">👨‍⚕️</div>
-                        <h3>Bu poliklinik için doktor listesi hazırlanıyor</h3>
-                        <p>Lütfen daha sonra tekrar deneyiniz veya başka bir poliklinik seçiniz.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = departmentDoctors.map(doctor => `
-                <div class="doctor-card" onclick="selectDoctor(${doctor.id}, '${doctor.name}')">
-                    <div class="doctor-header">
-                        <div class="doctor-photo">👨‍⚕️</div>
-                        <div class="doctor-info">
-                            <h5>${doctor.name}</h5>
-                            <p>${doctor.experience} deneyim • ⭐ ${doctor.rating}</p>
-                        </div>
-                    </div>
+                <div class="detail-item">
+                    <div class="detail-value">${hospital.distance}</div>
+                    <div class="detail-label">Mesafe</div>
                 </div>
-            `).join('');
+                <div class="detail-item">
+                    <div class="detail-value">Mevcut</div>
+                    <div class="detail-label">Randevu</div>
+                </div>
+            </div>
+        </div>
+    `
+          )
+          .join("");
+      }
+
+      function selectHospital(id, name) {
+        selectedData.hospital = { id, name };
+        document
+          .querySelectorAll(".hospital-card")
+          .forEach((card) => card.classList.remove("selected"));
+        event.target.closest(".hospital-card").classList.add("selected");
+      }
+
+      // Doktor yükleme
+      async function loadDoctors() {
+        const container = document.getElementById("doctorList");
+        showLoading(container, "Doktorlar yükleniyor...");
+
+        const doctors = await fetchAPI(
+          `/api/doctors/${selectedData.department.id}/${selectedData.hospital.id}`
+        );
+        if (doctors) {
+          renderDoctors(doctors);
         }
-        
-        function selectDoctor(id, name) {
-            selectedData.doctor = { id, name };
-            document.querySelectorAll('.doctor-card').forEach(card => card.classList.remove('selected'));
-            event.target.closest('.doctor-card').classList.add('selected');
+      }
+
+      function renderDoctors(doctors) {
+        const container = document.getElementById("doctorList");
+
+        if (doctors.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #666;">
+                <div style="font-size: 48px; margin-bottom: 15px;">👨‍⚕️</div>
+                <h3>Bu hastanede ${selectedData.department.name} doktoru bulunamadı</h3>
+                <p>Lütfen başka bir hastane seçiniz.</p>
+            </div>
+        `;
+          return;
         }
-        
-        function renderDatePicker() {
-            const container = document.getElementById('datePicker');
-            const dates = [];
-            const today = new Date();
-            
-            // Bugünden itibaren 14 gün ileriye kadar tarihler
-            for (let i = 1; i <= 14; i++) {
-                const date = new Date(today);
-                date.setDate(today.getDate() + i);
-                dates.push(date);
-            }
-            
-            container.innerHTML = dates.map(date => {
-                const dayName = date.toLocaleDateString('tr-TR', { weekday: 'short' });
-                const dayNum = date.getDate();
-                const monthName = date.toLocaleDateString('tr-TR', { month: 'short' });
-                
-                // Pazar günleri ve bazı rastgele günleri kapalı yap
-                const isSunday = date.getDay() === 0;
-                const isRandomlyClosed = Math.random() < 0.15; // %15 rastgele kapalı
-                const disabled = isSunday || isRandomlyClosed;
-                
-                return `
-                    <div class="date-item ${disabled ? 'disabled' : ''}" 
-                         onclick="${disabled ? '' : `selectDate('${date.toISOString().split('T')[0]}')`}">
-                        <div class="date-day">${dayName}</div>
-                        <div class="date-number">${dayNum}</div>
-                        <div class="date-month" style="font-size: 10px; color: #999;">${monthName}</div>
-                    </div>
-                `;
-            }).join('');
+
+        container.innerHTML = doctors
+          .map(
+            (doctor) => `
+        <div class="doctor-card" onclick="selectDoctor(${doctor.id}, '${doctor.name}')">
+            <div class="doctor-header">
+                <div class="doctor-photo">👨‍⚕️</div>
+                <div class="doctor-info">
+                    <h5>${doctor.name}</h5>
+                    <p>${doctor.experience} deneyim • ⭐ ${doctor.rating}</p>
+                </div>
+            </div>
+        </div>
+    `
+          )
+          .join("");
+      }
+
+      function selectDoctor(id, name) {
+        selectedData.doctor = { id, name };
+        document
+          .querySelectorAll(".doctor-card")
+          .forEach((card) => card.classList.remove("selected"));
+        event.target.closest(".doctor-card").classList.add("selected");
+      }
+
+      // Tarih yükleme
+      async function loadAvailableDates() {
+        const container = document.getElementById("datePicker");
+        showLoading(container, "Müsait tarihler yükleniyor...");
+
+        const availableDates = await fetchAPI(
+          `/api/available-dates/${selectedData.doctor.id}`
+        );
+        if (availableDates) {
+          renderDatePicker(availableDates);
         }
-        
-        function selectDate(dateStr) {
-            selectedData.date = dateStr;
-            document.querySelectorAll('.date-item').forEach(item => item.classList.remove('selected'));
-            event.target.closest('.date-item').classList.add('selected');
-            
-            // Tarih seçildikten sonra saat slotlarını yükle
-            renderTimeSlots();
-            
-            // Saat seçimi bölümünü göster
-            const timeSlotsContainer = document.getElementById('timeSlots');
-            timeSlotsContainer.style.display = 'grid';
-            timeSlotsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function renderDatePicker(availableDates) {
+        const container = document.getElementById("datePicker");
+        const today = new Date();
+        const dates = [];
+
+        // 14 gün ileriye kadar tarihler oluştur
+        for (let i = 1; i <= 14; i++) {
+          const date = new Date(today);
+          date.setDate(today.getDate() + i);
+          dates.push(date);
         }
-        
-        function renderTimeSlots() {
-            const container = document.getElementById('timeSlots');
-            
-            // Sabah saatleri (09:00-12:00)
-            const morningTimes = ['09:00', '09:20', '09:40', '10:00', '10:20', '10:40', '11:00', '11:20', '11:40'];
-            // Öğleden sonra saatleri (13:00-17:00)  
-            const afternoonTimes = ['13:00', '13:20', '13:40', '14:00', '14:20', '14:40', '15:00', '15:20', '15:40', '16:00', '16:20', '16:40'];
-            
-            const allTimes = [...morningTimes, ...afternoonTimes];
-            
-            container.innerHTML = allTimes.map((time, index) => {
-                // Rastgele bazı saatleri dolu göster (%25 dolu olacak şekilde)
-                const unavailable = Math.random() < 0.25;
-                return `
-                    <div class="time-slot ${unavailable ? 'unavailable' : ''}" 
-                         onclick="${unavailable ? '' : `selectTime('${time}')`}">
-                        ${time}
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        function selectTime(time) {
-            selectedData.time = time;
-            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
-            event.target.classList.add('selected');
-        }
-        
-        function renderSummary() {
-            const container = document.getElementById('summaryCard');
-            const date = new Date(selectedData.date);
-            const formattedDate = date.toLocaleDateString('tr-TR', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+
+        container.innerHTML = dates
+          .map((date) => {
+            const dayName = date.toLocaleDateString("tr-TR", {
+              weekday: "short",
             });
-            
-            container.innerHTML = `
-                <div class="summary-item">
-                    <div class="summary-label">Poliklinik:</div>
-                    <div class="summary-value">${selectedData.department.name}</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-label">Hastane:</div>
-                    <div class="summary-value">${selectedData.hospital.name}</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-label">Doktor:</div>
-                    <div class="summary-value">${selectedData.doctor.name}</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-label">Tarih:</div>
-                    <div class="summary-value">${formattedDate}</div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-label">Saat:</div>
-                    <div class="summary-value">${selectedData.time}</div>
-                </div>
-            `;
+            const dayNum = date.getDate();
+            const dateStr = date.toISOString().split("T")[0];
+            const isAvailable = availableDates.includes(dateStr);
+
+            return `
+            <div class="date-item ${isAvailable ? "" : "disabled"}" 
+                 onclick="${isAvailable ? `selectDate('${dateStr}')` : ""}">
+                <div class="date-day">${dayName}</div>
+                <div class="date-number">${dayNum}</div>
+            </div>
+        `;
+          })
+          .join("");
+      }
+
+      async function selectDate(dateStr) {
+        selectedData.date = dateStr;
+        document
+          .querySelectorAll(".date-item")
+          .forEach((item) => item.classList.remove("selected"));
+        event.target.closest(".date-item").classList.add("selected");
+
+        // Saat slotlarını yükle
+        await loadAvailableTimes(dateStr);
+
+        // Saat seçimi bölümünü göster
+        const timeSlotsContainer = document.getElementById("timeSlots");
+        timeSlotsContainer.style.display = "grid";
+        timeSlotsContainer.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+
+      // Saat yükleme
+      async function loadAvailableTimes(date) {
+        const container = document.getElementById("timeSlots");
+        showLoading(container, "Müsait saatler yükleniyor...");
+
+        const availableTimes = await fetchAPI(
+          `/api/available-times/${selectedData.doctor.id}/${date}`
+        );
+        if (availableTimes) {
+          renderTimeSlots(availableTimes);
         }
-        
-        function nextStep() {
-            if (currentStep === 1 && !selectedData.department) {
-                alert('Lütfen bir poliklinik seçiniz.');
-                return;
-            }
-            if (currentStep === 2 && !selectedData.hospital) {
-                alert('Lütfen bir hastane seçiniz.');
-                return;
-            }
-            if (currentStep === 3 && !selectedData.doctor) {
-                alert('Lütfen bir doktor seçiniz.');
-                return;
-            }
-            if (currentStep === 4 && (!selectedData.date || !selectedData.time)) {
-                alert('Lütfen tarih ve saat seçiniz.');
-                return;
-            }
-            
-            currentStep++;
-            updateStepIndicator();
-            showCurrentSection();
-            
-            // Her adımda ilgili verileri yükle
-            if (currentStep === 2) {
-                renderHospitals();
-            } else if (currentStep === 3) {
-                renderDoctors();
-            } else if (currentStep === 4) {
-                renderDatePicker();
-            } else if (currentStep === 5) {
-                renderSummary();
-                document.getElementById('nextBtn').style.display = 'none';
-            }
-            
-            // Önceki butonu göster
-            if (currentStep > 1) {
-                document.getElementById('prevBtn').style.display = 'block';
-            }
+      }
+
+      function renderTimeSlots(availableTimes) {
+        const container = document.getElementById("timeSlots");
+
+        // Tüm saat aralıkları
+        const morningTimes = [
+          "09:00",
+          "09:20",
+          "09:40",
+          "10:00",
+          "10:20",
+          "10:40",
+          "11:00",
+          "11:20",
+          "11:40",
+        ];
+        const afternoonTimes = [
+          "13:00",
+          "13:20",
+          "13:40",
+          "14:00",
+          "14:20",
+          "14:40",
+          "15:00",
+          "15:20",
+          "15:40",
+          "16:00",
+          "16:20",
+          "16:40",
+        ];
+        const allTimes = [...morningTimes, ...afternoonTimes];
+
+        container.innerHTML = allTimes
+          .map((time) => {
+            const isAvailable = availableTimes.includes(time);
+            return `
+            <div class="time-slot ${isAvailable ? "" : "unavailable"}" 
+                 onclick="${isAvailable ? `selectTime('${time}')` : ""}">
+                ${time}
+            </div>
+        `;
+          })
+          .join("");
+      }
+
+      function selectTime(time) {
+        selectedData.time = time;
+        document
+          .querySelectorAll(".time-slot")
+          .forEach((slot) => slot.classList.remove("selected"));
+        event.target.classList.add("selected");
+      }
+
+      function renderSummary() {
+        const container = document.getElementById("summaryCard");
+        const date = new Date(selectedData.date);
+        const formattedDate = date.toLocaleDateString("tr-TR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+
+        container.innerHTML = `
+        <div class="summary-item">
+            <div class="summary-label">Poliklinik:</div>
+            <div class="summary-value">${selectedData.department.name}</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-label">Hastane:</div>
+            <div class="summary-value">${selectedData.hospital.name}</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-label">Doktor:</div>
+            <div class="summary-value">${selectedData.doctor.name}</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-label">Tarih:</div>
+            <div class="summary-value">${formattedDate}</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-label">Saat:</div>
+            <div class="summary-value">${selectedData.time}</div>
+        </div>
+    `;
+      }
+
+      async function nextStep() {
+        if (currentStep === 1 && !selectedData.department) {
+          alert("Lütfen bir poliklinik seçiniz.");
+          return;
         }
-        
-        function previousStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateStepIndicator();
-                showCurrentSection();
-                
-                // Devam et butonunu tekrar göster
-                document.getElementById('nextBtn').style.display = 'block';
-                
-                // İlk adımda önceki butonu gizle
-                if (currentStep === 1) {
-                    document.getElementById('prevBtn').style.display = 'none';
-                }
-            }
+        if (currentStep === 2 && !selectedData.hospital) {
+          alert("Lütfen bir hastane seçiniz.");
+          return;
         }
-        
-        function updateStepIndicator() {
-            for (let i = 1; i <= 5; i++) {
-                const step = document.getElementById(`step${i}`);
-                if (i < currentStep) {
-                    step.className = 'step completed';
-                } else if (i === currentStep) {
-                    step.className = 'step active';
-                } else {
-                    step.className = 'step inactive';
-                }
-            }
+        if (currentStep === 3 && !selectedData.doctor) {
+          alert("Lütfen bir doktor seçiniz.");
+          return;
         }
-        
-        function showCurrentSection() {
-            for (let i = 1; i <= 5; i++) {
-                const section = document.getElementById(`section${i}`);
-                if (i === currentStep) {
-                    section.classList.add('active');
-                } else {
-                    section.classList.remove('active');
-                }
-            }
+        if (currentStep === 4 && (!selectedData.date || !selectedData.time)) {
+          alert("Lütfen tarih ve saat seçiniz.");
+          return;
         }
-        
-        function confirmAppointment() {
-            const date = new Date(selectedData.date);
-            const formattedDate = date.toLocaleDateString('tr-TR', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            const confirmMessage = `
+
+        currentStep++;
+        updateStepIndicator();
+        showCurrentSection();
+
+        // Her adımda ilgili verileri yükle
+        if (currentStep === 2) {
+          await loadHospitals();
+        } else if (currentStep === 3) {
+          await loadDoctors();
+        } else if (currentStep === 4) {
+          await loadAvailableDates();
+        } else if (currentStep === 5) {
+          renderSummary();
+          document.getElementById("nextBtn").style.display = "none";
+        }
+
+        // Önceki butonu göster
+        if (currentStep > 1) {
+          document.getElementById("prevBtn").style.display = "block";
+        }
+      }
+
+      function previousStep() {
+        if (currentStep > 1) {
+          currentStep--;
+          updateStepIndicator();
+          showCurrentSection();
+
+          // Devam et butonunu tekrar göster
+          document.getElementById("nextBtn").style.display = "block";
+
+          // İlk adımda önceki butonu gizle
+          if (currentStep === 1) {
+            document.getElementById("prevBtn").style.display = "none";
+          }
+        }
+      }
+
+      function updateStepIndicator() {
+        for (let i = 1; i <= 5; i++) {
+          const step = document.getElementById(`step${i}`);
+          if (i < currentStep) {
+            step.className = "step completed";
+          } else if (i === currentStep) {
+            step.className = "step active";
+          } else {
+            step.className = "step inactive";
+          }
+        }
+      }
+
+      function showCurrentSection() {
+        for (let i = 1; i <= 5; i++) {
+          const section = document.getElementById(`section${i}`);
+          if (i === currentStep) {
+            section.classList.add("active");
+          } else {
+            section.classList.remove("active");
+          }
+        }
+      }
+
+      async function confirmAppointment() {
+        const confirmBtn = document.querySelector(".confirm-btn");
+        const originalText = confirmBtn.innerHTML;
+
+        // Loading durumu
+        confirmBtn.innerHTML = "⏳ Randevu kaydediliyor...";
+        confirmBtn.disabled = true;
+
+        const appointmentData = {
+          patient_name: getUsername(),
+          department_id: selectedData.department.id,
+          hospital_id: selectedData.hospital.id,
+          doctor_id: selectedData.doctor.id,
+          date: selectedData.date,
+          time: selectedData.time,
+        };
+
+        const result = await postAPI("/api/appointments", appointmentData);
+
+        if (result && result.success) {
+          const date = new Date(selectedData.date);
+          const formattedDate = date.toLocaleDateString("tr-TR", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+
+          const confirmMessage = `
 🎉 Randevunuz başarıyla alındı!
 
 📋 Randevu Detayları:
@@ -1003,45 +1047,52 @@
 📧 E-posta onay bilgisi iletilmiştir.
 
 Randevunuza 15 dakika önce hastanede bulunmanız önerilir.
-            `;
-            
-            alert(confirmMessage);
-            
-            // Başarı animasyonu
-            document.querySelector('.confirm-btn').innerHTML = '✅ Randevu Alındı!';
-            document.querySelector('.confirm-btn').style.background = '#27ae60';
-            
-            // 3 saniye sonra ana sayfaya yönlendir
-            setTimeout(() => {
-                window.location.href = '/welcome/' + getUsername();
-            }, 3000);
+        `;
+
+          alert(confirmMessage);
+
+          // Başarı animasyonu
+          confirmBtn.innerHTML = "✅ Randevu Alındı!";
+          confirmBtn.style.background =
+            "linear-gradient(135deg, #27ae60 0%, #229954 100%)";
+
+          // 3 saniye sonra ana sayfaya yönlendir
+          setTimeout(() => {
+            window.location.href = "/welcome/" + getUsername();
+          }, 3000);
+        } else {
+          // Hata durumu
+          confirmBtn.innerHTML = originalText;
+          confirmBtn.disabled = false;
+          alert(result ? result.error : "Randevu kaydedilirken hata oluştu");
         }
-        
-        function getUsername() {
-            // URL'den kullanıcı adını al (template değişkeni yerine)
-            const pathParts = window.location.pathname.split('/');
-            return pathParts[pathParts.length - 1] || 'user';
-        }
-        
-        // Sayfa yüklendiğinde başlat
-        document.addEventListener('DOMContentLoaded', function() {
-            initializePage();
-            
-            // Kartlara animasyon ekle
+      }
+
+      function getUsername() {
+        // URL'den kullanıcı adını al
+        const pathParts = window.location.pathname.split("/");
+        return pathParts[pathParts.length - 1] || "user";
+      }
+
+      // Sayfa yüklendiğinde başlat
+      document.addEventListener("DOMContentLoaded", function () {
+        initializePage();
+
+        // Kartlara animasyon ekle
+        setTimeout(() => {
+          const cards = document.querySelectorAll(".department-card");
+          cards.forEach((card, index) => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(20px)";
+            card.style.transition = "all 0.5s ease";
+
             setTimeout(() => {
-                const cards = document.querySelectorAll('.department-card');
-                cards.forEach((card, index) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'all 0.5s ease';
-                    
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, index * 100);
-                });
-            }, 100);
-        });
+              card.style.opacity = "1";
+              card.style.transform = "translateY(0)";
+            }, index * 100);
+          });
+        }, 100);
+      });
     </script>
-</body>
+  </body>
 </html>
