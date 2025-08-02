@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medvice Asistan</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            overflow-y: auto;
+        }
+        
+        .phone-container {
+            width: 100%;
+            min-height: 100vh;
+            background: white;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: #f8f9fa;
+            height: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .time {
+            font-weight: 600;
+        }
+        
+        .indicators {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .profile-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .profile-info h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .profile-info p {
+            margin: 0;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #333;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 40px 30px 20px;
+            text-align: center;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .assistant-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .assistant-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            max-width: 350px;
+        }
+        
+        .search-container {
+            width: 100%;
+            max-width: 350px;
+            margin-bottom: 25px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 14px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #00d2ff;
+            box-shadow: 0 2px 15px rgba(0,210,255,0.2);
+        }
+        
+        .assistant-character {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin: 20px auto 25px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .assistant-character:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255,107,107,0.4);
+        }
+        
+        .assistant-character.recording {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            animation: pulse-recording 1s infinite;
+            transform: scale(1.1);
+        }
+        
+        @keyframes pulse-recording {
+            0%, 100% { box-shadow: 0 0 20px rgba(231, 76, 60, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(231, 76, 60, 0.8); }
+        }
+        
+        .recording-indicator {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background: #e74c3c;
+            border-radius: 50%;
+            border: 2px solid white;
+            animation: blink 1s infinite;
+            display: none;
+        }
+        
+        .assistant-character.recording .recording-indicator {
+            display: block;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .voice-status {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+        }
+        
+        .assistant-character.recording .voice-status {
+            display: block;
+        }
+        
+        .assistant-character::before {
+            content: '🤖';
+        }
+        
+        /* Bottom Button */
+        .bottom-section {
+            padding: 15px 30px 25px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            margin-top: auto;
+        }
+        
+        .start-btn {
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+            display: block;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.3);
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+        }
+        
+        .start-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+            max-width: 350px;
+            width: 100%;
+        }
+        
+        .quick-action {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .quick-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .quick-action-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .quick-action-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="indicators">
+                <span>📶</span>
+                <span>📶</span>
+                <span>🔋</span>
+            </div>
+        </div>
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="profile-section">
+                <div class="profile-avatar">👤</div>
+                <div class="profile-info">
+                    <h3>{{ username }}</h3>
+                    <p>Aktif Kullanıcı</p>
+                </div>
+            </div>
+            <button class="menu-btn">☰</button>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1 class="assistant-title">Nasıl yardımcı olabilirim?</h1>
+            <p class="assistant-subtitle">
+                Size yardımcı olmak için buradayım.<br>
+                Hangi konuda destek istediğinizi<br>
+                bana söyleyebilirsiniz. Size ayrıntılı<br>
+                bir cevap vermek için buradayım.<br>
+                Lütfen ihtiyacınızı belirtin!
+            </p>
+            
+            <div class="assistant-character" 
+                 onmousedown="startVoiceRecording()" 
+                 onmouseup="stopVoiceRecording()" 
+                 onmouseleave="stopVoiceRecording()"
+                 ontouchstart="startVoiceRecording()" 
+                 ontouchend="stopVoiceRecording()">
+                <div class="recording-indicator"></div>
+                <div class="voice-status">🎤 Dinliyorum...</div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="🔍 Size nasıl yardımcı olabilirim?">
+            </div>
+            
+            <div class="quick-actions">
+                <a href="/medicine/{{ username }}" class="quick-action">
+                    <div class="quick-action-icon">💊</div>
+                    <div class="quick-action-text">İlaç Bilgisi</div>
+                </a>
+                <a href="/appointments/{{ username }}" class="quick-action">
+                    <div class="quick-action-icon">🏥</div>
+                    <div class="quick-action-text">Hastane</div>
+                </a>
+                <a href="/calendar/{{ username }}" class="quick-action">
+                    <div class="quick-action-icon">📅</div>
+                    <div class="quick-action-text">Randevu</div>
+                </a>
+                <a href="/lab-results/{{ username }}" class="quick-action">
+                    <div class="quick-action-icon">📋</div>
+                    <div class="quick-action-text">Tahlil</div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Bottom Section -->
+        <div class="bottom-section">
+            <button class="start-btn" onclick="window.location.href='/chat/{{ username }}'">Asistanla Başla</button>
+        </div>
+    </div>
+    
+    <script>
+        let recognition;
+        let isRecording = false;
+        let recordingTimeout;
+        
+        // Ses tanıma desteği kontrolü
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'tr-TR'; // Türkçe dil desteği
+            
+            recognition.onresult = function(event) {
+                let finalTranscript = '';
+                let interimTranscript = '';
+                
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript;
+                    } else {
+                        interimTranscript += transcript;
+                    }
+                }
+                
+                // Arama kutusunu güncelle
+                const searchInput = document.querySelector('.search-input');
+                if (finalTranscript) {
+                    searchInput.value = finalTranscript;
+                    // Otomatik arama başlat
+                    setTimeout(() => {
+                        processVoiceCommand(finalTranscript);
+                    }, 500);
+                } else if (interimTranscript) {
+                    searchInput.placeholder = '🎤 ' + interimTranscript;
+                }
+            };
+            
+            recognition.onerror = function(event) {
+                console.log('Ses tanıma hatası:', event.error);
+                stopVoiceRecording();
+                showVoiceError();
+            };
+            
+            recognition.onend = function() {
+                stopVoiceRecording();
+            };
+        }
+        
+        function startVoiceRecording() {
+            if (!recognition) {
+                alert('Tarayıcınız ses tanımayı desteklemiyor. Chrome veya Edge kullanmayı deneyin.');
+                return;
+            }
+            
+            if (isRecording) return;
+            
+            isRecording = true;
+            const character = document.querySelector('.assistant-character');
+            character.classList.add('recording');
+            
+            // Mikrofon izni iste ve kayıt başlat
+            try {
+                recognition.start();
+                
+                // 10 saniye sonra otomatik durdur
+                recordingTimeout = setTimeout(() => {
+                    stopVoiceRecording();
+                }, 10000);
+                
+            } catch (error) {
+                console.log('Ses kayıt hatası:', error);
+                stopVoiceRecording();
+                showVoiceError();
+            }
+        }
+        
+        function stopVoiceRecording() {
+            if (!isRecording) return;
+            
+            isRecording = false;
+            const character = document.querySelector('.assistant-character');
+            character.classList.remove('recording');
+            
+            if (recognition) {
+                recognition.stop();
+            }
+            
+            if (recordingTimeout) {
+                clearTimeout(recordingTimeout);
+            }
+            
+            // Placeholder'ı sıfırla
+            setTimeout(() => {
+                const searchInput = document.querySelector('.search-input');
+                if (searchInput.value === '') {
+                    searchInput.placeholder = '🔍 Size nasıl yardımcı olabilirim?';
+                }
+            }, 1000);
+        }
+        
+        function processVoiceCommand(text) {
+            const searchInput = document.querySelector('.search-input');
+            
+            // Sesli komutu işle
+            if (text.toLowerCase().includes('merhaba') || text.toLowerCase().includes('selam')) {
+                searchInput.value = 'Merhaba, nasılsın?';
+            } else if (text.toLowerCase().includes('randevu')) {
+                searchInput.value = 'Randevu almak istiyorum';
+            } else if (text.toLowerCase().includes('ilaç')) {
+                searchInput.value = 'İlaç bilgisi almak istiyorum';
+            } else if (text.toLowerCase().includes('hastane')) {
+                searchInput.value = 'En yakın hastane nerede?';
+            } else {
+                searchInput.value = text;
+            }
+            
+            // Görsel geri bildirim
+            showVoiceSuccess();
+        }
+        
+        function showVoiceSuccess() {
+            const character = document.querySelector('.assistant-character');
+            character.style.background = 'linear-gradient(135deg, #27ae60 0%, #229954 100%)';
+            
+            setTimeout(() => {
+                character.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)';
+            }, 1000);
+        }
+        
+        function showVoiceError() {
+            const character = document.querySelector('.assistant-character');
+            character.style.background = 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)';
+            
+            setTimeout(() => {
+                character.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)';
+            }, 1000);
+        }
+        
+        // Touch eventlerini optimize et
+        document.addEventListener('touchstart', function() {}, {passive: true});
+        document.addEventListener('touchend', function() {}, {passive: true});
+    </script>
+</body>
+</html>
