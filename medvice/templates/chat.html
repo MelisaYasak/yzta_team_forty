@@ -154,6 +154,159 @@
         justify-content: center;
         font-size: 18px;
       }
+
+      /* ================ RANDEVU SİSTEMİ STİLLERİ ================ */
+      
+      /* Randevu özeti kartı */
+      .appointment-summary {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+      }
+
+      .appointment-item {
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        font-size: 15px;
+      }
+
+      .appointment-item .icon {
+        font-size: 18px;
+        margin-right: 10px;
+        width: 25px;
+      }
+
+      /* Randevu başarı mesajı */
+      .appointment-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin: 15px 0;
+        text-align: center;
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .appointment-id {
+        background: rgba(255,255,255,0.2);
+        padding: 8px 15px;
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 18px;
+        margin: 10px 0;
+        display: inline-block;
+      }
+
+      /* Hastane/doktor seçim kartları */
+      .selection-list {
+        margin: 15px 0;
+      }
+
+      .selection-item {
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 15px;
+        margin: 10px 0;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .selection-item:hover {
+        border-color: #007bff;
+        background: #e3f2fd;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,123,255,0.2);
+      }
+
+      .selection-item .number {
+        background: #007bff;
+        color: white;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 12px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .selection-item .title {
+        font-weight: 600;
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 5px;
+        padding-right: 35px;
+      }
+
+      .selection-item .details {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      /* Hızlı yanıt butonları */
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 15px 0;
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        flex: 1;
+        min-width: 120px;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+      }
+
+      .action-btn.primary {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+      }
+
+      .action-btn.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+      }
+
+      .action-btn.danger {
+        background: #dc3545;
+        color: white;
+      }
+
+      .action-btn.danger:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .selection-item .number {
+          position: static;
+          margin-bottom: 10px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -167,7 +320,7 @@
       <div class="chat-messages" id="chatMessages">
         <div class="message bot">
           <div class="message-bubble">
-            Merhaba {{ username }}! Size nasıl yardımcı olabilirim? Sağlık
+            Merhaba! Size nasıl yardımcı olabilirim? Sağlık
             konularında sorularınızı yanıtlamak için buradayım.
           </div>
         </div>
@@ -211,7 +364,7 @@
 
         recognition.continuous = true;
         recognition.interimResults = true;
-        recognition.lang = "tr-TR"; // Türkçe dil desteği
+        recognition.lang = "tr-TR";
 
         recognition.onresult = function (event) {
           let finalTranscript = "";
@@ -226,11 +379,9 @@
             }
           }
 
-          // Input'u güncelle
           const messageInput = document.getElementById("messageInput");
           if (finalTranscript) {
             messageInput.value = finalTranscript;
-            // Otomatik mesaj gönder
             setTimeout(() => {
               sendMessage();
             }, 500);
@@ -264,11 +415,8 @@
         const voiceBtn = document.getElementById("voiceBtn");
         voiceBtn.classList.add("recording");
 
-        // Mikrofon izni iste ve kayıt başlat
         try {
           recognition.start();
-
-          // 10 saniye sonra otomatik durdur
           recordingTimeout = setTimeout(() => {
             stopVoiceRecording();
           }, 10000);
@@ -294,7 +442,6 @@
           clearTimeout(recordingTimeout);
         }
 
-        // Placeholder'ı sıfırla
         setTimeout(() => {
           const messageInput = document.getElementById("messageInput");
           if (messageInput.value === "") {
@@ -312,6 +459,320 @@
           voiceBtn.style.background =
             "linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)";
         }, 1000);
+      }
+
+      // ================ RANDEVU SİSTEMİ FONKSİYONLARI ================
+
+      function formatAppointmentMessage(message) {
+        if (message.includes('📋 **Randevu Özeti:**')) {
+          return formatAppointmentSummary(message);
+        }
+        
+        if (message.includes('🎉 **Randevunuz oluşturuldu!**')) {
+          return formatAppointmentSuccess(message);
+        }
+        
+        if (message.includes('**En yakın hastaneler:**') || message.includes('bölümündeki doktorlar:')) {
+          return formatSelectionList(message);
+        }
+        
+        if (message.includes('Müsait saatler:') || message.includes('**Müsait saatler:**')) {
+          return formatTimeSelection(message);
+        }
+        
+        // Gün seçimi için yeni condition
+        if (message.includes('Randevu tarihi seçin:') || message.includes('Ne zaman randevu almak istersiniz?') || (message.includes('**Bugün**') && message.includes('**Yarın**'))) {
+          return formatDateSelection(message);
+        }
+        
+        return message;
+      }
+
+      function formatAppointmentSummary(message) {
+        const lines = message.split('\n');
+        let formatted = '<div class="appointment-summary">';
+        
+        for (let line of lines) {
+          if (line.includes('🏥') && line.includes('Hastane')) {
+            const hospitalMatch = line.match(/Hastane[:\s]*(.+?)$/);
+            const hospital = hospitalMatch ? hospitalMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">🏥</span><span>Hastane: ${hospital}</span></div>`;
+          } else if (line.includes('👨‍⚕️') && line.includes('Doktor')) {
+            const doctorMatch = line.match(/Doktor[:\s]*(.+?)$/);
+            const doctor = doctorMatch ? doctorMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">👨‍⚕️</span><span>Doktor: ${doctor}</span></div>`;
+          } else if (line.includes('🏥') && line.includes('Bölüm')) {
+            const departmentMatch = line.match(/Bölüm[:\s]*(.+?)$/);
+            const department = departmentMatch ? departmentMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">🏥</span><span>Bölüm: ${department}</span></div>`;
+          } else if (line.includes('📅') && line.includes('Tarih')) {
+            const dateMatch = line.match(/Tarih[:\s]*(.+?)$/);
+            const date = dateMatch ? dateMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">📅</span><span>Tarih: ${date}</span></div>`;
+          } else if (line.includes('🕐') && line.includes('Saat')) {
+            const timeMatch = line.match(/Saat[:\s]*(.+?)$/);
+            const time = timeMatch ? timeMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">🕐</span><span>Saat: ${time}</span></div>`;
+          } else if (line.includes('Onaylıyor musunuz?')) {
+            formatted += `</div><div style="margin-top: 15px;"><strong>${line}</strong></div>`;
+            formatted += `<div class="action-buttons">
+                <button class="action-btn primary" onclick="sendQuickReply('evet')">✅ Evet, oluştur</button>
+                <button class="action-btn danger" onclick="sendQuickReply('iptal')">❌ İptal et</button>
+            </div>`;
+          }
+        }
+        
+        if (!message.includes('Onaylıyor musunuz?')) {
+          formatted += '</div>';
+        }
+        
+        return formatted;
+      }
+
+      function formatAppointmentSuccess(message) {
+        const lines = message.split('\n');
+        let formatted = '<div class="appointment-success">';
+        
+        for (let line of lines) {
+          if (line.includes('🎉')) {
+            formatted += `<h3 style="margin: 0 0 15px 0;">${line.replace(/\*\*/g, '')}</h3>`;
+          } else if (line.includes('Randevu No:')) {
+            const appointmentMatch = line.match(/Randevu No:\s*(.+?)(?:\*\*|$)/);
+            const appointmentId = appointmentMatch ? appointmentMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-id">${appointmentId}</div>`;
+          } else if (line.includes('🏥') && (line.includes('Hastane') || line.includes('**Hastane'))) {
+            const hospitalMatch = line.match(/Hastane[:\s]*(.+?)(?:\*\*|$)/);
+            const hospital = hospitalMatch ? hospitalMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">🏥</span><span>Hastane: ${hospital}</span></div>`;
+          } else if (line.includes('👨‍⚕️') && (line.includes('Doktor') || line.includes('**Doktor'))) {
+            const doctorMatch = line.match(/Doktor[:\s]*(.+?)(?:\*\*|$)/);
+            const doctor = doctorMatch ? doctorMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">👨‍⚕️</span><span>Doktor: ${doctor}</span></div>`;
+          } else if (line.includes('📅') && (line.includes('Tarih') || line.includes('**Tarih'))) {
+            const dateMatch = line.match(/Tarih[:\s]*(.+?)(?:\*\*|$)/);
+            const date = dateMatch ? dateMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">📅</span><span>Tarih: ${date}</span></div>`;
+          } else if (line.includes('🕐') && (line.includes('Saat') || line.includes('**Saat'))) {
+            const timeMatch = line.match(/Saat[:\s]*(.+?)(?:\*\*|$)/);
+            const time = timeMatch ? timeMatch[1].replace(/\*\*/g, '').trim() : 'Bilinmiyor';
+            formatted += `<div class="appointment-item"><span class="icon">🕐</span><span>Saat: ${time}</span></div>`;
+          }
+        }
+        
+        formatted += '</div>';
+        return formatted;
+      }
+
+      function formatSelectionList(message) {
+        const lines = message.split('\n');
+        let formatted = '';
+        let inList = false;
+        let currentItem = '';
+        let itemCount = 0;
+        
+        for (let line of lines) {
+          if (line.includes('**En yakın hastaneler:**') || line.includes('bölümündeki doktorlar:')) {
+            formatted += `<strong>${line.replace(/\*\*/g, '')}</strong>`;
+            formatted += '<div class="selection-list">';
+            inList = true;
+          } else if (inList && line.match(/^\*\*\d+\./)) {
+            if (currentItem) {
+              formatted += formatSelectionItem(currentItem, itemCount);
+              currentItem = '';
+            }
+            itemCount++;
+            currentItem = line + '\n';
+          } else if (inList && line.trim() && !line.includes('Hangi') && !line.includes('seçmek')) {
+            currentItem += line + '\n';
+          } else if (line.includes('Hangi') || line.includes('seçmek')) {
+            if (currentItem) {
+              formatted += formatSelectionItem(currentItem, itemCount);
+            }
+            formatted += '</div>';
+            formatted += `<div style="margin-top: 15px;"><strong>${line}</strong></div>`;
+            inList = false;
+          } else if (!inList) {
+            formatted += line + '<br>';
+          }
+        }
+        
+        return formatted;
+      }
+
+      function formatSelectionItem(itemText, number) {
+        const lines = itemText.trim().split('\n');
+        const title = lines[0].replace(/^\*\*\d+\.\s*/, '').replace(/\*\*/g, '');
+        const details = lines.slice(1).join('<br>').replace(/📍|📏|⭐|👨‍⚕️/g, '').trim();
+        
+        return `
+            <div class="selection-item" onclick="sendQuickReply('${number}')">
+                <div class="number">${number}</div>
+                <div class="title">${title}</div>
+                <div class="details">${details}</div>
+            </div>
+        `;
+      }
+
+      function formatTimeSelection(message) {
+        console.log("formatTimeSelection çağrıldı:", message); // Debug için
+        
+        const lines = message.split('\n');
+        let formatted = '';
+        let inList = false;
+        let currentItem = '';
+        let itemCount = 0;
+        
+        for (let line of lines) {
+          line = line.trim();
+          
+          if (line.includes('Müsait saatler')) {
+            formatted += `<strong>${line.replace(/\*\*/g, '')}</strong>`;
+            formatted += '<div class="selection-list">';
+            inList = true;
+          } else if (inList && line.match(/^\*\*\d+\./)) {
+            // Önceki item'i işle
+            if (currentItem) {
+              formatted += formatTimeItem(currentItem, itemCount);
+              currentItem = '';
+            }
+            itemCount++;
+            currentItem = line;
+          } else if (line.includes('Hangi saati') || line.includes('tercih edersiniz')) {
+            // Son item'i işle
+            if (currentItem) {
+              formatted += formatTimeItem(currentItem, itemCount);
+            }
+            formatted += '</div>';
+            formatted += `<div style="margin-top: 15px;"><strong>${line}</strong></div>`;
+            inList = false;
+          } else if (!inList && line) {
+            formatted += line + '<br>';
+          }
+        }
+        
+        // Eğer liste kapanmamışsa kapat
+        if (inList) {
+          if (currentItem) {
+            formatted += formatTimeItem(currentItem, itemCount);
+          }
+          formatted += '</div>';
+        }
+        
+        console.log("Formatted result:", formatted); // Debug için
+        return formatted;
+      }
+
+      function formatTimeItem(itemText, number) {
+        console.log("formatTimeItem çağrıldı:", itemText, number); // Debug için
+        
+        // **1. 09:00** formatından 09:00'ı çıkar
+        const timeMatch = itemText.match(/\*\*\d+\.\s*\*\*([^*]+)\*\*/);
+        let time = 'Bilinmiyor';
+        
+        if (timeMatch) {
+          time = timeMatch[1].trim();
+        } else {
+          // Alternatif regex denemesi
+          const altMatch = itemText.match(/(\d{2}:\d{2})/);
+          if (altMatch) {
+            time = altMatch[1];
+          }
+        }
+        
+        console.log("Extracted time:", time); // Debug için
+        
+        return `
+            <div class="selection-item" onclick="sendQuickReply('${number}')">
+                <div class="number">${number}</div>
+                <div class="title">${time}</div>
+                <div class="details">Müsait saat</div>
+            </div>
+        `;
+      }
+
+      function formatDateSelection(message) {
+        console.log("formatDateSelection çağrıldı:", message); // Debug için
+        
+        const lines = message.split('\n');
+        let formatted = '';
+        let itemCount = 0;
+        
+        // Başlık ve açıklama bul
+        for (let line of lines) {
+          line = line.trim();
+          
+          if (line.includes('seçin:') || line.includes('istersiniz?')) {
+            formatted += `<strong>${line.replace(/\*\*/g, '')}</strong>`;
+            formatted += '<div class="selection-list">';
+            break;
+          }
+        }
+        
+        // Tarih seçeneklerini bul ve formatla
+        const dateOptions = [];
+        
+        // **Bugün** formatını ara
+        if (message.includes('**Bugün**')) {
+          itemCount++;
+          const bugünMatch = message.match(/\*\*Bugün\*\*[^*]*(\([^)]+\))?/);
+          const detail = bugünMatch ? bugünMatch[0].replace(/\*\*/g, '') : 'Bugün';
+          dateOptions.push({
+            number: itemCount,
+            title: 'Bugün',
+            details: detail.includes('(') ? detail : 'Bugün - Aynı gün randevu'
+          });
+        }
+        
+        // **Yarın** formatını ara
+        if (message.includes('**Yarın**')) {
+          itemCount++;
+          const yarınMatch = message.match(/\*\*Yarın\*\*[^*]*(\([^)]+\))?/);
+          const detail = yarınMatch ? yarınMatch[0].replace(/\*\*/g, '') : 'Yarın';
+          dateOptions.push({
+            number: itemCount,
+            title: 'Yarın', 
+            details: detail.includes('(') ? detail : 'Yarın - Ertesi gün randevu'
+          });
+        }
+        
+        // **Bu hafta** formatını ara
+        if (message.includes('**Bu hafta**')) {
+          itemCount++;
+          const buHaftaMatch = message.match(/\*\*Bu hafta\*\*[^*]*(\([^)]+\))?/);
+          const detail = buHaftaMatch ? buHaftaMatch[0].replace(/\*\*/g, '') : 'Bu hafta';
+          dateOptions.push({
+            number: itemCount,
+            title: 'Bu hafta',
+            details: detail.includes('(') ? detail : 'Bu hafta - 7 gün içinde randevu'
+          });
+        }
+        
+        // Card'ları oluştur
+        dateOptions.forEach(option => {
+          formatted += `
+            <div class="selection-item" onclick="sendQuickReply('${option.title.toLowerCase()}')">
+                <div class="number">${option.number}</div>
+                <div class="title">${option.title}</div>
+                <div class="details">${option.details.replace(option.title, '').replace(/^\s*-\s*/, '').trim()}</div>
+            </div>
+          `;
+        });
+        
+        formatted += '</div>';
+        
+        // Soru metnini ekle
+        const questionLine = lines.find(line => line.includes('Ne zaman') || line.includes('Belirli tarih'));
+        if (questionLine) {
+          formatted += `<div style="margin-top: 15px;"><strong>${questionLine.replace(/\*\*/g, '')}</strong></div>`;
+        }
+        
+        console.log("Date selection formatted:", formatted); // Debug için
+        return formatted;
+      }
+
+      function sendQuickReply(text) {
+        document.getElementById('messageInput').value = text;
+        sendMessage();
       }
 
       async function sendMessage() {
@@ -347,15 +808,20 @@
             body: JSON.stringify({ question: userText }),
           });
 
+          if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+          }
+
           const data = await response.json();
 
-          botLoading.remove(); // Geçici mesajı kaldır
+          botLoading.remove();
 
           const botMessage = document.createElement("div");
           botMessage.className = "message bot";
 
           if (data.success) {
-            botMessage.innerHTML = `<div class="message-bubble">${data.answer}</div>`;
+            const formattedAnswer = formatAppointmentMessage(data.answer);
+            botMessage.innerHTML = `<div class="message-bubble">${formattedAnswer}</div>`;
           } else {
             botMessage.innerHTML = `<div class="message-bubble">❌ ${
               data.message || "Bir hata oluştu."
@@ -364,12 +830,27 @@
 
           messages.appendChild(botMessage);
           messages.scrollTop = messages.scrollHeight;
+
         } catch (error) {
           botLoading.remove();
 
+          console.error("API Hatası:", error);
+
           const errorMessage = document.createElement("div");
           errorMessage.className = "message bot";
-          errorMessage.innerHTML = `<div class="message-bubble">❌ Sunucuya bağlanırken bir hata oluştu: ${error.message}</div>`;
+          
+          let errorText = "";
+          if (error.message.includes("Failed to fetch")) {
+            errorText = "❌ Sunucuya bağlanılamadı. Lütfen sunucunun çalıştığından emin olun.";
+          } else if (error.message.includes("HTTP Error")) {
+            errorText = `❌ Sunucu hatası: ${error.message}`;
+          } else if (error.message.includes("JSON")) {
+            errorText = "❌ Sunucu yanıt formatı hatalı. Lütfen backend geliştiricisine bildirin.";
+          } else {
+            errorText = `❌ Bağlantı hatası: ${error.message}`;
+          }
+          
+          errorMessage.innerHTML = `<div class="message-bubble">${errorText}</div>`;
           messages.appendChild(errorMessage);
           messages.scrollTop = messages.scrollHeight;
         }
@@ -383,11 +864,12 @@
           }
         });
 
-      // Touch eventlerini optimize et
       document.addEventListener("touchstart", function () {}, {
         passive: true,
       });
-      document.addEventListener("touchend", function () {}, { passive: true });
+      document.addEventListener("touchend", function () {}, { 
+        passive: true 
+      });
     </script>
   </body>
 </html>
