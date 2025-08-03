@@ -118,6 +118,28 @@
         text-align: center;
       }
 
+      /* Loading Spinner */
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+      }
+
+      .spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #00d2ff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
       /* Poliklinik Seçimi */
       .department-grid {
         display: grid;
@@ -334,7 +356,7 @@
       }
 
       .time-slots {
-        display: none; /* Başlangıçta gizli */
+        display: none;
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
         gap: 10px;
         margin-bottom: 25px;
@@ -549,6 +571,9 @@
     </div>
 
     <script>
+      // ÖNEMLİ: currentStep değişkenini tanımla
+      let currentStep = 1;
+
       let selectedData = {
         department: { id: null, name: null },
         hospital: { id: null, name: null },
@@ -571,11 +596,13 @@
         try {
           const response = await fetch("/api/departments");
           const departments = await response.json();
+          
+          console.log('Departments received:', departments); // Debug
 
           container.innerHTML = departments
             .map(
               (dept) => `
-                        <div class="department-card" onclick="selectDepartment(${dept.id}, '${dept.name}')">
+                        <div class="department-card" onclick="selectDepartment('${dept.id}', '${dept.name}')">
                             <div class="department-icon">${dept.icon}</div>
                             <div class="department-name">${dept.name}</div>
                         </div>
@@ -590,7 +617,8 @@
       }
 
       function selectDepartment(id, name) {
-        selectedData.department = { id, name };
+        console.log('Department selected:', id, name); // Debug
+        selectedData.department = { id: id, name: name }; // ID'yi olduğu gibi kullan
         document
           .querySelectorAll(".department-card")
           .forEach((card) => card.classList.remove("selected"));
@@ -606,10 +634,32 @@
           '<div class="loading"><div class="spinner"></div>Hastaneler yükleniyor...</div>';
 
         try {
+          console.log('Fetching hospitals for department:', selectedData.department.id); // Debug
           const response = await fetch(
             `/api/hospitals/${selectedData.department.id}`
           );
+          
+          console.log('Response status:', response.status); // Debug
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
           const hospitals = await response.json();
+          console.log('Received hospitals:', hospitals); // Debug
+          
+          // Eğer response error içeriyorsa
+          if (hospitals.error) {
+            container.innerHTML = `<div class="loading">Hata: ${hospitals.error}</div>`;
+            return;
+          }
+          
+          // Eğer array değilse
+          if (!Array.isArray(hospitals)) {
+            console.error('Hospitals is not an array:', hospitals);
+            container.innerHTML = '<div class="loading">Veri formatı hatalı.</div>';
+            return;
+          }
 
           if (hospitals.length === 0) {
             container.innerHTML =
@@ -647,9 +697,9 @@
             )
             .join("");
         } catch (error) {
+          console.error("Hospital loading error:", error); // Debug
           container.innerHTML =
-            '<div class="loading">Hastaneler yüklenirken hata oluştu. Lütfen tekrar deneyin.</div>';
-          console.error("Hospital loading error:", error);
+            `<div class="loading">Hastaneler yüklenirken hata oluştu: ${error.message}<br>Lütfen tekrar deneyin.</div>`;
         }
       }
 
@@ -711,6 +761,7 @@
           console.error("Doctor loading error:", error);
         }
       }
+      
       function selectDoctor(id, name) {
         selectedData.doctor = { id: id, name: name };
         document
@@ -751,23 +802,13 @@
             const disabled = isSunday || isRandomlyClosed;
 
             return `
-                                      <div class="date-item ${
-                                        disabled ? "disabled" : ""
-                                      }"
-                                           onclick="${
-                                             disabled
-                                               ? ""
-                                               : `selectDate('${
-                                                   date
-                                                     .toISOString()
-                                                     .split("T")[0]
-                                                 }')`
-                                           }">
-                                          <div class="date-day">${dayName}</div>
-                                          <div class="date-number">${dayNum}</div>
-                                          <div class="date-month" style="font-size: 10px; color: #999;">${monthName}</div>
-                                      </div>
-                                  `;
+                <div class="date-item ${disabled ? "disabled" : ""}"
+                     onclick="${disabled ? "" : `selectDate('${date.toISOString().split("T")[0]}')`}">
+                    <div class="date-day">${dayName}</div>
+                    <div class="date-number">${dayNum}</div>
+                    <div class="date-month" style="font-size: 10px; color: #999;">${monthName}</div>
+                </div>
+            `;
           })
           .join("");
       }
@@ -801,29 +842,53 @@
           '<div class="loading"><div class="spinner"></div>Müsait saatler yükleniyor...</div>';
 
         try {
+          console.log(`Fetching available times for doctor ${selectedData.doctor.id} on ${selectedData.date}`);
+          
           const response = await fetch(
             `/api/available-times/${selectedData.doctor.id}/${selectedData.date}`
           );
-          const availableTimes = await response.json();
+          
+          console.log('Time slots response status:', response.status);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const responseText = await response.text();
+          console.log('Time slots raw response:', responseText);
+          
+          // JSON parse etmeye çalış
+          let availableTimes;
+          try {
+            availableTimes = JSON.parse(responseText);
+          } catch (parseError) {
+            console.error('JSON parse error:', parseError);
+            throw new Error('Sunucudan geçersiz yanıt alındı');
+          }
+          
+          console.log('Available times:', availableTimes);
+          
+          if (!Array.isArray(availableTimes)) {
+            throw new Error('Saat verileri geçersiz format');
+          }
 
           container.innerHTML = availableTimes
             .map(
               (timeSlot) => `
             <div class="time-slot ${!timeSlot.available ? "unavailable" : ""}" 
-                 onclick="${
-                   !timeSlot.available ? "" : `selectTime('${timeSlot.time}')`
-                 }">
+                 onclick="${!timeSlot.available ? "" : `selectTime('${timeSlot.time}')`}">
                 ${timeSlot.time}
             </div>
         `
             )
             .join("");
         } catch (error) {
-          container.innerHTML =
-            '<div class="loading">Saatler yüklenirken hata oluştu. Lütfen tekrar deneyin.</div>';
           console.error("Time slots loading error:", error);
+          container.innerHTML =
+            `<div class="loading">Saatler yüklenirken hata oluştu: ${error.message}<br>Lütfen tekrar deneyin.</div>`;
         }
       }
+      
       function selectTime(time) {
         selectedData.time = time;
         document
@@ -843,30 +908,32 @@
         });
 
         container.innerHTML = `
-                                  <div class="summary-item">
-                                      <div class="summary-label">Poliklinik:</div>
-                                      <div class="summary-value">${selectedData.department.name}</div>
-                                  </div>
-                                  <div class="summary-item">
-                                      <div class="summary-label">Hastane:</div>
-                                      <div class="summary-value">${selectedData.hospital.name}</div>
-                                  </div>
-                                  <div class="summary-item">
-                                      <div class="summary-label">Doktor:</div>
-                                      <div class="summary-value">${selectedData.doctor.name}</div>
-                                  </div>
-                                  <div class="summary-item">
-                                      <div class="summary-label">Tarih:</div>
-                                      <div class="summary-value">${formattedDate}</div>
-                                  </div>
-                                  <div class="summary-item">
-                                      <div class="summary-label">Saat:</div>
-                                      <div class="summary-value">${selectedData.time}</div>
-                                  </div>
-                              `;
+            <div class="summary-item">
+                <div class="summary-label">Poliklinik:</div>
+                <div class="summary-value">${selectedData.department.name}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Hastane:</div>
+                <div class="summary-value">${selectedData.hospital.name}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Doktor:</div>
+                <div class="summary-value">${selectedData.doctor.name}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Tarih:</div>
+                <div class="summary-value">${formattedDate}</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Saat:</div>
+                <div class="summary-value">${selectedData.time}</div>
+            </div>
+        `;
       }
 
       async function nextStep() {
+        console.log('nextStep called, currentStep:', currentStep); // Debug için
+        
         if (currentStep === 1 && !selectedData.department.id) {
           alert("Lütfen bir poliklinik seçiniz.");
           return;
@@ -893,6 +960,7 @@
 
         try {
           currentStep++;
+          console.log('Moving to step:', currentStep); // Debug için
           updateStepIndicator();
           showCurrentSection();
 
@@ -1053,8 +1121,10 @@ Randevunuza 15 dakika önce hastanede bulunmanız önerilir.
             "linear-gradient(135deg, #27ae60 0%, #229954 100%)";
         }
       }
+      
       // Sayfa yüklendiğinde başlat
       document.addEventListener("DOMContentLoaded", async function () {
+        console.log('Page loaded, initializing...'); // Debug için
         await initializePage();
 
         // Kartlara animasyon ekle
@@ -1072,6 +1142,7 @@ Randevunuza 15 dakika önce hastanede bulunmanız önerilir.
           });
         }, 100);
       });
+      
       // Global loading yardımcı fonksiyonları
       function showLoading(container, message = "Yükleniyor...") {
         if (typeof container === "string") {
