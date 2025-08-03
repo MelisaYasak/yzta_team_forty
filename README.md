@@ -73,3 +73,23 @@ Uygulama tasarımı yaptık. Veri araştırması yaptık. İnternetten açık ka
 | Neyi İyi Yaptık | Neleri Geliştirmeliyiz| Geliştirme Aksiyonlarımız Ne Olmalı  |
 |-----------------|-----------------------|--------------------------------------|
 |Fikri geliştirmeyi ve organize olmayı iyi yaptık | Daha planlı bir şekilde ilerleyebilirdik. Dailylere vaktinde katılamadık |Doğru yol haritası çizmeliyiz. İlk kim hatırlarsa dailyi başlatsın.|
+
+# Sprint 3
+## Sprint Notları: 
+Bu sprintte uygulamanın kendisi yapıldı. WEB, db ve AI bölümü olmak üzere uygulama protatip seviyesine getirildi.
+## Tahmin Edilen Tamamlanacak Puan: 
+100 Puan
+## Tahmin Mantığı: 
+Takım üyelerinin zamanlarına göre sprinte iş alındı. 
+## Daily Scrum: 
+WhatsApp uygulaması üzerinden yapılan daily görüşmeleri Github reposundaki ['dailyler/sprint2'](https://github.com/MelisaYasak/yzta_team_forty/tree/main/dailyler/sprint2/sprint3) klasörü içerisine koyulmuştur. Dilylerde gün içerisinde yapılanlar, toplantı planlamaları ve iş yaparken bir engel varsa bunlar konuşulmuştur. 
+## Sprin Board Updates:
+![Sprint Board Updates](https://github.com/MelisaYasak/yzta_team_forty/blob/main/trello_pics/sprint3.png)
+## Sprint Review:
+Sprint Review katılımcıları: Miraç	Aral, Sümeyra Usta ,  Meryem Durdu, Muhammet Ömer Kurnaz, Melisa YASAK.
+Uygulama tasarımı yaptık. Veri araştırması yaptık. İnternetten açık kaynak veriler araştırdık. Uygulama tasarımı Miro linkinde (https://miro.com/app/board/uXjVJfJWOdg=/) Veri için araştırdığımız siteler Trello üzerinde kartlarda bulunmakta
+## Sprint Retrospective
+| Neyi İyi Yaptık | Neleri Geliştirmeliyiz| Geliştirme Aksiyonlarımız Ne Olmalı  |
+|-----------------|-----------------------|--------------------------------------|
+
+
