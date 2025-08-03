@@ -31,6 +31,7 @@ class Hospital(db.Model):
     rating = db.Column(db.String(10), nullable=True)
 
     doctors = db.relationship('Doctor', backref='hospital', lazy=True)
+    appointments = db.relationship('Appointment', backref='hospital_ref', lazy=True)
 
 
 # Doktor Modeli
@@ -42,7 +43,18 @@ class Doctor(db.Model):
 
     department_id = db.Column(db.String, db.ForeignKey('department.id'), nullable=False)
     hospital_id = db.Column(db.Integer, db.ForeignKey('hospital.id'), nullable=False)
-    
+    appointments = db.relationship('Appointment', backref='doctor_ref', lazy=True)
+
+class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_name = db.Column(db.String(200), nullable=False)
+    department_id = db.Column(db.String(50), db.ForeignKey('department.id'), nullable=False)
+    hospital_id = db.Column(db.Integer, db.ForeignKey('hospital.id'), nullable=False)
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'), nullable=False)
+    appointment_date = db.Column(db.Date, nullable=False)
+    appointment_time = db.Column(db.Time, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(20), default='active')  # active, cancelled, completed
 
 # 📌 User tablosu
 class User(db.Model):
@@ -116,7 +128,7 @@ with db_page.app_context():
 
     # 5 Hastane ekleyelim
     hastane_isimleri = [
-        "Şehir Hastanesi", "Özel Medica", "Klinik Plus", "Sağlık Merkezi", "Devlet Hastanesi"
+        "Şehir Hastanesi", 'Ankara Şehir Hastanesi', 'Hacettepe Üniversitesi Hastanesi', 'Gazi Üniversitesi Hastanesi', "Özel Medica", "Klinik Plus", "Sağlık Merkezi", "Devlet Hastanesi"
     ]
     hastaneler = []
     for i, isim in enumerate(hastane_isimleri, start=1):
@@ -131,12 +143,12 @@ with db_page.app_context():
         hastaneler.append(h)
 
     # Her departman ve hastaneye 3'er doktor ekleyelim
-    doktor_adlari = [
-        "Dr. Ahmet Yılmaz", "Dr. Ayşe Demir", "Dr. Mehmet Kaya", "Dr. Fatma Çelik",
-        "Dr. Hasan Şahin", "Dr. Elif Aydın", "Dr. Can Özkan", "Dr. Zeynep Korkmaz",
-        "Dr. Ali Yıldız", "Dr. Selin Kurt", "Dr. Emre Aksoy", "Dr. Derya Taş",
-        "Dr. Murat Deniz", "Dr. Yasemin Öztürk", "Dr. Kerem Uysal", "Dr. Seda Polat",
-        "Dr. Cem Sarı", "Dr. Melis Kılıç", "Dr. Okan Acar", "Dr. Ebru Doğan"
+    doktor_adlari = [ 'Prof. Dr. Ahmet Omurga', 'Prof. Dr. Selim Beyin', 'Doç. Dr. Elif Sinir', 'Uz. Dr. Can Refleks', 'Prof. Dr. Hasan İç', 'Doç. Dr. Merve Genel', 'Uz. Dr. Kemal Sistem', 
+        "Dr. Ahmet Yılmaz", 'Prof. Dr. Mehmet Kardiyak', 'Uz. Dr. Ali Damar', 'Doç. Dr. Ayşe Kalp', "Dr. Ayşe Demir", "Dr. Mehmet Kaya", "Dr. Fatma Çelik",
+        "Dr. Hasan Şahin", 'Prof. Dr. Fatma Ritim', "Dr. Elif Aydın", "Dr. Can Özkan", "Dr. Zeynep Korkmaz",
+        "Dr. Ali Yıldız", "Dr. Selin Kurt", 'Prof. Dr. Fatma Kemik', "Dr. Emre Aksoy", "Dr. Derya Taş",
+        "Dr. Murat Deniz", 'Doç. Dr. Emre Eklem', "Dr. Yasemin Öztürk", "Dr. Kerem Uysal", "Dr. Seda Polat",
+        "Dr. Cem Sarı", 'Uz. Dr. Zeynep Kas', "Dr. Melis Kılıç", "Dr. Okan Acar", "Dr. Ebru Doğan"
     ]
 
     # Doktorları departmanlara ve hastanelere dağıt

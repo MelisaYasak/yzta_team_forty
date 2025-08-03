@@ -20,6 +20,9 @@ load_dotenv()
 
 # Gemini API anahtarını al
 gemini_api_key = os.getenv("GEMINI_API_KEY")
+
+# Proje dizinini al (örneğin: /Users/kullanici/projem)
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -871,16 +874,13 @@ class EnhancedRAGSystem:
         processing_time = (datetime.now() - start_time).total_seconds()
         return enhanced_answer, relevant_docs, similarity_scores, processing_time
 
-# Gemini API'yi yapılandır
-genai.configure(api_key="AIzaSyC29VH13ZDaAwIepdefoqWnVzl3ommWqAk")  # Gerçek API key'inizi buraya koyun
-model = genai.GenerativeModel('gemini-2.0-flash')
-
 @chat.before_app_request
 def load_rag():
     global rag_system
+    data_path = os.path.join(BASE_DIR, 'three.json')
     try:
-        if os.path.exists(r'C:\\Users\\Acer Nitro\\Desktop\\akademi__proje\\yzta_team_forty2\\medvice\\three.json'):
-            rag_system = EnhancedRAGSystem(r'C:\\Users\\Acer Nitro\\Desktop\\akademi__proje\\yzta_team_forty2\\medvice\\three.json')
+        if os.path.exists(data_path):
+            rag_system = EnhancedRAGSystem(data_path)
         else:
             abort(500, description="Veri dosyası eksik.")
     except Exception as e:

@@ -7,6 +7,7 @@ from medicine_page import medicine_page
 from edevlet_page import edevlet_page
 from enabiz_page import enabiz_page
 from lab_results_page import lab_results_page
+from appointment_page import appointment_page
 import os
 from db.hospital import db, db_page
 
@@ -19,6 +20,7 @@ main.register_blueprint(medicine_page)
 main.register_blueprint(edevlet_page)
 main.register_blueprint(enabiz_page)
 main.register_blueprint(lab_results_page)
+main.register_blueprint(appointment_page)
 
 @main.route('/')
 def index():
